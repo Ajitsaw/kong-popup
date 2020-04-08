@@ -1,0 +1,21 @@
+<div class="pt-popup pt-popup--content pt-popup--subscribe popup-container kong-popup" id="subscribe" data-id="{_ID_}" data-display-condition="{start_to_display}" data-display-condition-type="{start_to_display_option}" data-when-reach="{when_reach_percentage}" data-after-second="{start_to_display_time_duration}" style="display: none;" data-template="Subscribe">
+    <div class="pt-popup__header">
+        <a class="pt-popup__close" href="javascript:void(0);" onclick="close_kong_popup(); clickTarget( {_ID_}, 'close' );">
+        	<i class="fa fa-times" aria-hidden="true"></i>
+        </a>
+        <h2>{popup_body_title}</h2>
+    </div>
+    <div class="pt-popup__body">
+        <p>{popup_body_description}</p>
+        <form class="popup-form" onsubmit="javascript:submit_behaviour();">
+            <div class="pt-frm-field">
+                <input type="email" name="" placeholder="Email address">
+                <button class="popup-button">{popup_button_text}</button>
+            </div>
+            <div class="pt-frm-field">
+                <label><input type="checkbox" name="">Specify consent message</label>
+            </div>
+            <p class="pt-popup__note">We will not share your information with anyone</p>
+        </form>
+    </div>
+</div>
