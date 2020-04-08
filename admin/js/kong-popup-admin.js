@@ -35,13 +35,13 @@ jQuery( document ).ready( function( e ) {
 	jQuery( '.toplevel_page_create-popup a' ).addClass( 'kg_primary_bg_color site-action-toggle btn-raised btn' );
 		
 	jQuery( '.kong-container .tab-content' ).hide();
-	jQuery( '.kong-container #tabs li:first-child' ).next().addClass( 'active' );
+	jQuery( '.kong-container #tabs li:first-child' ).next().addClass( 'kg_secondary_bg' );
 	jQuery( '.kong-container .tab-content:first-child' ).next().show();
 	
 	jQuery( '.kong-container #tabs li' ).on( 'click', function() {
 		var tabName = jQuery( this ).attr( 'data-href' );
-		jQuery( '.kong-container #tabs li' ).removeClass( 'active' );
-		jQuery( this ).addClass( 'active' );
+		jQuery( '.kong-container #tabs li' ).removeClass( 'kg_secondary_bg' );
+		jQuery( this ).addClass( 'kg_secondary_bg' );
 		jQuery( '.kong-container .tab-content' ).hide();
 		jQuery( '.kong-container ' + tabName ).show();
 	} );

@@ -357,14 +357,12 @@
 
       <!-- .btn-group starts -->
       <div class="btn-group">
-        <button class="btn-big btn-publish-popup" id="publish-popup">
+        <button class="btn-big btn-publish-popup kg_secondary_bg" id="publish-popup">
           <?php echo __( 'Publish', 'kong-popup' ); ?>
-          <span></span>
         </button>
 
-        <button class="btn-big">
+        <button class="btn-big kg_secondary_bg">
           <?php echo __( 'Cancel', 'kong-popup' ); ?>
-          <span></span>
         </button>
       </div>
       <!-- .btn-group ends -->

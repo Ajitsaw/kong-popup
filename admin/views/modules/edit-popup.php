@@ -26,7 +26,7 @@ $slug = get_post_meta( $popup->ID, 'template', true );
         <!-- .form-conainer starts -->
         <div class="form-conainer">
             <!-- .tabs-container starts -->
-            <div class="tabs-container">
+            <div class="tabs-container kg_primary_bg_color">
                 <!-- #tabs starts -->
                 <ul id="tabs">
                     <li data-href="#appearance"><?php echo __( 'Appearance', 'kong-popup' ); ?></li>
