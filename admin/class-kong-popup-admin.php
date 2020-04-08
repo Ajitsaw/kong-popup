@@ -528,7 +528,7 @@ class Kong_Popup_Admin
     {
         $add_menu_pages = array(
             'create-popup'              => array( 'Create A Popup Page', 'Create A Popup', ' ', ),
-            'recent-popups'             => array( 'Recent Popups Page', 'Recent Popups', ' ', ),
+            'recent-popups'             => array( 'Recent Popups Page', 'Recent Popups', 'dashicons-admin-generic', ),
             'popup-dashboard'           => array( 'Dashboard Page', 'Dashboard', 'dashicons-admin-generic', ),
             'popup-lists'               => array( 'Popups Page', 'Popups', 'dashicons-admin-generic', ),
             'template-lists'            => array( 'Templates Page', 'Templates', 'dashicons-admin-generic', ),

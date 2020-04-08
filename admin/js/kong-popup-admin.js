@@ -32,8 +32,9 @@ jQuery( document ).ready( function( e ) {
 	 * Although scripts in the WordPress core, Plugins and Themes may be
 	 * practising this, we should strive to set a better example in our own work.
 	 */
-	jQuery( '.toplevel_page_create-popup a' ).addClass( 'kg_primary_bg_color site-action-toggle btn-raised btn' );
-		
+	jQuery( '#toplevel_page_edit-popup, #toplevel_page_edit-template, #toplevel_page_create-template, #toplevel_page_popups-under-folder' ).remove();
+	jQuery( '#toplevel_page_create-popup a' ).addClass( 'kg_primary_bg_color site-action-toggle btn-raised btn' );
+	
 	jQuery( '.kong-container .tab-content' ).hide();
 	jQuery( '.kong-container #tabs li:first-child' ).next().addClass( 'kg_secondary_bg' );
 	jQuery( '.kong-container .tab-content:first-child' ).next().show();
@@ -1201,7 +1202,7 @@ jQuery( document ).ready( function( e ) {
 	})
 	jQuery('#emailAddressBtn').click(function() {
 		var ind = jQuery('#fldArea .drugableSection').length;
-		console.log( "LENGTH = " + ind );
+		console.log( "LENGTH = " + 'ea_' + ind );
 
 		jQuery('#fldArea').append(emailAddressFld('Email address', 'ea_'+ind));
 		toggleEl('#addFldList', 'hide');
@@ -1629,7 +1630,7 @@ function toggleEl($el, action)
 // markups
 var emailAddressFld = function(title, id) {
 	var index = findIndex( id );
-  return `<div class="drugableSection drag-${index}" id="${id}" data-index="index-${index}">
+  return `<div class="drugableSection drag-${index}" id="${id}" data-order="${index}">
     <div class="pt-addfield-box">
       <div class="accrodianBtn">
         <span class="pt-addfield-box-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
@@ -1968,12 +1969,14 @@ function myTestFunc()
 	var length = jQuery( '#fldArea .drugableSection' ).length;
 	// console.log( length );
 	for ( var i = 1; i <= length; i++ ) {
-		// console.log( "INDEX = " + i );
+		var j = parseInt( i ) - 1;
+		console.log( "INDEX = " + i );
+		console.log( "JINDEX = " + j );
 		// console.log( jQuery( '.drugableSection' ).eq( i ).prevObject[ 0 ].id );
-		var splitIndex = jQuery( '.drugableSection' ).eq( 2 ).prevObject[ 0 ].id.split( '_' );
+		var splitIndex = jQuery( '.drugableSection:nth-child( ' + i + ' )' )[ 0 ].id.split( '_' );
 		console.log( splitIndex );
-
-		// jQuery( '.drugableSection' ).eq( i ).attr( 'id', splitIndex[ 0 ] + '_' + i );
-		// console.log( jQuery( '.drag-' + i ).attr( 'id', splitIndex[ 0 ] + '_' + i ) );
+		// console.log( jQuery( '.drugableSection:nth-child( ' + i + ' )' )[ 0 ].id );
+		// jQuery( '.drugableSection' ).eq( i ).attr( { 'id': splitIndex[ 0 ] + '_' + j, 'data-order': j } );
+		console.log( jQuery( '.drugableSection:nth-child( ' + i + ' )' ) );
 	}
 }
