@@ -2348,18 +2348,19 @@ body {
 button {
   cursor: pointer;
 }
-
-.kong-container .tabs-container{
+.kong-container .tabs-container {
   border: 1px solid #98752e;
   background-color: #98752e;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  padding:10px;
-
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .project-title{ text-align: center; font-size:40px; padding: 30px 0; margin-bottom: 30px; font-weight: 700; border-bottom: 1px solid #ccc}
 .kong-container #tabs{
-  width: 80%;
+  width: 70%;
   padding:0px;
   margin: 0px;
   display: inline-block;
@@ -2381,9 +2382,26 @@ button {
   font-size: 16px;
   color: #fff;
 }
+.kong-container #tabs li:first-child {
+  padding-left: 0;
+}
+.kong-container #tabs li.active:first-child {
+padding-left: 20px;
+}
 .kong-container #tabs li.active{
   background-color: #7b5f26
 }
+.is-template-block {
+  display: flex;
+  align-items: center;
+}
+input#is-template-box {
+  margin-top: 1px;
+}
+.is-template-block label {
+  color:#fff;
+}
+
 .tab-container {
   padding: 15px;
   border: 1px solid #ddd;
@@ -3859,9 +3877,9 @@ a.close-popup {
   margin-right: 6px
 }
 
-.wp-core-ui select {
+/* .wp-core-ui select {
   background:#fff url(../images/down-arrow.svg) no-repeat right 5px top 55%;
-}
+} */
 
 .select-option--small {
   width: 150px !important;
@@ -4564,7 +4582,46 @@ a.close-popup {
 .pt-addfield.no-border-bot {
   padding-bottom: 0
 }
+
 /*css added 10.3.2020*/
+
+
+/** Css added by AJit **/
+
+input:focus {
+  box-shadow: none !important;
+  border: 1px solid #ccc !important;
+}
+
+.btn.btn-raised, .btn.btn-raised:focus {
+  border-radius: 0px;
+  color: white;
+  font-size: 15px !important;
+  font-weight: 700;
+  width: 100%;
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+  cursor: pointer;
+  margin-bottom: 15px;
+  border: none;
+  border-bottom: 5px solid rgba(0,0,0,.3);
+}
+#toplevel_page_create-popup {
+  padding: 0;
+  display: flex;
+}
+#toplevel_page_create-popup a {
+  padding: 0;
+}
+#toplevel_page_create-popup .side-navigation__menu-icon {
+  display: none;
+}
+#toplevel_page_create-popup span.side-navigation__menu-text {
+  width: 100%;
+  text-align: center;
+}
+
+
 
 /*Responsive Start*/
 @media (max-width: 1200px){
