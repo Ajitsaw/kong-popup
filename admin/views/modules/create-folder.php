@@ -1,5 +1,5 @@
 <!-- .create-folder-section starts -->
-<div class="wrap create-folder-section">
+<div class="wrap create-folder-section kg_primary_bg_color">
     <!-- .kong-container-create-folder starts -->
     <div class="kong-container-create-folder create-folder">
         <!-- .project-title starts -->
@@ -7,7 +7,7 @@
             <span><?php echo __( 'Create A Folder', 'kong-popup' ); ?></span> 
             <input type="text" id="folder-name" placeholder="Folder Name" required /> 
             <span class="error-message" id="error-message"></span> 
-            <button id="create-folder"><?php echo __( 'Create', 'kong-popup' ); ?></button>
+            <button class="kg_secondary_bg btn" id="create-folder"><?php echo __( 'Create', 'kong-popup' ); ?></button>
         </div>
         <!-- .project-title ends -->
 

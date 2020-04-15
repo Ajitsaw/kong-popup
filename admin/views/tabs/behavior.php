@@ -259,5 +259,16 @@
     <!-- .widget-block ends -->
   </div>
   <!-- .no-panel ends -->
+  <!-- .btn-group starts -->
+  <div class="btn-group clearfix">
+      <button class="save-popup kg_secondary_bg btn">
+          <?php echo __( 'Save', 'kong-popup' ); ?>
+      </button>
+      
+      <button class="cancel-popup kg_secondary_bg btn">
+          <?php echo __( 'Cancel', 'kong-popup' ); ?>
+      </button>
+  </div>
+  <!-- .btn-group ends -->
 </div>
 <!-- .popup-tab-content ends -->

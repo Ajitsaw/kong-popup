@@ -15,7 +15,7 @@ if ( isset( $_REQUEST[ 'category' ] ) ) {
     <!-- .kong-container starts -->
     <div class="kong-container">
         <!-- .section-header starts -->
-        <div class="section-header">
+        <div class="section-header kg_primary_bg_color">
             <h2 class="page-title"><?php echo __( 'What Do You Want To Create Today??', 'kong-popup' ); ?></h2>
             <!-- .search-box starts -->
             <div class="search-box">

@@ -129,11 +129,11 @@ class Kong_Popup_Admin
         wp_enqueue_style( 'spectrum-min', '//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css', array(), $this->version, 'all' );
         wp_enqueue_style( 'roundslider-min', '//cdn.jsdelivr.net/npm/round-slider@1.4.0/dist/roundslider.min.css', array(), $this->version, 'all' );
 
-
-        wp_enqueue_style( 'chartist', plugin_dir_url( __FILE__ ) . 'css/chartist.min.css', array(), $this->version, 'all' );
-        wp_enqueue_style( 'chartist-plugin-tooltip', plugin_dir_url( __FILE__ ) . 'css/chartist-plugin-tooltip.css', array(), $this->version, 'all' );
-        wp_enqueue_style( 'dashboard-modern', plugin_dir_url( __FILE__ ) . 'css/dashboard-modern.css', array(), $this->version, 'all' );
-
+        if ( isset( $_REQUEST[ 'page' ] ) && $_REQUEST[ 'page' ] == "popup-dashboard" ) {
+            wp_enqueue_style( 'chartist', plugin_dir_url( __FILE__ ) . 'css/chartist.min.css', array(), $this->version, 'all' );
+            wp_enqueue_style( 'chartist-plugin-tooltip', plugin_dir_url( __FILE__ ) . 'css/chartist-plugin-tooltip.css', array(), $this->version, 'all' );
+            wp_enqueue_style( 'dashboard-modern', plugin_dir_url( __FILE__ ) . 'css/dashboard-modern.css', array(), $this->version, 'all' );
+        }
 
         wp_enqueue_style( 'daterangepicker', '//cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css', array(), $this->version, 'all' );
         wp_enqueue_style( 'open-sans', '//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap', array(), $this->version, 'all' );
@@ -168,13 +168,13 @@ class Kong_Popup_Admin
         wp_enqueue_script( 'spectrum-min', '//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js', array( 'jquery' ), $this->version, true );
         wp_enqueue_script( 'roundslider-min', '//cdn.jsdelivr.net/npm/round-slider@1.4.0/dist/roundslider.min.js', array( 'jquery' ), $this->version, true );
 
-
-        wp_enqueue_script( 'canvas-min', plugin_dir_url( __FILE__ ) . 'js/canvasjs.min.js', array( 'jquery' ), $this->version, true );
-        wp_enqueue_script( 'chart-min', plugin_dir_url( __FILE__ ) . 'js/chart.min.js', array( 'jquery' ), $this->version, true );
-        wp_enqueue_script( 'chartist-min', plugin_dir_url( __FILE__ ) . 'js/chartist.min.js', array( 'jquery' ), $this->version, true );
-        wp_enqueue_script( 'chartist-plugin-tooltip', plugin_dir_url( __FILE__ ) . 'js/chartist-plugin-tooltip.js', array( 'jquery' ), $this->version, true );
-        wp_enqueue_script( 'chartist-plugin-fill-donut-min', plugin_dir_url( __FILE__ ) . 'js/chartist-plugin-fill-donut.min.js', array( 'jquery' ), $this->version, true );
-
+        if ( isset( $_REQUEST[ 'page' ] ) && $_REQUEST[ 'page' ] == "popup-dashboard" ) {
+            wp_enqueue_script( 'canvas-min', plugin_dir_url( __FILE__ ) . 'js/canvasjs.min.js', array( 'jquery' ), $this->version, true );
+            wp_enqueue_script( 'chart-min', plugin_dir_url( __FILE__ ) . 'js/chart.min.js', array( 'jquery' ), $this->version, true );
+            wp_enqueue_script( 'chartist-min', plugin_dir_url( __FILE__ ) . 'js/chartist.min.js', array( 'jquery' ), $this->version, true );
+            wp_enqueue_script( 'chartist-plugin-tooltip', plugin_dir_url( __FILE__ ) . 'js/chartist-plugin-tooltip.js', array( 'jquery' ), $this->version, true );
+            wp_enqueue_script( 'chartist-plugin-fill-donut-min', plugin_dir_url( __FILE__ ) . 'js/chartist-plugin-fill-donut.min.js', array( 'jquery' ), $this->version, true );
+        }
         
         wp_enqueue_script( 'moment', plugin_dir_url( __FILE__ ) . 'js/moment.min.js', array( 'jquery' ), true );
         wp_enqueue_script( 'moment-timezones-list', plugin_dir_url( __FILE__ ) . 'js/moment-timezones-list.js', array( 'jquery' ), $this->version, true );

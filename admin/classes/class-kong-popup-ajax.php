@@ -97,8 +97,8 @@ class Kong_Popup_Admin_Ajax
 
         $total_leads_array = array();
 
-        $top_performing_popup = array();
-        $top_performing_popup_result = array();
+        $total_activity = array();
+        $total_activity_result = array();
 
         $top_locations = array();
         $top_locations_result = array();
@@ -210,7 +210,7 @@ class Kong_Popup_Admin_Ajax
             );
         }
 
-        /**========== Query for counting top performing popup ==========**/
+        /**========== Query for counting total avtivity ==========**/
         // get all items which belongs to popup-template category
         $popup_template_categories = get_terms( 
             array(
@@ -224,7 +224,7 @@ class Kong_Popup_Admin_Ajax
                 $name = $popup_template_category->name;
                 $slug = $popup_template_category->slug;
 
-                $top_performing_popup_query = $wpdb->get_results( "
+                $total_activity_query = $wpdb->get_results( "
                     SELECT COUNT( kong_popup_analytics.ID ) as popular_count
                     FROM {$wpdb->prefix}posts as posts 
                     JOIN {$wpdb->prefix}kong_popup_analytics as kong_popup_analytics ON kong_popup_analytics.popup_id = posts.ID
@@ -232,12 +232,12 @@ class Kong_Popup_Admin_Ajax
                     AND posts.post_status = 'publish'
                     AND kong_popup_analytics.template = '$slug'
                 " );
-                if ( $top_performing_popup_query[ 0 ]->popular_count ) {
-                    $top_performing_popup[ $name ] = $top_performing_popup_query[ 0 ]->popular_count;
+                if ( $total_activity_query[ 0 ]->popular_count ) {
+                    $total_activity[ $name ] = $total_activity_query[ 0 ]->popular_count;
                 }
             }
-            arsort( $top_performing_popup );
-            $top_performing_popup_result[ 'top_performing_popup' ] = array_slice( $top_performing_popup, 0, 10 );
+            arsort( $total_activity );
+            $total_activity_result[ 'total_activity' ] = array_slice( $total_activity, 0, 10 );
         }
 
         /**========== Query for counting top locations ==========**/
@@ -262,8 +262,8 @@ class Kong_Popup_Admin_Ajax
         $top_locations_result[ 'top_locations' ] = array_slice( $top_locations, 0, 4 );
 
         // print_data( $top_locations );
-        // print_data( $top_performing_popup );
-        // print_data( $top_performing_popup );
+        // print_data( $total_activity );
+        // print_data( $total_activity );
         // exit;
 
         // print_data( array_slice( $top_locations, 0, 4 ) );
@@ -278,7 +278,7 @@ class Kong_Popup_Admin_Ajax
         $views_statistics_array[ 'views_statistics_report' ] = $views_statistics_query;
         $clicks_statistics_array[ 'clicks_statistics_report' ] = $clicks_statistics_query;
 
-        echo json_encode( array_merge( $total_views_array, $total_clicks_array, $views_array, $clicks_array, $views_statistics_array, $clicks_statistics_array, $total_leads_array, $top_performing_popup_result, $top_locations_result ) );
+        echo json_encode( array_merge( $total_views_array, $total_clicks_array, $views_array, $clicks_array, $views_statistics_array, $clicks_statistics_array, $total_leads_array, $total_activity_result, $top_locations_result ) );
 
         die();
     }

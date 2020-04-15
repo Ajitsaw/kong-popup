@@ -813,11 +813,11 @@
 
     <!-- .btn-group starts -->
     <div class="btn-group clearfix">
-        <button class="btn-big save-popup kg_secondary_bg">
+        <button class="save-popup kg_secondary_bg btn">
             <?php echo __( 'Save', 'kong-popup' ); ?>
         </button>
         
-        <button class="btn-big cancel-popup kg_secondary_bg">
+        <button class="cancel-popup kg_secondary_bg btn">
             <?php echo __( 'Cancel', 'kong-popup' ); ?>
         </button>
     </div>

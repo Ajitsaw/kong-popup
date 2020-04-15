@@ -28,8 +28,8 @@
 
 </style>
 
-<!-- .settings-section starts -->
-<div class="wrap settings-section">
+<!-- .create-template-category starts -->
+<div class="wrap create-template-category settings-section kg_primary_bg_color">
     <!-- .kong-container-settings starts -->
     <div class="kong-container-settings create-folder">
         <!-- .project-title starts -->
@@ -37,9 +37,9 @@
             <span><?php echo __( 'Create A Template Category', 'kong-popup' ); ?></span> 
             <input type="text" id="template-category-name" placeholder="Template Category Name" required />
             <span class="error-message" id="error-message"></span>
-            <input type="button" id="template-category-image-btn" value="Upload" />
+            <input type="button" class="kg_secondary_bg btn" id="template-category-image-btn" value="Upload" />
             <input type="hidden" id="template-category-image" />
-            <button id="create-template-category"><?php echo __( 'Create', 'kong-popup' ); ?></button>
+            <button class="kg_secondary_bg btn" id="create-template-category"><?php echo __( 'Create', 'kong-popup' ); ?></button>
         </div>
         <!-- .project-title ends -->
 
@@ -86,4 +86,4 @@
     </div>
     <!-- .kong-container-settings ends -->
 </div>
-<!-- .settings-section ends -->
+<!-- .create-template-category ends -->

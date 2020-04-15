@@ -35,7 +35,7 @@ jQuery( document ).ready( function( e ) {
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 	jQuery( '#toplevel_page_edit-popup, #toplevel_page_edit-template, #toplevel_page_create-template, #toplevel_page_popups-under-folder' ).remove();
-	jQuery( '#toplevel_page_create-popup a' ).addClass( 'kg_primary_bg_color site-action-toggle btn-raised btn' );
+	jQuery( '#toplevel_page_create-popup a' ).addClass( 'kg_secondary_bg btn p-0 site-action-toggle btn-raised' );
 	
 	jQuery( '.kong-container .tab-content' ).hide();
 	jQuery( '.kong-container #tabs li:first-child' ).next().addClass( 'kg_secondary_bg' );
@@ -1395,7 +1395,7 @@ function dateRender( start, end )
 	var splineTotalViewsStatisticsChartData = [];
 	var splineTotalClicksStatisticsChartData = [];
 
-	var leadsHTML = topPerformingPopupHTML = topLocationsHTML = '';
+	var leadsHTML = totalActivityHTML = topLocationsHTML = '';
 
 	var fromDate = start.format( 'YYYY-MM-DD' );
 	var toDate = end.format( 'YYYY-MM-DD' );
@@ -1484,10 +1484,10 @@ function dateRender( start, end )
 					`;
 				}
 
-				var topPerformingPopup = Object.entries( response.top_performing_popup );
-				if ( topPerformingPopup.length ) {
-					topPerformingPopup.forEach( popup => {
-						topPerformingPopupHTML += `
+				var totalActivity = Object.entries( response.total_activity );
+				if ( totalActivity.length ) {
+					totalActivity.forEach( popup => {
+						totalActivityHTML += `
 							<!-- .chart-value-row starts -->
 							<div class="chart-value-row">
 								<strong>` + popup[ 0 ] + `</strong>
@@ -1514,8 +1514,8 @@ function dateRender( start, end )
 
 				jQuery( '#popuplist-box tbody' ).html( leadsHTML );
 
-				if ( topPerformingPopupHTML.length > 0 ) {
-					jQuery( '#top-performing-popup-block' ).html( topPerformingPopupHTML );
+				if ( totalActivityHTML.length > 0 ) {
+					jQuery( '#total-activity-block' ).html( totalActivityHTML );
 				}
 
 				if ( topLocationsHTML.length > 0 ) {
@@ -1527,132 +1527,133 @@ function dateRender( start, end )
 
 	// console.log( topLocationsHTML.length );
 
-
-	/** CHART START */
-	var totalViewsChart = new Chartist.Line(
-		"#total-views-chart",
-		{
-			series: [ totalViewsChartData ]
-		},
-		{
-			chartPaddingTop: 5,
-			axisX: {
-				showLabel: false,
-				showGrid: false
-			},
-			axisY: {
-				showLabel: false,
-					showGrid: false
-			},
-			lineSmooth: Chartist.Interpolation.simple( {
-				divisor: 2
-			} ),
-			plugins: [ Chartist.plugins.tooltip( { class: 'total-count-tooltip', appendToBody: true } ) ],
-			fullWidth: false
-		}
-	);
-
-	var totalClicksChart = new Chartist.Line(
-		"#total-clicks-chart",
-		{
-			series: [ totalClicksChartData ]
-		},
-		{
-			chartPaddingTop: 5,
-			axisX: {
-				showLabel: false,
-				showGrid: false
-			},
-			axisY: {
-				showLabel: false,
-					showGrid: false
-			},
-			lineSmooth: Chartist.Interpolation.simple( {
-				divisor: 2
-			} ),
-			plugins: [ Chartist.plugins.tooltip( { class: 'total-count-tooltip', appendToBody: true } ) ],
-			fullWidth: false
-		}
-	);
-
-	totalViewsChart.on( 'created', function( data ) {
-		var defs = data.svg.querySelector( 'defs' ) || data.svg.elem( 'defs' );
-		defs
-			.elem( 'linearGradient', {
-				id: 'lineLinearStats',
-				x1: 0,
-				y1: 0,
-				x2: 1,
-				y2: 0
-			} )
-			.elem( 'stop', {
-				offset: '0%',
-				'stop-color': '#fff'
-			} )
-			.parent()
-			.elem( 'stop', {
-				offset: '10%',
-				'stop-color': '#fff'
-			} )
-			.parent()
-			.elem( 'stop', {
-				offset: '30%',
-				'stop-color': '#fff'
-			} )
-			.parent()
-			.elem( 'stop', {
-				offset: '95%',
-				'stop-color': '#fff'
-			} )
-			.parent()
-			.elem( 'stop', {
-				offset: '100%',
-				'stop-color': '#fff'
-			} );
-
-		return defs;
-	} );
-
-	var chart = new CanvasJS.Chart( 'statistics-graph', {
-		animationEnabled: true,
-		axisY :{
-			gridColor: '#DCDCDC',
-			includeZero: false,
-			labelFontColor: '#bfbfbf',
-		},
-		toolTip: {
-			shared: true
-		},
-		legend: {
-			fontSize: 15,
-			horizontalAlign: 'left',
-			verticalAlign: 'top'
-		},
-		data: [
+    if ( kongPopupSupports.current_page == "popup-dashboard" ) {
+		/** CHART START */
+		var totalViewsChart = new Chartist.Line(
+			"#total-views-chart",
 			{
-				type: 'splineArea', 
-				showInLegend: true,
-				color: '#9D8AF8',
-				legendMarkerType: 'circle',
-				name: 'Total Views',
-				yValueFormatString: '###',
-				//markerType: ' ',
-				dataPoints: splineTotalViewsStatisticsChartData
+				series: [ totalViewsChartData ]
 			},
 			{
-				type: 'splineArea', 
-				showInLegend: true,
-				color: '#4AD4DF',
-				legendMarkerType: 'circle',
-				name: 'Total Click',
-				yValueFormatString: '###',    
-				//markerType: ' ', 
-				dataPoints: splineTotalClicksStatisticsChartData
-			} 
-		]
-	} );
-	chart.render();
+				chartPaddingTop: 5,
+				axisX: {
+					showLabel: false,
+					showGrid: false
+				},
+				axisY: {
+					showLabel: false,
+						showGrid: false
+				},
+				lineSmooth: Chartist.Interpolation.simple( {
+					divisor: 2
+				} ),
+				plugins: [ Chartist.plugins.tooltip( { class: 'total-count-tooltip', appendToBody: true } ) ],
+				fullWidth: false
+			}
+		);
+
+		var totalClicksChart = new Chartist.Line(
+			"#total-clicks-chart",
+			{
+				series: [ totalClicksChartData ]
+			},
+			{
+				chartPaddingTop: 5,
+				axisX: {
+					showLabel: false,
+					showGrid: false
+				},
+				axisY: {
+					showLabel: false,
+						showGrid: false
+				},
+				lineSmooth: Chartist.Interpolation.simple( {
+					divisor: 2
+				} ),
+				plugins: [ Chartist.plugins.tooltip( { class: 'total-count-tooltip', appendToBody: true } ) ],
+				fullWidth: false
+			}
+		);
+
+		totalViewsChart.on( 'created', function( data ) {
+			var defs = data.svg.querySelector( 'defs' ) || data.svg.elem( 'defs' );
+			defs
+				.elem( 'linearGradient', {
+					id: 'lineLinearStats',
+					x1: 0,
+					y1: 0,
+					x2: 1,
+					y2: 0
+				} )
+				.elem( 'stop', {
+					offset: '0%',
+					'stop-color': '#fff'
+				} )
+				.parent()
+				.elem( 'stop', {
+					offset: '10%',
+					'stop-color': '#fff'
+				} )
+				.parent()
+				.elem( 'stop', {
+					offset: '30%',
+					'stop-color': '#fff'
+				} )
+				.parent()
+				.elem( 'stop', {
+					offset: '95%',
+					'stop-color': '#fff'
+				} )
+				.parent()
+				.elem( 'stop', {
+					offset: '100%',
+					'stop-color': '#fff'
+				} );
+
+			return defs;
+		} );
+
+		var chart = new CanvasJS.Chart( 'statistics-graph', {
+			animationEnabled: true,
+			axisY :{
+				gridColor: '#DCDCDC',
+				includeZero: false,
+				labelFontColor: '#bfbfbf',
+			},
+			toolTip: {
+				shared: true
+			},
+			legend: {
+				fontSize: 15,
+				horizontalAlign: 'left',
+				verticalAlign: 'top'
+			},
+			data: [
+				{
+					type: 'splineArea', 
+					showInLegend: true,
+					color: '#9D8AF8',
+					legendMarkerType: 'circle',
+					name: 'Total Views',
+					yValueFormatString: '###',
+					//markerType: ' ',
+					dataPoints: splineTotalViewsStatisticsChartData
+				},
+				{
+					type: 'splineArea', 
+					showInLegend: true,
+					color: '#4AD4DF',
+					legendMarkerType: 'circle',
+					name: 'Total Click',
+					yValueFormatString: '###',    
+					//markerType: ' ', 
+					dataPoints: splineTotalClicksStatisticsChartData
+				} 
+			]
+		} );
+		chart.render();
 	/** CHART END */
+	}
 
 	// rearrangeSection();
 	// jQuery( '.pt-addfield' ).on( 'sortupdate', function( event, ui ) {

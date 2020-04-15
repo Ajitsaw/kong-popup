@@ -11,7 +11,7 @@
 </style>
 
 <!-- .create-popup-section starts -->
-<div class="wrap create-popup-section">
+<div class="wrap create-popup-section kg_primary_bg_color">
     <!-- .kong-container starts -->
     <div class="kong-container">
         <!-- .popup-building-block starts -->
@@ -79,7 +79,7 @@
 
 			            <!-- .btn-group starts -->
 			            <div class="btn-group">
-			                <button class="btn-big btn-big--colorbright" class="create-popup" id="create-popup">
+			                <button class="kg_secondary_bg btn" id="create-popup">
 			                    <?php echo __( 'Start Building!', 'kong-popup' ); ?>
 			                </button>
 			            </div>

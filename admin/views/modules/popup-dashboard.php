@@ -146,9 +146,20 @@
 			<i class="material-icons"><?php //echo __( 'more_vert', 'kong-popup' ); ?></i>
 			<span class="date-box"><?php //echo __( 'May14 - Jun13', 'kong-popup' ); ?></span>
 		</div> -->
-		<div class="dashboard-left kg_secondary_bg" id="report-filter">
-			<i class="material-icons"><?php echo __( 'more_vert', 'kong-popup' ); ?></i>
-			<span class="date-box"></span>
+		<div class="dashboard-left">
+			<div class="kg_secondary_bg" id="report-filter">
+				<i class="material-icons"><?php echo __( 'more_vert', 'kong-popup' ); ?></i>
+				<span class="date-box"></span>
+			</div>
+
+			<div>
+				<select class="dashboard-popup-lists">
+					<option>ABCD</option>
+					<option>ABCD</option>
+					<option>ABCD</option>
+					<option>ABCD</option>
+				</select>
+			</div>
 		</div>
 		<!-- .dashboard-left ends -->
 
@@ -301,56 +312,7 @@
 						<!-- .round-chart ends -->
 
 						<!-- .chart-information starts -->
-						<div class="chart-information">
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong><?php echo __( 'subscribers', 'kong-popup' ); ?></strong>
-								<span>0</span>
-							</div>
-							<!-- .chart-value-row ends -->
-
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong><?php echo __( 'contact messages', 'kong-popup' ); ?></strong>
-								<span>0</span>
-							</div>
-							<!-- .chart-value-row ends -->
-
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong><?php echo __( 'promo clicks', 'kong-popup' ); ?></strong>
-								<span>0</span>
-							</div>
-							<!-- .chart-value-row ends -->
-
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong><?php echo __( 'responses', 'kong-popup' ); ?></strong>
-								<span>0</span>
-							</div>
-							<!-- .chart-value-row ends -->
-
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong><?php echo __( 'followers', 'kong-popup' ); ?></strong>
-								<span>0</span>
-							</div>
-							<!-- .chart-value-row ends -->
-
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong><?php echo __( 'shares', 'kong-popup' ); ?></strong>
-								<span>0</span>
-							</div>
-							<!-- .chart-value-row ends -->
-
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong><?php echo __( 'fb messenger', 'kong-popup' ); ?></strong>
-								<span>0</span>
-							</div>
-							<!-- .chart-value-row ends -->
-						</div>
+						<div class="chart-information" id="total-activity-block"></div>
 						<!-- .chart-information ends -->
 					</div>
 					<!-- .chart-value ends -->

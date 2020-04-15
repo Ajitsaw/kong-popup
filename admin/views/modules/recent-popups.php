@@ -1,5 +1,5 @@
 <!-- .recent-popups-section starts -->
-<div class="wrap recent-popups-section">
+<div class="wrap recent-popups-section kg_primary_bg_color">
     <!-- .kong-container starts -->
     <div class="kong-container">
         <!-- .popup-listing starts -->
