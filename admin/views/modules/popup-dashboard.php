@@ -371,56 +371,7 @@
 						<!-- .round-chart ends -->
 
 						<!-- .chart-information starts -->
-						<div class="chart-information">
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong><?php echo __( 'subscribers', 'kong-popup' ); ?></strong>
-								<span>0</span>
-							</div>
-							<!-- .chart-value-row ends -->
-
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong><?php echo __( 'contact messages', 'kong-popup' ); ?></strong>
-								<span>0</span>
-							</div>
-							<!-- .chart-value-row ends -->
-
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong><?php echo __( 'promo clicks', 'kong-popup' ); ?></strong>
-								<span>0</span>
-							</div>
-							<!-- .chart-value-row ends -->
-
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong><?php echo __( 'responses', 'kong-popup' ); ?></strong>
-								<span>0</span>
-							</div>
-							<!-- .chart-value-row ends -->
-
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong><?php echo __( 'followers', 'kong-popup' ); ?></strong>
-								<span>0</span>
-							</div>
-							<!-- .chart-value-row ends -->
-
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong><?php echo __( 'shares', 'kong-popup' ); ?></strong>
-								<span>0</span>
-							</div>
-							<!-- .chart-value-row ends -->
-
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong><?php echo __( 'fb messenger', 'kong-popup' ); ?></strong>
-								<span>0</span>
-							</div>
-							<!-- .chart-value-row ends -->
-						</div>
+						<div class="chart-information" id="top-performing-popup-block"></div>
 						<!-- .chart-information ends -->
 					</div>
 					<!-- .chart-value ends -->
@@ -511,56 +462,7 @@
 						<!-- .round-chart ends -->
 
 						<!-- .chart-information starts -->
-						<div class="chart-information">
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong><?php echo __( 'subscribers', 'kong-popup' ); ?></strong>
-								<span>0</span>
-							</div>
-							<!-- .chart-value-row ends -->
-
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong><?php echo __( 'contact messages', 'kong-popup' ); ?></strong>
-								<span>0</span>
-							</div>
-							<!-- .chart-value-row ends -->
-
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong><?php echo __( 'promo clicks', 'kong-popup' ); ?></strong>
-								<span>0</span>
-							</div>
-							<!-- .chart-value-row ends -->
-
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong><?php echo __( 'responses', 'kong-popup' ); ?></strong>
-								<span>0</span>
-							</div>
-							<!-- .chart-value-row ends -->
-
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong><?php echo __( 'followers', 'kong-popup' ); ?></strong>
-								<span>0</span>
-							</div>
-							<!-- .chart-value-row ends -->
-
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong><?php echo __( 'shares', 'kong-popup' ); ?></strong>
-								<span>0</span>
-							</div>
-							<!-- .chart-value-row ends -->
-
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong><?php echo __( 'fb messenger', 'kong-popup' ); ?></strong>
-								<span>0</span>
-							</div>
-							<!-- .chart-value-row ends -->
-						</div>
+						<div class="chart-information" id="top-locations-block"></div>
 						<!-- .chart-information ends -->
 					</div>
 					<!-- .chart-value ends -->

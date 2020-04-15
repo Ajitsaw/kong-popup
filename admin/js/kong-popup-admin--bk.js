@@ -1,7 +1,7 @@
 // var popupData = {};
 $ = jQuery.noConflict();
 
-var removeFieldsNameArray = [];
+var removeFieldsNameArray = new Array();
 jQuery( document ).ready( function( e ) {
 	'use strict';
 
@@ -120,7 +120,7 @@ jQuery( document ).ready( function( e ) {
 		if ( popupData.hasOwnProperty( 'display_in' ) && popupData.display_in.length > 0 ) {
 			var DisplayInArr = popupData[ 'display_in' ];
 		} else {
-			var DisplayInArr = [];
+			var DisplayInArr = new Array();
 		}
 
 		var value = e.target.value;
@@ -138,11 +138,9 @@ jQuery( document ).ready( function( e ) {
 		updatePopupData();
 	} );
 
-	jQuery( this ).on( 'change', '.kong-container textarea', function( e ) {
+	jQuery( '.kong-container textarea' ).on( 'change', function( e ) {
 		var key = e.target.name;
 		var value = e.target.value;
-		console.log( key );
-		console.log( value );
 		popupData[ key ] = value;
 
 		updatePopupData();
@@ -151,8 +149,6 @@ jQuery( document ).ready( function( e ) {
 	jQuery( this ).on( 'change', '.kong-container input[type="radio"]', function( e ) {
 		var key = e.target.name;
 		var value = e.target.value;
-		console.log( key );
-		console.log( value );
 		popupData[ key ] = value;
 
 		if ( value == "specific" ) {
@@ -179,15 +175,11 @@ jQuery( document ).ready( function( e ) {
 		updatePopupData();
 	} );
 
-	jQuery( this ).on( 'change', '.kong-container .option-checkbox', function( e ) {
+	jQuery( '.kong-container .option-checkbox' ).on( 'change', function( e ) {
 		var key = e.target.name;
 		var id = e.target.id;
 
-		console.log( "KEY = " + key );
-		console.log( "ID = " + id );
-
 		if ( jQuery( '#' + id ).is( ':checked' ) ) {
-			console.log( "YOYO" );
 			popupData[ key ] = e.target.value;
 
 			if ( id == "date-start" || id == "date-stop" ) {
@@ -196,8 +188,6 @@ jQuery( document ).ready( function( e ) {
 				jQuery( '#' + id + '-field' ).removeAttr( 'disabled' );
 			} else { }
 		} else {
-			console.log( "HONEY SINGH" );
-
 			popupData[ key ] = 0;
 
 			if ( id == "date-start" || id == "date-stop" ) {
@@ -206,8 +196,6 @@ jQuery( document ).ready( function( e ) {
 				jQuery( '#' + id + '-field' ).prop( 'disabled', true );
 			} else { }
 		}
-
-		console.log( popupData );
 
 		updatePopupData();
 	} );
@@ -348,21 +336,21 @@ jQuery( document ).ready( function( e ) {
 				if ( popupData.hasOwnProperty( 'desktop_image' ) && popupData.desktop_image.length > 0 ) {
 					var appearanceImageArray = popupData[ 'desktop_image' ];
 				} else {
-					var appearanceImageArray = [];
+					var appearanceImageArray = new Array();
 				}
 				var bgImage = "desktop_image";
 			} else if ( param == "bgfile" ) {
 				if ( popupData.hasOwnProperty( 'desktop_bgfile_image' ) && popupData.desktop_bgfile_image.length > 0 ) {
 					var appearanceImageArray = popupData[ 'desktop_bgfile_image' ];
 				} else {
-					var appearanceImageArray = [];
+					var appearanceImageArray = new Array();
 				}
 				var bgImage = "desktop_bgfile_image";
 			} else {
 				if ( popupData.hasOwnProperty( 'desktop_btmscreen_image' ) && popupData.desktop_btmscreen_image.length > 0 ) {
 					var appearanceImageArray = popupData[ 'desktop_btmscreen_image' ];
 				} else {
-					var appearanceImageArray = [];
+					var appearanceImageArray = new Array();
 				}
 				var bgImage = "desktop_btmscreen_image";
 			}
@@ -371,21 +359,21 @@ jQuery( document ).ready( function( e ) {
 				if ( popupData.hasOwnProperty( 'mobile_image' ) && popupData.mobile_image.length > 0 ) {
 					var appearanceImageArray = popupData[ 'mobile_image' ];
 				} else {
-					var appearanceImageArray = [];
+					var appearanceImageArray = new Array();
 				}
 				var bgImage = "mobile_image";
 			} else if ( param == "bgfile" ) {
 				if ( popupData.hasOwnProperty( 'mobile_bgfile_image' ) && popupData.mobile_bgfile_image.length > 0 ) {
 					var appearanceImageArray = popupData[ 'mobile_bgfile_image' ];
 				} else {
-					var appearanceImageArray = [];
+					var appearanceImageArray = new Array();
 				}
 				var bgImage = "mobile_bgfile_image";
 			} else {
 				if ( popupData.hasOwnProperty( 'mobile_btmscreen_image' ) && popupData.mobile_btmscreen_image.length > 0 ) {
 					var appearanceImageArray = popupData[ 'mobile_btmscreen_image' ];
 				} else {
-					var appearanceImageArray = [];
+					var appearanceImageArray = new Array();
 				}
 				var bgImage = "mobile_btmscreen_image";
 			}
@@ -473,7 +461,7 @@ jQuery( document ).ready( function( e ) {
 		if ( popupData.hasOwnProperty( 'visitor' ) && popupData.visitor.length > 0 ) {
 			var visitorArray = popupData[ 'visitor' ];
 		} else {
-			var visitorArray = [];
+			var visitorArray = new Array();
 		}
 
 		var key = e.target.name;
@@ -506,7 +494,7 @@ jQuery( document ).ready( function( e ) {
 		if ( popupData.hasOwnProperty( 'browser' ) && popupData.browser.length > 0 ) {
 			var BrowserArr = popupData[ 'browser' ];
 		} else {
-			var BrowserArr = [];
+			var BrowserArr = new Array();
 		}
 
 		var key = e.target.name;
@@ -539,7 +527,7 @@ jQuery( document ).ready( function( e ) {
 		if ( popupData.hasOwnProperty( 'os' ) && popupData.os.length > 0 ) {
 			var OSArr = popupData[ 'os' ];
 		} else {
-			var OSArr = [];
+			var OSArr = new Array();
 		}
 
 		var key = e.target.name;
@@ -572,7 +560,7 @@ jQuery( document ).ready( function( e ) {
 		if ( popupData.hasOwnProperty( 'device' ) && popupData.device.length > 0 ) {
 			var DeviceArr = popupData[ 'device' ];
 		} else {
-			var DeviceArr = [];
+			var DeviceArr = new Array();
 		}
 
 		var key = e.target.name;
@@ -605,7 +593,7 @@ jQuery( document ).ready( function( e ) {
 		if ( popupData.hasOwnProperty( 'days_of_week' ) && popupData.days_of_week.length > 0 ) {
 			var DaysOfWeekArr = popupData[ 'days_of_week' ];
 		} else {
-			var DaysOfWeekArr = [];
+			var DaysOfWeekArr = new Array();
 		}
 
 		var key = e.target.name;
@@ -830,7 +818,7 @@ jQuery( document ).ready( function( e ) {
     	if ( popupData.hasOwnProperty( 'display_in' ) && popupData.display_in.length > 0 ) {
 			var removeDisplayInArr = popupData[ 'display_in' ];
 		} else {
-			var removeDisplayInArr = [];
+			var removeDisplayInArr = new Array();
 		}
 		
     	var targetingIndex = jQuery( this ).data( 'id' );
@@ -847,12 +835,11 @@ jQuery( document ).ready( function( e ) {
 		updatePopupData();
     } );
     
-    jQuery( this ).on( 'click', '.url-test', function( e ) {
+    jQuery( this ).on( 'click', '#url-test', function( e ) {
     	e.preventDefault();
     	e.stopPropagation();
 
-    	var splitID = this.id.split( '-' );
-    	var successRedirectURL = jQuery( '#success-redirect-url-' + splitID[ 1 ] ).val();
+    	var successRedirectURL = jQuery( '#success-redirect-url' ).val();
     	var pattern = /^((http|https|ftp):\/\/)/;
 		if ( ! pattern.test( successRedirectURL ) ) {
 		    successRedirectURL = "http://" + successRedirectURL;
@@ -1187,28 +1174,23 @@ jQuery( document ).ready( function( e ) {
 	});
 
 	jQuery( this ).on( 'click', '.removeSection', function() {
-		// console.log( removeFieldsNameArray );
-		// console.log( removeFieldsNameArray.length );
-		// if ( removeFieldsNameArray.length > 0 ) {
-		// 	console.log( "OK" );
-		// }
-		// console.log( popupData );
+		console.log( popupData );
 		jQuery( this ).closest( '.drugableSection' ).find( 'input, select, textarea' ).each( function() {
 		    removeFieldsNameArray.push( this.name );
 		    delete popupData[ this.name ];
 		} );
-		// console.log( removeFieldsNameArray );
+		console.log( removeFieldsNameArray );
 		console.log( popupData );
-		jQuery( this ).closest( '.drugableSection' ).remove();
-		rearrangeSection();
+		// jQuery(this).closest('.drugableSection').remove();
+		// rearrangeSection();
 	} );
 	jQuery(document).on('click', '.cloneSection', function() {
 		var $el = jQuery(this).closest('.drugableSection');
 		var fldIdentity = $el.attr('id').split('_')[0];
-		var id = fldIdentity + '_' + jQuery( '#fldArea .drugableSection' ).length;
+		var id = fldIdentity + '_' + jQuery('#fldArea .drugableSection').length;
 		var title = $el.find('.editableTitle').val() + ' Cloned';
 		if(fldIdentity == 'wp') {
-			jQuery('#fldArea').append(welcomePageField( title, id ));
+			jQuery('#fldArea').append(welcomePageFld( title, id ));
 			rearrangeSection();
 		} else if (fldIdentity == 'rb' || fldIdentity == 'cb' || fldIdentity == 'dl') {
 			jQuery('#fldArea').append(radioButtonFld( title, id ));
@@ -1242,21 +1224,21 @@ jQuery( document ).ready( function( e ) {
 		jQuery(this).prev().append(markUp);
 	})
 	jQuery('#emailAddressBtn').click(function() {
-		var ind = jQuery( '#fldArea .drugableSection' ).length + 1;
-		console.log( "INDEX " + ind );
+		var ind = jQuery('#fldArea .drugableSection').length;
+
 		jQuery('#fldArea').append(emailAddressFld('Email address', 'ea_'+ind));
 		toggleEl('#addFldList', 'hide');
 		rearrangeSection();
 	});
 	jQuery('#welcomePageBtn').click(function() {
-		var ind = jQuery( '#fldArea .drugableSection' ).length;
+		var ind = jQuery('#fldArea .drugableSection').length;
 
-		jQuery('#fldArea').append(welcomePageField('Welcome Page', 'wp_'+ind));
+		jQuery('#fldArea').append(welcomePageFld('Welcome Page', 'wp_'+ind));
 		toggleEl('#addFldList', 'hide');
 		rearrangeSection();
 	});
 	jQuery('#radioButtonsBtn').click(function() {
-		var ind = jQuery( '#fldArea .drugableSection' ).length;
+		var ind = jQuery('#fldArea .drugableSection').length;
 
 		jQuery('#fldArea').append(radioButtonFld('Radio Button', 'rb_'+ind));
 		toggleEl('#addFldList', 'hide');
@@ -1264,7 +1246,7 @@ jQuery( document ).ready( function( e ) {
 		rearrangeSection();
 	});
 	jQuery('#checkboxesBtn').click(function() {
-		var ind = jQuery( '#fldArea .drugableSection' ).length;
+		var ind = jQuery('#fldArea .drugableSection').length;
 
 		jQuery('#fldArea').append(radioButtonFld('Checkboxes', 'cb_'+ind));
 		toggleEl('#addFldList', 'hide');
@@ -1272,7 +1254,7 @@ jQuery( document ).ready( function( e ) {
 		rearrangeSection();
 	});
 	jQuery('#dropdownListBtn').click(function() {
-		var ind = jQuery( '#fldArea .drugableSection' ).length;
+		var ind = jQuery('#fldArea .drugableSection').length;
 
 		jQuery('#fldArea').append(radioButtonFld('Dropdown list', 'dl_'+ind));
 		toggleEl('#addFldList', 'hide');
@@ -1280,28 +1262,28 @@ jQuery( document ).ready( function( e ) {
 		rearrangeSection();
 	});
 	jQuery('#singleLineTextBtn').click(function() {
-		var ind = jQuery( '#fldArea .drugableSection' ).length;
+		var ind = jQuery('#fldArea .drugableSection').length;
 
 		jQuery('#fldArea').append(singleLineTextFld('Single line text', 'slt_'+ind));
 		toggleEl('#addFldList', 'hide');
 		rearrangeSection();
 	});
 	jQuery('#multiLineTextBtn').click(function() {
-		var ind = jQuery( '#fldArea .drugableSection' ).length;
+		var ind = jQuery('#fldArea .drugableSection').length;
 
 		jQuery('#fldArea').append(singleLineTextFld('Multiline text', 'mlt_'+ind));
 		toggleEl('#addFldList', 'hide');
 		rearrangeSection();
 	});
 	jQuery('#successPageBtn').click(function() {
-		var ind = jQuery( '#fldArea .drugableSection' ).length;
+		var ind = jQuery('#fldArea .drugableSection').length;
 
 		jQuery('#fldArea').append(successPageFld('Success Page', 'sp_'+ind));
 		toggleEl('#addFldList', 'hide');
 		rearrangeSection();
 	});
 	jQuery('#ratingBtn').click(function() {
-		var ind = jQuery( '#fldArea .drugableSection' ).length;
+		var ind = jQuery('#fldArea .drugableSection').length;
 
 		jQuery('#fldArea').append(ratingFld('Rating', 'r_'+ind));
 		toggleEl('#addFldList', 'hide');
@@ -1342,42 +1324,6 @@ jQuery( document ).ready( function( e ) {
 	}, dateRender );
 	
 	dateRender( moment().subtract( 6, 'month' ), moment() );
-
-
-
-
-
-
-
-	jQuery( '.drugableSection' ).find( 'input, select, textarea' ).each( function() {
-		var fieldType = this.type;
-		var fieldName = this.name;
-		jQuery.ajax( {
-			type: 'POST',
-			url: ajaxurl,
-			async: false,
-			data: {
-				action: 'set_popup_form_fields_value_ajax',
-				popup_id: popupData.popup_id,
-				field_name: fieldName,
-			},
-			success: function( response ) {
-				console.log( response );
-				if ( response ) {
-					if ( fieldType == "checkbox" ) {
-						jQuery( '[name="' + fieldName + '"]' ).prop( 'checked', true );
-
-					} else if ( fieldType == "radio" ) {
-						jQuery( '[name="' + fieldName + '"]' ).filter( '[value="' + response + '"]' ).prop( 'checked', true );
-
-					} else {
-						jQuery( '[name="' + fieldName + '"]' ).val( response );
-					}
-				}
-			}
-		} );
-	} );
-
 });
 
 // function updatePopupData() 
@@ -1395,7 +1341,7 @@ function dateRender( start, end )
 	var splineTotalViewsStatisticsChartData = [];
 	var splineTotalClicksStatisticsChartData = [];
 
-	var leadsHTML = topPerformingPopupHTML = topLocationsHTML = '';
+	var leadsHTML = '';
 
 	var fromDate = start.format( 'YYYY-MM-DD' );
 	var toDate = end.format( 'YYYY-MM-DD' );
@@ -1463,19 +1409,17 @@ function dateRender( start, end )
 
 				var leadsCount = response.leads_count;
 				if ( leadsCount.length ) {
-					leadsCount.forEach( function( item ) {
+					for ( var index = 0; index < leadsCount.length; index++ ) {
 						leadsHTML += `
-							<!-- tr starts -->
 							<tr>
-								<td>` + item.popup_title + `</td>
-								<td>` + item.popup_template + `</td>
-								<td>` + item.count + `
+								<td>` + leadsCount[ index ].popup_title + `</td>
+								<td>` + leadsCount[ index ].popup_template + `</td>
+								<td>` + leadsCount[ index ].count + `
 									<i class="large material-icons">equalizer</i>
 								</td>
 							</tr>
-							<!-- tr ends -->
 						`;
-					} );
+					}
 				} else {
 					leadsHTML = `
 						<tr>
@@ -1483,52 +1427,14 @@ function dateRender( start, end )
 						</tr>
 					`;
 				}
-
-				var topPerformingPopup = Object.entries( response.top_performing_popup );
-				if ( topPerformingPopup.length ) {
-					topPerformingPopup.forEach( popup => {
-						topPerformingPopupHTML += `
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong>` + popup[ 0 ] + `</strong>
-								<span>` + popup[ 1 ] + `</span>
-							</div>
-							<!-- .chart-value-row ends -->
-						`;
-				  	} );
-				}
-
-				var topLocations = Object.entries( response.top_locations );
-				if ( topLocations.length ) {
-					topLocations.forEach( location => {
-						topLocationsHTML += `
-							<!-- .chart-value-row starts -->
-							<div class="chart-value-row">
-								<strong>` + location[ 0 ] + `</strong>
-								<span>` + location[ 1 ] + `</span>
-							</div>
-							<!-- .chart-value-row ends -->
-						`;
-				  	} );
-				}
-
-				jQuery( '#popuplist-box tbody' ).html( leadsHTML );
-
-				if ( topPerformingPopupHTML.length > 0 ) {
-					jQuery( '#top-performing-popup-block' ).html( topPerformingPopupHTML );
-				}
-
-				if ( topLocationsHTML.length > 0 ) {
-					jQuery( '#top-locations-block' ).html( topLocationsHTML );
-				}
 			}
 		}
 	} );
 
-	// console.log( topLocationsHTML.length );
+	// console.log( leadsHTML );
+	jQuery( '#popuplist-box tbody' ).html( leadsHTML );
 
-
-	/** CHART START */
+	/** CHART START
 	var totalViewsChart = new Chartist.Line(
 		"#total-views-chart",
 		{
@@ -1652,7 +1558,7 @@ function dateRender( start, end )
 		]
 	} );
 	chart.render();
-	/** CHART END */
+	CHART END */
 
 	// rearrangeSection();
 	// jQuery( '.pt-addfield' ).on( 'sortupdate', function( event, ui ) {
@@ -1702,12 +1608,6 @@ var updatePopupDataa = () => {
 			popupData[ 'content_html_structures' ] = contentHTMLStructures;
 		}
 
-		// if ( removeFieldsNameArray.length > 0 ) {
-		// 	console.log( "OK" );
-		// }
-
-		console.log( removeFieldsNameArray );
-
 		jQuery.ajax( {
 			type: 'POST',
 			url: ajaxurl,
@@ -1715,7 +1615,6 @@ var updatePopupDataa = () => {
 			data: {
 				action: 'update_popup_info_ajax',
 				popup_data: popupData,
-				remove_fields: removeFieldsNameArray,
 			},
 			beforeSend: ( x ) => {
 				if ( x && x.overrideMimeType ) {
@@ -1731,7 +1630,6 @@ var updatePopupDataa = () => {
 					jQuery( '#success-message' ).hide( 'blind', {}, 500 );
 				}, 1500 );
 				// location.reload();
-				removeFieldsNameArray = [];
 			}
 		} );
 	} else {
@@ -1791,10 +1689,10 @@ var toggleEl = ( $el, action ) => {
 
 // markups
 var emailAddressFld = ( title, id ) => {
-	// var index = findNextIndex( id );
-	var index = formFieldIndex();
+	console.log( id );
+	var index = findIndex( id );
 	return `
-		<div class="drugableSection" id="${id}" data-field="${index}">
+		<div class="drugableSection" id="${id}">
 			<div class="pt-addfield-box">
 				<div class="accrodianBtn">
 					<span class="pt-addfield-box-icon">
@@ -1830,7 +1728,7 @@ var emailAddressFld = ( title, id ) => {
 				<section>
 					<div class="pt-checkbox pt-inline-field">
 						<label class="container">
-							<input type="checkbox" name="conent_form_email_consent_${index}" id="conent-form-email-consent-${index}" class="sectionOpener option-checkbox" />
+							<input type="checkbox" name="conent_form_email_consent_${index}" class="sectionOpener" />
 							<span class="checkmark"></span>Add a consent checkbox
 						</label>
 					</div>
@@ -1843,7 +1741,7 @@ var emailAddressFld = ( title, id ) => {
 
 						<div class="pt-checkbox pt-inline-field">
 							<label class="container">
-								<input type="checkbox" name="conent_form_email_required_${index}" id="conent-form-email-required-${index}" class="option-checkbox" />
+								<input type="checkbox" name="conent_form_email_required_${index}" />
 								<span class="checkmark"></span>Required
 							</label>
 						</div>
@@ -1854,82 +1752,60 @@ var emailAddressFld = ( title, id ) => {
   	`;
 }
 
-var welcomePageField = ( title, id ) => {
-	var index = formFieldIndex();
+var welcomePageFld = ( title, id ) => {
+  return `<div class="drugableSection" id="${id}">
+    <div class="pt-addfield-box">
+      <div class="accrodianBtn">
+        <span class="pt-addfield-box-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+        <span class="pt-addfield-box-title"><input type="text" class="editableTitle" name="" readonly value="${title}"></span>
+        <span class="pt-addfield-box-arrow"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+      </div>
 
-  	return `
-  		<div class="drugableSection" id="${id}" data-field="${index}">
-  			<div class="pt-addfield-box">
-  				<div class="accrodianBtn">
-  					<span class="pt-addfield-box-icon">
-  						<i class="fa fa-bars" aria-hidden="true"></i>
-  					</span>
-  					
-  					<span class="pt-addfield-box-title">
-  						<input type="text" class="editableTitle" name="conent_form_welcome_field_${index}" readonly value="${title}" />
-  					</span>
-  					
-  					<span class="pt-addfield-box-arrow">
-  						<i class="fa fa-caret-down" aria-hidden="true"></i>
-  					</span>
-  				</div>
+        <a class="pt-addfield-box-config" href="javascript:void(0);"><i class="fa fa-cog" aria-hidden="true"></i></a>
+        <ul class="add-button-field pt-config-btn">
+            <li class="renameTitle">Rename</li>
+            <li class="cloneSection">Clone</li>
+            <li class="removeSection">Remove</li>
+        </ul>
+    </div>
+    <div class="pt-addfield-box-edit">
+        <div class="pt-option-box">
+            <label>Title</label>
+            <input type="text" name="" placeholder="Welcome!">
+        </div>
+        <div class="pt-option-box">
+            <label>Description</label>
+            <textarea></textarea>
+        </div>
+        <div class="pt-option-box">
+            <label>Final action</label>
+            <div class="pt-radio">
+                <label class="container">
+                  <input type="radio" name="radio">
+                  <span class="checkmark"></span>none
+                </label>
+            </div>
+            <div class="pt-radio">
+                <label class="container">
+                  <input type="radio" name="radio">
+                  <span class="checkmark"></span>Close widget
+                </label>
+            </div>
+            <div class="pt-radio">
+                <label class="container">
+                  <input type="radio" name="radio">
+                  <span class="checkmark"></span>redirect to URL
+                </label>
+            </div>
+            <div class="redirect-url">
+                <input type="text" value="" name="success_redirect_url" class="success-redirect-url" placeholder="Redirect URL">
+                <button type="button" class="url-test">Test</button>
+            </div>
+        </div>
+    </div>
 
-  				<a class="pt-addfield-box-config" href="javascript:void(0);">
-  					<i class="fa fa-cog" aria-hidden="true"></i>
-  				</a>
-  				
-  				<ul class="add-button-field pt-config-btn">
-  					<li class="renameTitle">Rename</li>
-				  	<li class="cloneSection">Clone</li>
-				  	<li class="removeSection">Remove</li>
-  				</ul>
-  			</div>
-  			
-  			<div class="pt-addfield-box-edit">
-  				<div class="pt-option-box">
-  					<label>Title</label>
-  					<input type="text" name="conent_form_welcome_title_${index}" placeholder="Welcome!" />
-  				</div>
-  				
-  				<div class="pt-option-box">
-  					<label>Description</label>
-  					<textarea name="conent_form_welcome_description_${index}"></textarea>
-  				</div>
-  				
-  				<div class="pt-option-box">
-  					<label>Final action</label>
-  					
-  					<div class="pt-radio">
-  						<label class="container">
-	  						<input type="radio" name="conent_form_welcome_action_${index}" value="none" />
-	  						<span class="checkmark"></span>none
-  						</label>
-  					</div>
-				  	
-				  	<div class="pt-radio">
-					  	<label class="container">
-						  	<input type="radio" name="conent_form_welcome_action_${index}" value="close" />
-						  	<span class="checkmark"></span>close widget
-					  	</label>
-				  	</div>
-				  	
-				  	<div class="pt-radio">
-					  	<label class="container">
-						  	<input type="radio" name="conent_form_welcome_action_${index}" value="redirect" />
-						  	<span class="checkmark"></span>redirect to URL
-					  	</label>
-				  	</div>
-  					
-  					<div class="redirect-url">
-  						<input type="text" name="conent_form_welcome_redirect_url_${index}" class="success-redirect-url" id="success-redirect-url-${index}" placeholder="Redirect URL" />
-  						<button type="button" id="btn-${index}" class="url-test">Test</button>
-  					</div>
-  				</div>
-  			</div>
-  		</div>
-  	`;
+  </div>`;
 }
-
 var radioButtonFld = ( title, id ) => {
   return `<div class="drugableSection" id="${id}">
     <div class="pt-addfield-box">
@@ -2159,28 +2035,17 @@ var newSegment = ( title, id ) => {
 </div>`
 }
 
-// var findNextIndex =  ( id ) => {
-// 	var splitIndex = id.split( '_' );
+var findIndex =  ( id ) => {
+	var splitIndex = id.split( '_' );
 
-// 	return parseInt( splitIndex[ 1 ] );
-// }
+	return splitIndex[ 1 ];
+}
 
 var rearrangeSection = () => {
 	var length = jQuery( '#fldArea .drugableSection' ).length;
 	for ( var i = 1; i <= length; i++ ) {
+		var j = i - 1;
 		var splitIndex = jQuery( '.drugableSection:nth-child( ' + i + ' )' )[ 0 ].id.split( '_' );
-		// jQuery( '.drugableSection:nth-child( ' + i + ' )' ).removeClass().addClass( 'drugableSection drag-' + i ).attr( { 'id': splitIndex[ 0 ] + '_' + i, 'data-order': i } );
-		jQuery( '.drugableSection:nth-child( ' + i + ' )' ).attr( { 'id': splitIndex[ 0 ] + '_' + i } );
+		jQuery( '.drugableSection:nth-child( ' + i + ' )' ).removeClass().addClass( 'drugableSection drag-' + j ).attr( { 'id': splitIndex[ 0 ] + '_' + j, 'data-order': j } );
 	}
-}
-
-var formFieldIndex = () => {
-	const length = 10;
-	const characters = '0123456789abcdefghijklmnopqrstuvwxyz';
-    var result = '';
-    for ( var i = length; i > 0; --i ) {
-    	result += characters[ Math.round( Math.random() * ( characters.length - 1 ) ) ];
-    }
-
-    return result;
 }

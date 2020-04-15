@@ -85,7 +85,7 @@ class Kong_Popup_Admin
 
         add_action( 'wp_ajax_savepopup', array( $this, 'savePopup' ) );
         //add_action( 'wp_ajax_nopriv_savepopup', array( $this, 'savePopup' ) );
-        add_action( 'wp_ajax_update_popup_info_ajax', array( $this, 'update_popup_info' ) );
+        // add_action( 'wp_ajax_update_popup_info_ajax', array( $this, 'update_popup_info' ) );
         add_action( 'wp_ajax_update_popup_status_ajax', array( $this, 'update_popup_status' ) );
         add_action( 'wp_ajax_preview', array( $this, 'preview' ) );
         add_action( 'admin_menu', array( $this, 'add_folders' ) );
@@ -130,9 +130,9 @@ class Kong_Popup_Admin
         wp_enqueue_style( 'roundslider-min', '//cdn.jsdelivr.net/npm/round-slider@1.4.0/dist/roundslider.min.css', array(), $this->version, 'all' );
 
 
-        // wp_enqueue_style( 'chartist', plugin_dir_url( __FILE__ ) . 'css/chartist.min.css', array(), $this->version, 'all' );
-        // wp_enqueue_style( 'chartist-plugin-tooltip', plugin_dir_url( __FILE__ ) . 'css/chartist-plugin-tooltip.css', array(), $this->version, 'all' );
-        // wp_enqueue_style( 'dashboard-modern', plugin_dir_url( __FILE__ ) . 'css/dashboard-modern.css', array(), $this->version, 'all' );
+        wp_enqueue_style( 'chartist', plugin_dir_url( __FILE__ ) . 'css/chartist.min.css', array(), $this->version, 'all' );
+        wp_enqueue_style( 'chartist-plugin-tooltip', plugin_dir_url( __FILE__ ) . 'css/chartist-plugin-tooltip.css', array(), $this->version, 'all' );
+        wp_enqueue_style( 'dashboard-modern', plugin_dir_url( __FILE__ ) . 'css/dashboard-modern.css', array(), $this->version, 'all' );
 
 
         wp_enqueue_style( 'daterangepicker', '//cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css', array(), $this->version, 'all' );
@@ -169,11 +169,11 @@ class Kong_Popup_Admin
         wp_enqueue_script( 'roundslider-min', '//cdn.jsdelivr.net/npm/round-slider@1.4.0/dist/roundslider.min.js', array( 'jquery' ), $this->version, true );
 
 
-        // wp_enqueue_script( 'canvas-min', plugin_dir_url( __FILE__ ) . 'js/canvasjs.min.js', array( 'jquery' ), $this->version, true );
-        // wp_enqueue_script( 'chart-min', plugin_dir_url( __FILE__ ) . 'js/chart.min.js', array( 'jquery' ), $this->version, true );
-        // wp_enqueue_script( 'chartist-min', plugin_dir_url( __FILE__ ) . 'js/chartist.min.js', array( 'jquery' ), $this->version, true );
-        // wp_enqueue_script( 'chartist-plugin-tooltip', plugin_dir_url( __FILE__ ) . 'js/chartist-plugin-tooltip.js', array( 'jquery' ), $this->version, true );
-        // wp_enqueue_script( 'chartist-plugin-fill-donut-min', plugin_dir_url( __FILE__ ) . 'js/chartist-plugin-fill-donut.min.js', array( 'jquery' ), $this->version, true );
+        wp_enqueue_script( 'canvas-min', plugin_dir_url( __FILE__ ) . 'js/canvasjs.min.js', array( 'jquery' ), $this->version, true );
+        wp_enqueue_script( 'chart-min', plugin_dir_url( __FILE__ ) . 'js/chart.min.js', array( 'jquery' ), $this->version, true );
+        wp_enqueue_script( 'chartist-min', plugin_dir_url( __FILE__ ) . 'js/chartist.min.js', array( 'jquery' ), $this->version, true );
+        wp_enqueue_script( 'chartist-plugin-tooltip', plugin_dir_url( __FILE__ ) . 'js/chartist-plugin-tooltip.js', array( 'jquery' ), $this->version, true );
+        wp_enqueue_script( 'chartist-plugin-fill-donut-min', plugin_dir_url( __FILE__ ) . 'js/chartist-plugin-fill-donut.min.js', array( 'jquery' ), $this->version, true );
 
         
         wp_enqueue_script( 'moment', plugin_dir_url( __FILE__ ) . 'js/moment.min.js', array( 'jquery' ), true );
@@ -273,38 +273,38 @@ class Kong_Popup_Admin
         die();
     }
 
-    public function update_popup_info() 
-    {
-        $meta_data = $_REQUEST[ 'popup_data' ];
+    // public function update_popup_info() 
+    // {
+    //     $meta_data = $_REQUEST[ 'popup_data' ];
 
-        $post_id = $meta_data[ 'popup_id' ];
-        unset( $meta_data[ 'popup_id' ] );  // remove the popup_id from array
+    //     $post_id = $meta_data[ 'popup_id' ];
+    //     unset( $meta_data[ 'popup_id' ] );  // remove the popup_id from array
 
-        // loop the remaining and put in post meta
-        foreach ( $meta_data as $mdkey => $mdvalue ) {
-            if ( $mdvalue ) {
-                if ( is_array( $mdvalue ) ) {
-                    $mdvalue = array_values( array_filter( $mdvalue ) );    // for removing empty array element
-                } else {
-                    $expl_data = explode( ',', $mdvalue );
-                    if( isset( $expl_data[ 1 ] ) ) {
-                        $mdvalue = implode( ',', array_map( 'trim', $expl_data ) ); // for triming whitespace from array element
-                    } else {
-                        $mdvalue = trim( $expl_data[ 0 ] );
-                    }
-                }
-                update_post_meta( $post_id, $mdkey, $mdvalue );
-            } else {
-                delete_post_meta( $post_id, $mdkey );
-            }
+    //     // loop the remaining and put in post meta
+    //     foreach ( $meta_data as $mdkey => $mdvalue ) {
+    //         if ( $mdvalue ) {
+    //             if ( is_array( $mdvalue ) ) {
+    //                 $mdvalue = array_values( array_filter( $mdvalue ) );    // for removing empty array element
+    //             } else {
+    //                 $expl_data = explode( ',', $mdvalue );
+    //                 if( isset( $expl_data[ 1 ] ) ) {
+    //                     $mdvalue = implode( ',', array_map( 'trim', $expl_data ) ); // for triming whitespace from array element
+    //                 } else {
+    //                     $mdvalue = trim( $expl_data[ 0 ] );
+    //                 }
+    //             }
+    //             update_post_meta( $post_id, $mdkey, $mdvalue );
+    //         } else {
+    //             delete_post_meta( $post_id, $mdkey );
+    //         }
 
-            if ( is_array( $mdvalue ) && empty( $mdvalue[ 0 ] ) ) {
-                delete_post_meta( $post_id, $mdkey );
-            }
-        }
+    //         if ( is_array( $mdvalue ) && empty( $mdvalue[ 0 ] ) ) {
+    //             delete_post_meta( $post_id, $mdkey );
+    //         }
+    //     }
 
-        die();
-    }
+    //     die();
+    // }
 
     public function update_popup_status() 
     {

@@ -50,11 +50,12 @@ class Kong_Popup_Analytics
         global $wpdb;
 
         $data = maybe_serialize( $data );
+        $template = get_post_meta( $popup_id, 'template', true );
         $current_date = date( 'Y-m-d', time() );
 
         // print_data( $data );
 
-        $wpdb->query( "INSERT INTO {$wpdb->prefix}kong_popup_analytics ( popup_id, data, created_at ) VALUES ( $popup_id, '$data', '$current_date' )" );
+        $wpdb->query( "INSERT INTO {$wpdb->prefix}kong_popup_analytics ( popup_id, data, template, created_at ) VALUES ( $popup_id, '$data', '$template', '$current_date' )" );
     }
     
 }

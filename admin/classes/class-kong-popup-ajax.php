@@ -4,10 +4,82 @@ class Kong_Popup_Admin_Ajax
 {
     public function __construct() 
     {
+        add_action( 'wp_ajax_set_popup_form_fields_value_ajax', array( $this, 'set_popup_form_fields_value' ) );
+        
+        add_action( 'wp_ajax_update_popup_info_ajax', array( $this, 'update_popup_info' ) );
+        
         add_action( 'wp_ajax_get_filtered_report_ajax', array( $this, 'get_filtered_report' ) );
+
+        add_action( 'wp_ajax_get_preview_popup_ajax', array( $this, 'get_preview_popup' ) );
 
         add_action( 'wp_ajax_add_click_target_ajax', array( $this, 'add_click_target' ) );
         add_action( 'wp_ajax_nopriv_add_click_target_ajax', array( $this, 'add_click_target' ) );
+    }
+
+    public function set_popup_form_fields_value() {
+        echo get_post_meta( $_REQUEST[ 'popup_id' ], $_REQUEST[ 'field_name' ], true );
+
+        die();
+    }
+
+    public function update_popup_info() 
+    {
+        // print_data( $_REQUEST );
+        $meta_data = $_REQUEST[ 'popup_data' ];
+        // print_data( get_post_meta( $meta_data[ 'popup_id' ] ) );
+        // print_data( $meta_data );
+        $post_id = $meta_data[ 'popup_id' ];
+        unset( $meta_data[ 'popup_id' ] );  // remove the popup_id from array
+
+        if ( $_REQUEST[ 'remove_fields' ] ) {
+            foreach ( $_REQUEST[ 'remove_fields' ] as $remove_field ) {
+                delete_post_meta( $post_id, $remove_field );                                
+            }
+        }
+
+        // loop the remaining and put in post meta
+        foreach ( $meta_data as $mdkey => $mdvalue ) {
+            if ( $mdkey == "content_html_structures" ) {
+                global $wpdb;
+
+                $current_date = date( 'Y-m-d', time() );
+
+                if ( empty( $mdvalue ) ) {
+                    $wpdb->query( "DELETE FROM {$wpdb->prefix}kong_popup_content_structures WHERE popup_id = $post_id" );
+                } else {
+                    $query = $wpdb->get_results( "SELECT structures FROM {$wpdb->prefix}kong_popup_content_structures WHERE popup_id = $post_id" );
+                    if ( $query ) {
+                        $wpdb->query( "UPDATE {$wpdb->prefix}kong_popup_content_structures SET structures = '$mdvalue' WHERE popup_id = $post_id" );
+                        echo "UPDATE QUERY";
+                    } else {
+                        $wpdb->query( "INSERT INTO {$wpdb->prefix}kong_popup_content_structures ( popup_id, structures, created_at ) VALUES ( $post_id, '$mdvalue', '$current_date' )" );
+                        echo "INSERT QUERY";
+                    }
+                }
+            } else {
+                if ( $mdvalue ) {
+                    if ( is_array( $mdvalue ) ) {
+                        $mdvalue = array_values( array_filter( $mdvalue ) );    // for removing empty array element
+                    } else {
+                        $expl_data = explode( ',', $mdvalue );
+                        if( isset( $expl_data[ 1 ] ) ) {
+                            $mdvalue = implode( ',', array_map( 'trim', $expl_data ) ); // for triming whitespace from array element
+                        } else {
+                            $mdvalue = trim( $expl_data[ 0 ] );
+                        }
+                    }
+                    update_post_meta( $post_id, $mdkey, $mdvalue );
+                } else {
+                    delete_post_meta( $post_id, $mdkey );
+                }
+            }
+
+            if ( is_array( $mdvalue ) && empty( $mdvalue[ 0 ] ) ) {
+                delete_post_meta( $post_id, $mdkey );
+            }
+        }
+
+        die();
     }
 
     public function get_filtered_report()
@@ -24,6 +96,9 @@ class Kong_Popup_Admin_Ajax
         $clicks_statistics_array = array();
 
         $total_leads_array = array();
+
+        $top_performing_popup = array();
+        $top_performing_popup_result = array();
 
         $top_locations = array();
         $top_locations_result = array();
@@ -105,7 +180,7 @@ class Kong_Popup_Admin_Ajax
             -- ORDER BY created_at
         " );
 
-        /**========== Query for counting total views ==========**/
+        /**========== Query for counting total leads ==========**/
         $total_leads_query = $wpdb->get_results( "
             SELECT posts.ID as popup_id, 
                    posts.post_title as popup_title, 
@@ -124,7 +199,48 @@ class Kong_Popup_Admin_Ajax
             ORDER BY total_leads_count DESC
             LIMIT 10
         " );
+        foreach ( $total_leads_query as $total_leads ) {
+            $slug = get_post_meta( $total_leads->popup_id, 'template', true );
+            $template = get_term_by( 'slug', $slug, 'popup-template' );
+            $total_leads_array[ 'leads_count' ][] = array(
+                'popup_id'          => $total_leads->popup_id,
+                'popup_title'       => $total_leads->popup_title,
+                'popup_template'    => $template->name,
+                'count'             => $total_leads->total_leads_count
+            );
+        }
 
+        /**========== Query for counting top performing popup ==========**/
+        // get all items which belongs to popup-template category
+        $popup_template_categories = get_terms( 
+            array(
+                'taxonomy'      => 'popup-template',
+                'hide_empty'    => false,
+            ) 
+        );
+        // if popup_template_categories exists
+        if ( $popup_template_categories ) {
+            foreach ( $popup_template_categories as $popup_template_category ) {
+                $name = $popup_template_category->name;
+                $slug = $popup_template_category->slug;
+
+                $top_performing_popup_query = $wpdb->get_results( "
+                    SELECT COUNT( kong_popup_analytics.ID ) as popular_count
+                    FROM {$wpdb->prefix}posts as posts 
+                    JOIN {$wpdb->prefix}kong_popup_analytics as kong_popup_analytics ON kong_popup_analytics.popup_id = posts.ID
+                    WHERE posts.post_type = 'popup'
+                    AND posts.post_status = 'publish'
+                    AND kong_popup_analytics.template = '$slug'
+                " );
+                if ( $top_performing_popup_query[ 0 ]->popular_count ) {
+                    $top_performing_popup[ $name ] = $top_performing_popup_query[ 0 ]->popular_count;
+                }
+            }
+            arsort( $top_performing_popup );
+            $top_performing_popup_result[ 'top_performing_popup' ] = array_slice( $top_performing_popup, 0, 10 );
+        }
+
+        /**========== Query for counting top locations ==========**/
         $top_locations_query = $wpdb->get_results( "
             SELECT kong_popup_analytics.data as user_info
             FROM {$wpdb->prefix}posts as posts 
@@ -132,9 +248,6 @@ class Kong_Popup_Admin_Ajax
             WHERE posts.post_type = 'popup'
             AND posts.post_status = 'publish'
         " );
-
-        // print_data( $top_locations_query );
-
         foreach ( $top_locations_query as $top_location_data ) {
             $meta_data = maybe_unserialize( $top_location_data->user_info );
             $location_name = $meta_data[ 'IP' ][ 'country_name' ];
@@ -146,6 +259,12 @@ class Kong_Popup_Admin_Ajax
             }
         }
         arsort( $top_locations );
+        $top_locations_result[ 'top_locations' ] = array_slice( $top_locations, 0, 4 );
+
+        // print_data( $top_locations );
+        // print_data( $top_performing_popup );
+        // print_data( $top_performing_popup );
+        // exit;
 
         // print_data( array_slice( $top_locations, 0, 4 ) );
         // exit;
@@ -159,20 +278,17 @@ class Kong_Popup_Admin_Ajax
         $views_statistics_array[ 'views_statistics_report' ] = $views_statistics_query;
         $clicks_statistics_array[ 'clicks_statistics_report' ] = $clicks_statistics_query;
 
-        foreach ( $total_leads_query as $total_leads ) {
-            $slug = get_post_meta( $total_leads->popup_id, 'template', true );
-            $template = get_term_by( 'slug', $slug, 'popup-template' );
-            $total_leads_array[ 'leads_count' ][] = array(
-                'popup_id'          => $total_leads->popup_id,
-                'popup_title'       => $total_leads->popup_title,
-                'popup_template'    => $template->name,
-                'count'             => $total_leads->total_leads_count
-            );
-        }
+        echo json_encode( array_merge( $total_views_array, $total_clicks_array, $views_array, $clicks_array, $views_statistics_array, $clicks_statistics_array, $total_leads_array, $top_performing_popup_result, $top_locations_result ) );
 
-        $top_locations_result[ 'top_locations' ] = array_slice( $top_locations, 0, 4 );
+        die();
+    }
 
-        echo json_encode( array_merge( $total_views_array, $total_clicks_array, $views_array, $clicks_array, $views_statistics_array, $clicks_statistics_array, $total_leads_array, $top_locations_result ) );
+    public function get_preview_popup()
+    {
+        unset( $_COOKIE[ 'kong_popup_preview_rendered' ] );
+        setcookie( 'kong_popup_preview_rendered', null, -1 );
+
+        setcookie( 'kong_popup_preview_rendered', serialize( $_REQUEST[ 'popup_data' ] ) );
 
         die();
     }
