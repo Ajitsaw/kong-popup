@@ -306,9 +306,7 @@
 					<!-- .chart-value starts -->
 					<div class="chart-value clearfix">
 						<!-- .round-chart starts -->
-						<div class="round-chart" id="round-chart">
-							<img src="<?php echo PLUGIN_BASE_URL . 'admin/images/round-chart.png'; ?>" alt="">
-						</div>
+						<div class="round-chart" id="top-activity-round-chart"></div>
 						<!-- .round-chart ends -->
 
 						<!-- .chart-information starts -->
@@ -327,9 +325,7 @@
 					<!-- .chart-value starts -->
 					<div class="chart-value clearfix">
 						<!-- .round-chart starts -->
-						<div class="round-chart">
-							<img src="<?php echo PLUGIN_BASE_URL . 'admin/images/round-chart.png'; ?>" alt="">
-						</div>
+						<div class="round-chart" id="top-performing-popup-round-chart"></div>
 						<!-- .round-chart ends -->
 
 						<!-- .chart-information starts -->
@@ -348,9 +344,7 @@
 					<!-- .chart-value starts -->
 					<div class="chart-value clearfix">
 						<!-- .round-chart starts -->
-						<div class="round-chart">
-							<img src="<?php echo PLUGIN_BASE_URL . 'admin/images/round-chart.png'; ?>" alt="">
-						</div>
+						<div class="round-chart" id="top-refferers-round-chart"></div>
 						<!-- .round-chart ends -->
 
 						<!-- .chart-information starts -->
@@ -418,9 +412,7 @@
 					<!-- .chart-value starts -->
 					<div class="chart-value clearfix">
 						<!-- .round-chart starts -->
-						<div class="round-chart">
-							<img src="<?php echo PLUGIN_BASE_URL . 'admin/images/round-chart.png'; ?>" alt="">
-						</div>
+						<div class="round-chart" id="top-locations-round-chart"></div>
 						<!-- .round-chart ends -->
 
 						<!-- .chart-information starts -->

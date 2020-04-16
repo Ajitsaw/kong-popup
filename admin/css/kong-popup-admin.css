@@ -2537,7 +2537,7 @@ height:40px;
 .popup-item-inner {
   border-radius: 5px;
   overflow: hidden;
-  box-shadow: 0 0 10px 0 rgba(0,0,0,.05);
+  box-shadow: 0 2px 2px #b9b8b887;
 }
 .popup-thumb{
   position: relative;
@@ -2558,6 +2558,7 @@ height:40px;
   z-index: 9;
   color: #fff;
   font-size: 18px;
+  margin-bottom: 10px;
 }
 
 /*tempaltes*/
@@ -2662,12 +2663,14 @@ div#template-listing {
   grid-row-start: 2;
   height: auto;
   grid-gap: 30px;
+  padding-bottom: 50px;
 }
 .template-box__browse {
   padding: 10px;
   background-color: #fff;
-  box-shadow: 0 2px 2px #b9b8b8;
-  margin-bottom: 30px
+  box-shadow: 0 2px 2px #b9b8b887;
+  margin-bottom: 30px;
+  border-radius: 5px;
 }
 .template-box__browse h3 {
   margin-top: 0;
@@ -2675,10 +2678,10 @@ div#template-listing {
   margin-bottom: 0
 }
 .template-cat {
-  height: 317px;
   overflow: hidden;
   overflow-y: scroll;
-  margin-top: 15px
+  margin-top: 15px;
+  min-height: 305px;
 }
 .template-cat ul {
   list-style-type: none;
@@ -2699,7 +2702,9 @@ div#template-listing {
 }
 
 .template-box__temp {
-  box-shadow: 0 2px 2px #b9b8b8;
+  box-shadow: 0 2px 2px #b9b8b887;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 .template-box__temp figure {
@@ -2713,12 +2718,12 @@ div#template-listing {
   object-fit: cover;
 }
 .template-box__temp figure figcaption {
-  font-size: 20px;
-  color: #fff;
-  position: absolute;
-  left: 25px;
-  bottom: 30px;
-  text-shadow: 0 0 1px #000
+    font-size: 18px;
+    color: #fff;
+    position: absolute;
+    left: 10px;
+    bottom: 15px;
+    text-shadow: none;
 }
 
 .template-box__cnt {
@@ -2757,26 +2762,34 @@ div#template-listing {
   color: #919191
 }
 .template-box__btns {
-  list-style-type: none;
   padding: 0;
-  margin: 0
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0;
+  margin: 0 -5px;
 }
 .template-box__btns li {
-  display: inline-block;
-  vertical-align: top
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex: 2;
+  margin: 0 5px;
+}
+.template-box__btns li:last-child {
+  flex: 1;
 }
 .tem-btn {
-  padding: 5px 21px;
+  padding: 5px 0px;
   display: inline-block;
   cursor: pointer;
   border-radius: 5px;
   background-color: transparent;
-  color: #919191
+  color: #919191;
+  border: 1px solid #ccc;
+  text-decoration: none;
+  width: 100%;
 }
-.tem-btn:hover {
-  background-color: #98752e;
-  color: #fff
-}
+
 .btn-setting {
   width: 30px;
   height: 30px;
@@ -2960,7 +2973,7 @@ input.time-schedule {
 .left-panel .form-wrap label.selected .popview-icon:after {
   background-color: #7b5f26;
 }
-/*.btn-big {
+.btn-big {
   display: inline-block;
   padding: 8px 30px;
   background-color: #98752d;
@@ -2982,7 +2995,7 @@ input.time-schedule {
   right: 0;
   bottom: -5px;
   background-color: #7c6123
-}*/
+}
 
 .template-wrap--tab {
   margin-top: 0;
@@ -3374,7 +3387,6 @@ ul.action-panel--btns li {
 }
 /*Popup listing*/
 .popup-listing{
-  background: #98752E;
   padding: 0 27px 40px;
 }
 .popup-listing h2{
@@ -3386,7 +3398,7 @@ ul.action-panel--btns li {
   font-weight:600;
 }
 .listing-row{
-  border-top: 3px solid #72591F;
+  border-top: 3px solid rgba(0, 0, 0, 0.3);
 }
 .listing-row h3{
   font-size: 24px;
@@ -3453,12 +3465,12 @@ ul.action-panel--btns li {
   padding: 0 22px;
 }
 
-/*button.btn-big.btn-big--colorbright {
+button.btn-big.btn-big--colorbright {
   background: #7C6123;
 }
 button.btn-big.btn-big--colorbright {
   border-bottom: 5px solid #654e19;
-}*/
+}
 .popup-building select {
   max-width: none;
   display: block;
@@ -3579,7 +3591,7 @@ span.close-btn {
   padding-top: 19px;
 }
 .create-folder {
-  background: #96742D;
+  /* background: #96742D; */
   padding: 20px;
   height: 100%;
 }
@@ -3617,7 +3629,12 @@ span.close-btn {
   margin: 40px 0 0;
 }
 .project-title.project-title--folder {
-  border-bottom: 2px solid #6A531E;
+  border-bottom: 2px solid rgba(0,0,0,.3);
+}
+
+ul.folders {
+  display: flex;
+  flex-flow: row wrap;
 }
 li.folder-item {
   max-width: calc(100%/7 - 20px);
@@ -4847,7 +4864,12 @@ background-color: #555;
   margin: 0 auto;
   border-radius: 100%;
 }
-
+span.error-message {
+  font-size: 15px;
+  font-weight: 300;
+  color: #ff0000 !important;
+  margin-top: 10px;
+}
 
 
 
@@ -4869,6 +4891,9 @@ background-color: #555;
   }
   .pt-colors ul li {
     width: 35%
+  }
+  .template-cat {
+    min-height: 267px;
   }
 }
 @media (max-width: 991px){
@@ -4910,6 +4935,15 @@ background-color: #555;
   .kong-container-settings .template-category-item {
     width: 33%;
   }
+  .template-cat {
+    min-height: 336px;
+  }
+  div#template-listing {
+    grid-template-columns: 1fr 1fr;
+  }
+  .template-wrap > .template-box {
+    width: calc(50% - 30px);
+  }
 }
 @media (max-width: 767px){
   .form-conainer {
@@ -4947,10 +4981,10 @@ background-color: #555;
   /*.preview-viewport {
     margin-top: 30px
   }*/
-  /*.btn-big {
+  .btn-big {
     margin: 0 5px;
     min-width: 145px
-  }*/
+  }
   .w-50 {
     width: auto;
     float: none
@@ -4969,6 +5003,18 @@ background-color: #555;
 }
 .kong-container-settings .template-category-item {
   width: 50%;
+}
+.template-cat {
+  min-height: 276px;
+}
+.listing-thumb li {
+  width: 50%;
+}
+.section-header .search-box input[type="text"] {
+  padding: 0;
+}
+.section-header .page-title {
+  font-size: 30px;
 }
 }
 @media (max-width: 567px){
@@ -4994,6 +5040,32 @@ background-color: #555;
   .kong-container-settings .template-category-item {
     width: 100%;
   }
+  .template-wrap {
+    margin-top: 30px;
+    position: relative;
+    padding: 0 15px;
+  }
+  .section-header {
+    background-color: #98752e;
+    min-height: auto;
+    text-align: center;
+    padding: 30px;
+  }
+  .template-wrap > .template-box {
+    z-index: 9 !important;
+    left: 0px;
+    position: relative;
+    width: 100%;
+  }
+  .template-cat {
+    min-height: 200px;
+  }
+  div#template-listing {
+    display: flex;
+  }
+  .listing-thumb li {
+    width: 100%;
+  }
 }
 @media (max-width: 479px){
   .project-title {
@@ -5002,10 +5074,10 @@ background-color: #555;
   .appearance .w-50.left-panel, .appearance .w-50.right-panel {
     padding: 0
   }
-  /*.btn-big {
+  .btn-big {
     min-width: 130px;
     font-size: 15px
-  }*/
+  }
   .preview-viewport {
     margin-top: 0
   }
@@ -5027,10 +5099,10 @@ background-color: #555;
   .select-option--small {
     width: 100% !important
   }
-  /*.btn-big {
+  .btn-big {
     min-width: 105px;
     font-size: 12px
-  }*/
+  }
   .pt-inline-field label {
     font-size: 12px
   }

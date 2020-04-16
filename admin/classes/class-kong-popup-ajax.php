@@ -237,8 +237,10 @@ class Kong_Popup_Admin_Ajax
                 }
             }
             arsort( $total_activity );
-            $total_activity_result[ 'total_activity' ] = array_slice( $total_activity, 0, 10 );
+            $total_activity_result[ 'total_activity' ] = $total_activity;
         }
+
+        // print_data( $total_activity_result );
 
         /**========== Query for counting top locations ==========**/
         $top_locations_query = $wpdb->get_results( "
