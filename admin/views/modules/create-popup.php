@@ -30,6 +30,7 @@
 			        <h2><?php echo __( 'What Do You Want To Call Your Popup?', 'kong-popup' ); ?></h2>
 			        <form>
 			            <input type="text" name="project_name" id="project-name" placeholder="Project Name">
+            			<span class="error-message" id="pn-error-message"></span> 
 
 			            <!-- .project-folder starts -->
 			            <select name="project_folder" class="project-folder" id="project-folder">
@@ -53,6 +54,7 @@
 			                ?>
 			            </select>
 			            <!-- .project-folder ends -->
+            			<span class="error-message" id="pf-error-message"></span> 
 
 			            <!-- .project-template starts -->
 			            <select name="project_template" class="project-template" id="project-template">
@@ -76,6 +78,7 @@
 			                ?>
 			            </select>
 			            <!-- .project-template ends -->
+            			<span class="error-message" id="pt-error-message"></span> 
 
 			            <!-- .btn-group starts -->
 			            <div class="btn-group">

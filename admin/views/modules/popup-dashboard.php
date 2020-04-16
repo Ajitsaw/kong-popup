@@ -306,7 +306,7 @@
 					<!-- .chart-value starts -->
 					<div class="chart-value clearfix">
 						<!-- .round-chart starts -->
-						<div class="round-chart">
+						<div class="round-chart" id="round-chart">
 							<img src="<?php echo PLUGIN_BASE_URL . 'admin/images/round-chart.png'; ?>" alt="">
 						</div>
 						<!-- .round-chart ends -->

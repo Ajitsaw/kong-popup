@@ -79,23 +79,29 @@ jQuery( document ).ready( function( e ) {
 
 		if ( jQuery.trim( projectTitle ) == '' ) {
 			jQuery( '#project-name' ).css( { 'border': '1px solid #f00' } );
+			jQuery( '#pn-error-message' ).text( "required" );
 			isVaildate = false;
 		} else {
 			jQuery( '#project-name' ).removeAttr( 'style' );
+			jQuery( '#pn-error-message' ).text( "" );
 		}
 
 		if ( jQuery.trim( projectFolder ) == '' ) {
 			jQuery( '#project-folder' ).css( { 'border': '1px solid #f00' } );
+			jQuery( '#pf-error-message' ).text( "required" );
 			isVaildate = false;
 		} else {
 			jQuery( '#project-folder' ).removeAttr( 'style' );
+			jQuery( '#pf-error-message' ).text( "" );
 		}
 
 		if ( jQuery.trim( projectTemplate ) == '' ) {
 			jQuery( '#project-template' ).css( { 'border': '1px solid #f00' } );
+			jQuery( '#pt-error-message' ).text( "required" );
 			isVaildate = false;
 		} else {
 			jQuery( '#project-template' ).removeAttr( 'style' );
+			jQuery( '#pt-error-message' ).text( "" );
 		}
 
 		if ( isVaildate ) {
@@ -748,8 +754,19 @@ jQuery( document ).ready( function( e ) {
 	jQuery( '#create-folder' ).on( 'click', function( e ) {
         e.preventDefault();
 
+        var isVaildate = true;
+
         var folderName = jQuery( '#folder-name' ).val();
-        if ( jQuery.trim( folderName ) != '' ) {
+        if ( jQuery.trim( folderName ) == '' ) {
+			jQuery( '#folder-name' ).css( { 'border': '1px solid #f00' } );
+			jQuery( '#error-message' ).text( "required" );
+			isVaildate = false;
+		} else {
+			jQuery( '#folder-name' ).removeAttr( 'style' );
+			jQuery( '#error-message' ).text( "" );
+		}
+
+        if ( isVaildate ) {
             jQuery.ajax( {
                 url: ajaxurl + '?action=create_folder_ajax',
                 type: 'POST',
@@ -760,17 +777,27 @@ jQuery( document ).ready( function( e ) {
             .done( function( response ) {
                 location.reload();
             } );
-        } else {
-        	jQuery( '#error-message' ).text( "Folder Name required" );
-        }
+        } 
     } );
 
     jQuery( '#create-template-category' ).on( 'click', function( e ) {
         e.preventDefault();
 
+        var isVaildate = true;
+
         var templateCategoryName = jQuery( '#template-category-name' ).val();
         var templateCategoryImage = jQuery( '#template-category-image' ).val();
-        if ( jQuery.trim( templateCategoryName ) != '' ) {
+
+        if ( jQuery.trim( templateCategoryName ) == '' ) {
+			jQuery( '#template-category-name' ).css( { 'border': '1px solid #f00' } );
+			jQuery( '#error-message' ).text( "required" );
+			isVaildate = false;
+		} else {
+			jQuery( '#template-category-name' ).removeAttr( 'style' );
+			jQuery( '#error-message' ).text( "" );
+		}
+
+        if ( isVaildate ) {
             jQuery.ajax( {
                 url: ajaxurl + '?action=create_template_category_ajax',
                 type: 'POST',
@@ -782,8 +809,6 @@ jQuery( document ).ready( function( e ) {
             .done( function( response ) {
                 location.reload();
             } );
-        } else {
-        	jQuery( '#error-message' ).text( "Template Category Name required" );
         }
     } );
 
@@ -1652,7 +1677,94 @@ function dateRender( start, end )
 			]
 		} );
 		chart.render();
-	/** CHART END */
+		/** CHART END */
+
+		am4core.ready(function() {
+
+		// Themes begin
+		am4core.useTheme(am4themes_kelly);
+		am4core.useTheme(am4themes_animated);
+		// Themes end
+
+		var chart = am4core.create("round-chart", am4charts.PieChart3D);
+		chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+
+		chart.data = [
+		  {
+		    template: "Subscribe",
+		    activity: 16.5
+		  },
+		  {
+		    template: "Contact",
+		    activity: 20
+		  },
+		  {
+		    template: "Promo",
+		    activity: 10.1
+		  },
+		  {
+		    template: "Content Upgrade",
+		    activity: 12.3,
+		  },
+		  {
+		    template: "Spin Wheel",
+		    activity: 22.1
+		  },
+		  {
+		    template: "Content",
+		    activity: 0.2
+		  },
+		  {
+		    template: "Survey",
+		    activity: 3
+		  },
+		  {
+		    template: "Follow",
+		    activity: 1
+		  },
+		  {
+		    template: "Welcome Mat",
+		    activity: 0
+		  },
+		  {
+		    template: "Two Step",
+		    activity: 2
+		  },
+		  {
+		    template: "Interstitial",
+		    activity: 3
+		  }
+		];
+
+		chart.innerRadius = am4core.percent(90);
+		chart.depth = 90;
+		chart.angle = 0;
+
+		// chart.legend = new am4charts.Legend();
+
+		var series = chart.series.push(new am4charts.PieSeries3D());
+		series.dataFields.value = "activity";
+		series.dataFields.depthValue = "activity";
+		series.dataFields.category = "template";
+		series.slices.template.cornerRadius = 5;
+		series.colors.step = 3;
+		series.ticks.template.disabled = true;
+		series.labels.template.disabled = true;
+		// series.colors.list = [
+		//   am4core.color("#6C4623"),
+		//   am4core.color("#613F20"),
+		//   am4core.color("#56381C"),
+		//   am4core.color("#4C3119"),
+		//   am4core.color("#412A15"),
+		//   am4core.color("#362312"),
+		//   am4core.color("#2B1C0E"),
+		//   am4core.color("#20150B"),
+		//   am4core.color("#160E07"),
+		//   am4core.color("#0B0704"),
+		//   am4core.color("#000000"),
+		// ];
+
+		});
 	}
 
 	// rearrangeSection();
