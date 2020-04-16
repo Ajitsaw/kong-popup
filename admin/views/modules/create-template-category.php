@@ -36,7 +36,7 @@
         <div class="project-title project-title--folder">
             <span><?php echo __( 'Create A Template Category', 'kong-popup' ); ?></span> 
             <input type="text" id="template-category-name" placeholder="Template Category Name" required />
-            <span class="error-message" id="error-message"></span> 
+            <span class="error-message" id="tcn-error-message"></span> 
             <input type="button" class="kg_secondary_bg btn" id="template-category-image-btn" value="Upload" />
             <input type="hidden" id="template-category-image" />
             <button class="kg_secondary_bg btn" id="create-template-category"><?php echo __( 'Create', 'kong-popup' ); ?></button>

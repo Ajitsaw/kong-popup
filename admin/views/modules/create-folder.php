@@ -6,7 +6,7 @@
         <div class="project-title project-title--folder">
             <span><?php echo __( 'Create A Folder', 'kong-popup' ); ?></span> 
             <input type="text" id="folder-name" placeholder="Folder Name" required /> 
-            <span class="error-message" id="error-message"></span> 
+            <span class="error-message" id="fn-error-message"></span> 
             <button class="kg_secondary_bg btn" id="create-folder"><?php echo __( 'Create', 'kong-popup' ); ?></button>
         </div>
         <!-- .project-title ends -->
