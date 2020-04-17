@@ -92,6 +92,7 @@ class Kong_Popup_Admin_Ajax
 
         $views_array = array();
         $clicks_array = array();
+        $ctrs_array = array();
 
         $views_statistics_array = array();
         $clicks_statistics_array = array();
@@ -109,9 +110,10 @@ class Kong_Popup_Admin_Ajax
 
         /**========== Query for counting total views ==========**/
         $total_views_query = $wpdb->get_results( "
-            SELECT COUNT( kong_popup_analytics.ID ) as total_views_count 
-            FROM {$wpdb->prefix}kong_popup_analytics as kong_popup_analytics 
-            JOIN {$wpdb->prefix}posts as posts ON posts.ID = kong_popup_analytics.popup_id
+            SELECT COUNT( kong_popup_analytics.ID ) AS total_views_count 
+            FROM {$wpdb->prefix}kong_popup_analytics AS kong_popup_analytics 
+            JOIN {$wpdb->prefix}posts AS posts 
+                ON posts.ID = kong_popup_analytics.popup_id
             WHERE posts.post_type = 'popup'
             AND posts.post_status = 'publish'
             AND kong_popup_analytics.created_at BETWEEN '$from_date' AND '$to_date'
@@ -119,9 +121,10 @@ class Kong_Popup_Admin_Ajax
 
         /**========== Query for counting total clicks ==========**/
         $total_clicks_query = $wpdb->get_results( "
-            SELECT COUNT( kong_popup_click_targets.ID ) as total_clicks_count 
-            FROM {$wpdb->prefix}kong_popup_click_targets as kong_popup_click_targets 
-            JOIN {$wpdb->prefix}posts as posts ON posts.ID = kong_popup_click_targets.popup_id
+            SELECT COUNT( kong_popup_click_targets.ID ) AS total_clicks_count 
+            FROM {$wpdb->prefix}kong_popup_click_targets AS kong_popup_click_targets 
+            JOIN {$wpdb->prefix}posts AS posts 
+                ON posts.ID = kong_popup_click_targets.popup_id
             WHERE posts.post_type = 'popup'
             AND posts.post_status = 'publish'
             AND kong_popup_click_targets.created_at BETWEEN '$from_date' AND '$to_date'
@@ -134,88 +137,175 @@ class Kong_Popup_Admin_Ajax
 
         /**========== Query for views graph ==========**/
         $views_query = $wpdb->get_results( "
-            SELECT kong_popup_analytics.created_at, date_format( kong_popup_analytics.created_at, '%Y' ) as year, date_format( kong_popup_analytics.created_at, '%c' ) as month, date_format( kong_popup_analytics.created_at, '%e' ) as day, count( kong_popup_analytics.ID ) as count 
-            FROM {$wpdb->prefix}kong_popup_analytics as kong_popup_analytics
-            JOIN {$wpdb->prefix}posts as posts ON posts.ID = kong_popup_analytics.popup_id 
+            SELECT kong_popup_analytics.created_at AS created, 
+                   date_format( kong_popup_analytics.created_at, '%Y' ) AS year, 
+                   date_format( kong_popup_analytics.created_at, '%c' ) AS month, 
+                   date_format( kong_popup_analytics.created_at, '%e' ) AS day, 
+                   COUNT( kong_popup_analytics.ID ) AS count 
+            FROM {$wpdb->prefix}kong_popup_analytics AS kong_popup_analytics
+            JOIN {$wpdb->prefix}posts AS posts 
+                ON posts.ID = kong_popup_analytics.popup_id 
             WHERE posts.post_type = 'popup'
             AND posts.post_status = 'publish'
             AND kong_popup_analytics.created_at BETWEEN '$from_date' AND '$to_date' 
-            GROUP BY kong_popup_analytics.created_at 
+            GROUP BY created 
             -- ORDER BY created_at
         " );
 
         /**========== Query for clicks graph ==========**/
         $clicks_query = $wpdb->get_results( "
-            SELECT kong_popup_click_targets.created_at, date_format( kong_popup_click_targets.created_at, '%Y' ) as year, date_format( kong_popup_click_targets.created_at, '%c' ) as month, date_format( kong_popup_click_targets.created_at, '%e' ) as day, count( kong_popup_click_targets.ID ) as count 
-            FROM {$wpdb->prefix}kong_popup_click_targets as kong_popup_click_targets
-            JOIN {$wpdb->prefix}posts as posts ON posts.ID = kong_popup_click_targets.popup_id 
+            SELECT kong_popup_click_targets.created_at AS created, 
+                   date_format( kong_popup_click_targets.created_at, '%Y' ) AS year, 
+                   date_format( kong_popup_click_targets.created_at, '%c' ) AS month, 
+                   date_format( kong_popup_click_targets.created_at, '%e' ) AS day, 
+                   COUNT( kong_popup_click_targets.ID ) AS count 
+            FROM {$wpdb->prefix}kong_popup_click_targets AS kong_popup_click_targets
+            JOIN {$wpdb->prefix}posts AS posts 
+                ON posts.ID = kong_popup_click_targets.popup_id 
             WHERE posts.post_type = 'popup'
             AND posts.post_status = 'publish'
             AND kong_popup_click_targets.created_at BETWEEN '$from_date' AND '$to_date' 
-            GROUP BY created_at 
+            GROUP BY created 
             -- ORDER BY created_at
         " );
-        // print_data( $views_query );
-        // print_data( $clicks_query );
 
-        // foreach ( $views_query as $view_query ) {
-        //     // print_data( $view_query );
-        //     print_data( $view_query->created_at );
-        //     // print_data( "*****************");
-        //     foreach ( $clicks_query as $click_query ) {
-        //         // print_data( $click_query->created_at );
-        //         if ( $view_query->created_at == $click_query->created_at ) {
-        //             print_data( "MATCH " . $click_query->created_at );
-        //             break;
-        //         } else {
-        //             print_data( "NOT MATCH " . $click_query->created_at );
-        //             // break;
-        //         }     
-        //         // if ( array_intersect( $view_query->created_at, $clicks_query ) ) {
-        //         //     print_data( "MATCH " . $view_query->created_at );
-        //         // } else {
-        //         //     print_data( "NOT MATCH " . $view_query->created_at );
-        //         // }        
-        //     }
-        //     print_data( "=================");
-        // }
+        // $query = $wpdb->get_results( "
+        //     SELECT * FROM {$wpdb->prefix}kong_popup_analytics AS kong_popup_analytics
+        //     JOIN {$wpdb->prefix}kong_popup_click_targets AS kong_popup_click_targets 
+        //         ON kong_popup_click_targets.popup_id = kong_popup_analytics.popup_id 
+        //     JOIN {$wpdb->prefix}posts AS posts 
+        //         ON posts.ID = kong_popup_analytics.popup_id 
+        //     WHERE kong_popup_click_targets.template = kong_popup_analytics.template
+        //     AND posts.post_type = 'popup'
+        //     AND posts.post_status = 'publish'
+        //     AND kong_popup_analytics.created_at BETWEEN '$from_date' AND '$to_date' 
+        //     GROUP BY kong_popup_analytics.popup_id 
+        // " );
+        $views_queryy = $wpdb->get_results( "
+            SELECT kong_popup_analytics.template AS template, 
+                   COUNT( kong_popup_analytics.ID ) AS views 
+            FROM {$wpdb->prefix}kong_popup_analytics AS kong_popup_analytics
+            JOIN {$wpdb->prefix}posts AS posts 
+                ON posts.ID = kong_popup_analytics.popup_id
+            WHERE posts.post_type = 'popup'
+            AND posts.post_status = 'publish'
+            AND kong_popup_analytics.created_at BETWEEN '$from_date' AND '$to_date' 
+            GROUP BY template 
+            ORDER BY views DESC
+        " );
+
+        $clicks_queryy = $wpdb->get_results( "
+            SELECT kong_popup_click_targets.template AS template, 
+                   COUNT( kong_popup_click_targets.ID ) AS clicks 
+            FROM {$wpdb->prefix}kong_popup_click_targets AS kong_popup_click_targets 
+            JOIN {$wpdb->prefix}posts AS posts 
+                ON posts.ID = kong_popup_click_targets.popup_id
+            WHERE posts.post_type = 'popup'
+            AND posts.post_status = 'publish'
+            AND kong_popup_click_targets.created_at BETWEEN '$from_date' AND '$to_date' 
+            GROUP BY template 
+            ORDER BY clicks DESC
+        " );
+        print_data( $views_queryy );
+        print_data( $clicks_queryy );
+
+        print_data( $views_query );
+        print_data( $clicks_query );
+        exit;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /**========== Query for click through rate graph ==========**/
+        $ctrs_query = $wpdb->get_results( "
+            SELECT kong_popup_analytics.created_at AS created, 
+                   date_format( kong_popup_analytics.created_at, '%Y' ) AS year, 
+                   date_format( kong_popup_analytics.created_at, '%c' ) AS month, 
+                   date_format( kong_popup_analytics.created_at, '%e' ) AS day, 
+                   COUNT( kong_popup_analytics.ID ) AS count 
+            FROM {$wpdb->prefix}kong_popup_analytics AS kong_popup_analytics
+            JOIN {$wpdb->prefix}posts AS posts 
+                ON posts.ID = kong_popup_analytics.popup_id 
+            WHERE posts.post_type = 'popup'
+            AND posts.post_status = 'publish'
+            AND kong_popup_analytics.created_at BETWEEN '$from_date' AND '$to_date' 
+            GROUP BY created
+            -- ORDER BY created_at
+        " );
+
+        foreach ( $ctrs_query as $ctr_query ) {
+            $flag = 0;
+
+            foreach ( $clicks_query as $click_query ) {
+                if ( $ctr_query->created == $click_query->created ) {
+                    $ctr_query->count = round( ( ( $click_query->count / $ctr_query->count ) * 100 ), 2 );
+                    $flag = 1;
+                    break;
+                }
+            }
+
+            if ( $flag == 0 ) {
+                $ctr_query->count = 0;
+            } 
+        }
+
         /**========== Query for average popup length graph ==========**/
 
         /**========== Query for total views statistics graph ==========**/
         $views_statistics_query = $wpdb->get_results( "
-            SELECT kong_popup_analytics.created_at, date_format( kong_popup_analytics.created_at, '%Y' ) as year, date_format( kong_popup_analytics.created_at, '%c' ) as month, date_format( kong_popup_analytics.created_at, '%e' ) as day, count( kong_popup_analytics.ID ) as count 
-            FROM {$wpdb->prefix}kong_popup_analytics as kong_popup_analytics
-            JOIN {$wpdb->prefix}posts as posts ON posts.ID = kong_popup_analytics.popup_id 
+            SELECT kong_popup_analytics.created_at AS created, 
+                   date_format( kong_popup_analytics.created_at, '%Y' ) AS year, 
+                   date_format( kong_popup_analytics.created_at, '%c' ) AS month, 
+                   date_format( kong_popup_analytics.created_at, '%e' ) AS day, 
+                   COUNT( kong_popup_analytics.ID ) AS count 
+            FROM {$wpdb->prefix}kong_popup_analytics AS kong_popup_analytics
+            JOIN {$wpdb->prefix}posts AS posts 
+                ON posts.ID = kong_popup_analytics.popup_id 
             WHERE posts.post_type = 'popup'
             AND posts.post_status = 'publish'
             AND kong_popup_analytics.created_at BETWEEN '$from_date' AND '$to_date' 
-            GROUP BY created_at 
+            GROUP BY created 
             -- ORDER BY created_at
         " );
 
         /**========== Query for total clicks statistics graph ==========**/
         $clicks_statistics_query = $wpdb->get_results( "
-            SELECT kong_popup_click_targets.created_at, date_format( kong_popup_click_targets.created_at, '%Y' ) as year, date_format( kong_popup_click_targets.created_at, '%c' ) as month, date_format( kong_popup_click_targets.created_at, '%e' ) as day, count( kong_popup_click_targets.ID ) as count 
-            FROM {$wpdb->prefix}kong_popup_click_targets as kong_popup_click_targets
-            JOIN {$wpdb->prefix}posts as posts ON posts.ID = kong_popup_click_targets.popup_id 
+            SELECT kong_popup_click_targets.created_at AS created, 
+                   date_format( kong_popup_click_targets.created_at, '%Y' ) AS year, 
+                   date_format( kong_popup_click_targets.created_at, '%c' ) AS month, 
+                   date_format( kong_popup_click_targets.created_at, '%e' ) AS day, 
+                   COUNT( kong_popup_click_targets.ID ) AS count 
+            FROM {$wpdb->prefix}kong_popup_click_targets AS kong_popup_click_targets
+            JOIN {$wpdb->prefix}posts AS posts 
+                ON posts.ID = kong_popup_click_targets.popup_id 
             WHERE posts.post_type = 'popup'
             AND posts.post_status = 'publish'
             AND kong_popup_click_targets.created_at BETWEEN '$from_date' AND '$to_date' 
-            GROUP BY created_at 
+            GROUP BY created 
             -- ORDER BY created_at
         " );
 
         /**========== Query for counting total leads ==========**/
         $total_leads_query = $wpdb->get_results( "
-            SELECT posts.ID as popup_id, 
-                   posts.post_title as popup_title, 
-                   COUNT( kong_popup_analytics.ID ) as total_leads_count
-            FROM {$wpdb->prefix}posts as posts 
-            JOIN {$wpdb->prefix}kong_popup_analytics as kong_popup_analytics ON kong_popup_analytics.popup_id = posts.ID
+            SELECT posts.ID AS popup_id, 
+                   posts.post_title AS popup_title, 
+                   COUNT( kong_popup_analytics.ID ) AS total_leads_count
+            FROM {$wpdb->prefix}posts AS posts 
+            JOIN {$wpdb->prefix}kong_popup_analytics AS kong_popup_analytics 
+                ON kong_popup_analytics.popup_id = posts.ID
             WHERE NOT EXISTS (
-                SELECT * FROM {$wpdb->prefix}postmeta as postmeta
+                SELECT * FROM {$wpdb->prefix}postmeta AS postmeta
                 WHERE postmeta.post_id = posts.ID 
                 AND postmeta.meta_key = 'is_template'
             )
@@ -238,23 +328,22 @@ class Kong_Popup_Admin_Ajax
         }
 
         /**========== Query for counting total avtivity ==========**/
-        // get all items which belongs to popup-template category
         $popup_template_categories = get_terms( 
             array(
                 'taxonomy'      => 'popup-template',
                 'hide_empty'    => false,
             ) 
         );
-        // if popup_template_categories exists
         if ( $popup_template_categories ) {
             foreach ( $popup_template_categories as $popup_template_category ) {
                 $name = $popup_template_category->name;
                 $slug = $popup_template_category->slug;
 
                 $total_activity_query = $wpdb->get_results( "
-                    SELECT COUNT( kong_popup_analytics.ID ) as popular_count
-                    FROM {$wpdb->prefix}posts as posts 
-                    JOIN {$wpdb->prefix}kong_popup_analytics as kong_popup_analytics ON kong_popup_analytics.popup_id = posts.ID
+                    SELECT COUNT( kong_popup_analytics.ID ) AS popular_count
+                    FROM {$wpdb->prefix}posts AS posts 
+                    JOIN {$wpdb->prefix}kong_popup_analytics AS kong_popup_analytics 
+                        ON kong_popup_analytics.popup_id = posts.ID
                     WHERE posts.post_type = 'popup'
                     AND posts.post_status = 'publish'
                     AND kong_popup_analytics.template = '$slug'
@@ -267,13 +356,12 @@ class Kong_Popup_Admin_Ajax
             $total_activity_result[ 'total_activity' ] = $total_activity;
         }
 
-        // print_data( $total_activity_result );
-
         /**========== Query for counting top locations ==========**/
         $top_locations_query = $wpdb->get_results( "
-            SELECT kong_popup_analytics.data as user_info
-            FROM {$wpdb->prefix}posts as posts 
-            JOIN {$wpdb->prefix}kong_popup_analytics as kong_popup_analytics ON kong_popup_analytics.popup_id = posts.ID
+            SELECT kong_popup_analytics.data AS user_info
+            FROM {$wpdb->prefix}posts AS posts 
+            JOIN {$wpdb->prefix}kong_popup_analytics AS kong_popup_analytics 
+                ON kong_popup_analytics.popup_id = posts.ID
             WHERE posts.post_type = 'popup'
             AND posts.post_status = 'publish'
         " );
@@ -290,25 +378,18 @@ class Kong_Popup_Admin_Ajax
         arsort( $top_locations );
         $top_locations_result[ 'top_locations' ] = array_slice( $top_locations, 0, 4 );
 
-        // print_data( $top_locations );
-        // print_data( $total_activity );
-        // print_data( $total_activity );
-        // exit;
-
-        // print_data( array_slice( $top_locations, 0, 4 ) );
-        // exit;
-
         $total_views_array[ 'views_count' ] = $total_views_query;
         $total_clicks_array[ 'clicks_count' ] = $total_clicks_query;
         $total_ctr_array[ 'ctr_count' ] = $total_ctr_query;
 
         $views_array[ 'views_report' ] = $views_query;
         $clicks_array[ 'clicks_report' ] = $clicks_query;
+        $ctrs_array[ 'ctrs_report' ] = $ctrs_query;
 
         $views_statistics_array[ 'views_statistics_report' ] = $views_statistics_query;
         $clicks_statistics_array[ 'clicks_statistics_report' ] = $clicks_statistics_query;
 
-        echo json_encode( array_merge( $total_views_array, $total_clicks_array, $total_ctr_array, $views_array, $clicks_array, $views_statistics_array, $clicks_statistics_array, $total_leads_array, $total_activity_result, $top_locations_result ) );
+        echo json_encode( array_merge( $total_views_array, $total_clicks_array, $total_ctr_array, $views_array, $clicks_array, $ctrs_array, $views_statistics_array, $clicks_statistics_array, $total_leads_array, $total_activity_result, $top_locations_result ) );
 
         die();
     }
@@ -329,9 +410,10 @@ class Kong_Popup_Admin_Ajax
 
         $popup_id = $_REQUEST[ 'popup_id' ]; 
         $target = sanitize_text_field( $_REQUEST[ 'target' ] );
+        $template = get_post_meta( $popup_id, 'template', true );
         $current_date = date( 'Y-m-d', time() );
 
-        $wpdb->query( "INSERT INTO {$wpdb->prefix}kong_popup_click_targets ( popup_id, target, created_at ) VALUES ( $popup_id, '$target', '$current_date' )" );
+        $wpdb->query( "INSERT INTO {$wpdb->prefix}kong_popup_click_targets ( popup_id, target, template, created_at ) VALUES ( $popup_id, '$target', '$template', '$current_date' )" );
 
         die();
     }

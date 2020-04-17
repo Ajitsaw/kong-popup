@@ -8,47 +8,47 @@
             <!-- .form-position starts -->
             <div class="form-position">
                 <label for="appearance-center-center" class="pos-label <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'center-center' ) echo 'selected'; ?>">
-                    <input type="radio" name="appearance_position" value="center-center" id="appearance-center-center" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="appearance_position" value="center-center" id="appearance-center-center" data-name="position" />
                     <div class="popview-icon popview-icon__one"></div>
                 </label>
 
                 <label for="appearance-bottom-left" class="pos-label <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'bottom-left' ) echo 'selected'; ?>">
-                    <input type="radio" name="appearance_position" value="bottom-left" id="appearance-bottom-left" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="appearance_position" value="bottom-left" id="appearance-bottom-left" data-name="position" />
                     <div class="popview-icon popview-icon__two"></div>
                 </label>
 
                 <label for="appearance-bottom-right" class="pos-label <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'bottom-right' ) echo 'selected'; ?>">
-                    <input type="radio" name="appearance_position" value="bottom-right" id="appearance-bottom-right" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="appearance_position" value="bottom-right" id="appearance-bottom-right" data-name="position" />
                     <div class="popview-icon popview-icon__three"></div>
                 </label>
 
                 <label for="appearance-top-full" class="pos-label <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'top-full' ) echo 'selected'; ?>">
-                    <input type="radio" name="appearance_position" value="top-full" id="appearance-top-full" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="appearance_position" value="top-full" id="appearance-top-full" data-name="position" />
                     <div class="popview-icon popview-icon__four"></div>
                 </label>
 
                 <label for="appearance-bottom-full" class="pos-label <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'bottom-full' ) echo 'selected'; ?>">
-                    <input type="radio" name="appearance_position" value="bottom-full" id="appearance-bottom-full" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="appearance_position" value="bottom-full" id="appearance-bottom-full" data-name="position" />
                     <div class="popview-icon popview-icon__five"></div>
                 </label>
 
                 <label for="appearance-center-left" class="pos-label <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'center-left' ) echo 'selected'; ?>">
-                    <input type="radio" name="appearance_position" value="center-left" id="appearance-center-left" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="appearance_position" value="center-left" id="appearance-center-left" data-name="position" />
                     <div class="popview-icon popview-icon__six"></div>
                 </label>
 
                 <label for="appearance-center-right" class="pos-label <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'center-right' ) echo 'selected'; ?>">
-                    <input type="radio" name="appearance_position" value="center-right" id="appearance-center-right" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="appearance_position" value="center-right" id="appearance-center-right" data-name="position" />
                     <div class="popview-icon popview-icon__seven"></div>
                 </label>
 
                 <label for="appearance-baseline-left" class="pos-label <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'baseline-left' ) echo 'selected'; ?>">
-                    <input type="radio" name="appearance_position" value="baseline-left" id="appearance-baseline-left" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="appearance_position" value="baseline-left" id="appearance-baseline-left" data-name="position" />
                     <div class="popview-icon popview-icon__eight"></div>
                 </label>
 
                 <label for="appearance-baseline-right" class="pos-label <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'baseline-right' ) echo 'selected'; ?>">
-                    <input type="radio" name="appearance_position" value="baseline-right" id="appearance-baseline-right" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="appearance_position" value="baseline-right" id="appearance-baseline-right" data-name="position" />
                     <div class="popview-icon popview-icon__nine"></div>
                 </label>
             </div>
@@ -279,14 +279,14 @@
                                     <ul class="pt-flip-option">
                                         <li<?php if ( isset( $popup_meta[ 'step1_flip_value_desktop_1' ] ) && $popup_meta[ 'step1_flip_value_desktop_1' ] == "vertical" ) echo " class='selected'"; ?>>
                                             <!-- <a href="javascript:void(0);"> -->
-                                                <input type="radio" name="step1_flip_value_desktop_1" value="vertical">
+                                                <input type="radio" class="bg_radio_color" name="step1_flip_value_desktop_1" value="vertical">
                                                 <img src="<?php echo PLUGIN_BASE_URL . 'admin/images/flip1.png'; ?>" alt="">
                                             <!-- </a> -->
                                         </li>
 
                                         <li<?php if ( isset( $popup_meta[ 'step1_flip_value_desktop_1' ] ) && $popup_meta[ 'step1_flip_value_desktop_1' ] == "horizontal" ) echo " class='selected'"; ?>>
                                             <!-- <a href="javascript:void(0);"> -->
-                                                <input type="radio" name="step1_flip_value_desktop_1" value="horizontal">
+                                                <input type="radio" class="bg_radio_color" name="step1_flip_value_desktop_1" value="horizontal">
                                                 <img src="<?php echo PLUGIN_BASE_URL . 'admin/images/flip2.png'; ?>" alt="">
                                             <!-- </a> -->
                                         </li>
@@ -499,14 +499,14 @@
                                     <ul class="pt-flip-option">
                                         <li<?php if ( isset( $popup_meta[ 'step1_flip_value_mobile_1' ] ) && $popup_meta[ 'step1_flip_value_mobile_1' ] == "vertical" ) echo " class='selected'"; ?>>
                                             <!-- <a href="javascript:void(0);"> -->
-                                                <input type="radio" name="step1_flip_value_mobile_1" value="vertical">
+                                                <input type="radio" class="bg_radio_color" name="step1_flip_value_mobile_1" value="vertical">
                                                 <img src="<?php echo PLUGIN_BASE_URL . 'admin/images/flip1.png'; ?>" alt="">
                                             <!-- </a> -->
                                         </li>
 
                                         <li<?php if ( isset( $popup_meta[ 'step1_flip_value_mobile_1' ] ) && $popup_meta[ 'step1_flip_value_mobile_1' ] == "horizontal" ) echo " class='selected'"; ?>>
                                             <!-- <a href="javascript:void(0);"> -->
-                                                <input type="radio" name="step1_flip_value_mobile_1" value="horizontal">
+                                                <input type="radio" class="bg_radio_color" name="step1_flip_value_mobile_1" value="horizontal">
                                                 <img src="<?php echo PLUGIN_BASE_URL . 'admin/images/flip2.png'; ?>" alt="">
                                             <!-- </a> -->
                                         </li>

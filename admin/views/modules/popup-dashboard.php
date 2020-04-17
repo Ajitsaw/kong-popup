@@ -233,13 +233,13 @@
 			<div class="value-info">
 				<div class="card value-info--inner click-rate animate fadeUp" id="click-rate" style="display:none;">
 					<div class="heading"> 
-						<h5 id="total-click-rate"></h5>
+						<h5 id="total-click-through-rate"></h5>
 						<h6><?php echo __( 'Click Through Rate', 'kong-popup' ); ?></h6>
 					</div>
 					<div class="right-icon">
 						<i class="fa fa-line-chart fa-lg" aria-hidden="true"></i>
 					</div>
-					<div id="total-click-rate-chart" class="chart-item chart-shadow"></div>
+					<div id="total-click-through-rate-chart" class="chart-item chart-shadow"></div>
 				</div>
 			</div>
 			<!-- .value-info ends -->

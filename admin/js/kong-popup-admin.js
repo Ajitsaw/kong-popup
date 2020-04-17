@@ -38,13 +38,13 @@ jQuery( document ).ready( function( e ) {
 	jQuery( '#toplevel_page_create-popup a' ).addClass( 'kg_secondary_bg btn p-0 site-action-toggle btn-raised' );
 	
 	jQuery( '.kong-container .tab-content' ).hide();
-	jQuery( '.kong-container #tabs li:first-child' ).next().addClass( 'kg_secondary_bg' );
+	jQuery( '.kong-container #tabs li:first-child' ).next().addClass( 'active' );
 	jQuery( '.kong-container .tab-content:first-child' ).next().show();
 	
 	jQuery( '.kong-container #tabs li' ).on( 'click', function() {
 		var tabName = jQuery( this ).attr( 'data-href' );
-		jQuery( '.kong-container #tabs li' ).removeClass( 'kg_secondary_bg' );
-		jQuery( this ).addClass( 'kg_secondary_bg' );
+		jQuery( '.kong-container #tabs li' ).removeClass( 'active' );
+		jQuery( this ).addClass( 'active' );
 		jQuery( '.kong-container .tab-content' ).hide();
 		jQuery( '.kong-container ' + tabName ).show();
 	} );
@@ -178,8 +178,11 @@ jQuery( document ).ready( function( e ) {
 		// }
 
 		if ( jQuery( this ).attr( 'data-name' ) == "position" ) {
+			console.log( "HERE1 = " + this.id );
 			jQuery( '.form-position' ).find( '.selected' ).removeClass( 'selected' );
+			jQuery( '.form-position' ).find( '.kg_border_color' ).removeClass( 'kg_border_color' );
 			jQuery( 'label[for="' + this.id + '"]' ).addClass( 'selected' );
+			jQuery( 'label[for="' + this.id + '"] .popview-icon' ).addClass( 'kg_border_color' );
 		}
 
 		updatePopupData();
@@ -219,6 +222,7 @@ jQuery( document ).ready( function( e ) {
 	} );
 
 	jQuery( '.kong-container .pos_label > *' ).on( 'click', function( e ) {
+		console.log( "HERE2" );
 		jQuery( '.pos_label' ).removeClass( 'selected' );
 		jQuery( this ).parents( '.pos_label' ).addClass( 'selected' );
 	} );
@@ -1416,6 +1420,7 @@ function dateRender( start, end )
 
 	var totalViewsChartData = [];
 	var totalClicksChartData = [];
+	var totalCtrsChartData = [];
 
 	var splineTotalViewsStatisticsChartData = [];
 	var splineTotalClicksStatisticsChartData = [];
@@ -1443,8 +1448,6 @@ function dateRender( start, end )
 		success: function( response ) {
 			// console.log( response );
 			if ( response !== 0 ) {
-				// var rev = response.total_rev;
-				// var dis = response.total_dis;
 				var viewsCount = response.views_count;
 				jQuery( '#total-views' ).html( viewsCount[ 0 ].total_views_count );
 
@@ -1452,9 +1455,7 @@ function dateRender( start, end )
 				jQuery( '#total-clicks' ).html( clicksCount[ 0 ].total_clicks_count );
 
 				var ctrCount = response.ctr_count;
-				jQuery( '#total-click-rate' ).html( ctrCount );
-				// $('#total_revenue').html('$'+rev[0].price);
-				// $('#total_discount').html('$'+dis[0].discount);
+				jQuery( '#total-click-through-rate' ).html( ctrCount );
 
 				var viewsReport = response.views_report;
 				for ( var index = 0; index < viewsReport.length; index++ ) {
@@ -1469,6 +1470,16 @@ function dateRender( start, end )
 						parseInt( clicksReport[ index ].count )
 					);
 				}
+					
+				var ctrsReport = Object.entries( response.ctrs_report );
+				ctrsReport.forEach( function( ctr ) {
+					totalCtrsChartData.push(
+						ctr[ 1 ].count
+					);
+				} );
+
+				console.log( ctrsReport );
+				console.log( totalCtrsChartData );
 
 				var viewsStatisticsReport = response.views_statistics_report;
 				for ( var index = 0; index < viewsStatisticsReport.length; index++ ) {
@@ -1595,6 +1606,29 @@ function dateRender( start, end )
 			"#total-clicks-chart",
 			{
 				series: [ totalClicksChartData ]
+			},
+			{
+				chartPaddingTop: 5,
+				axisX: {
+					showLabel: false,
+					showGrid: false
+				},
+				axisY: {
+					showLabel: false,
+						showGrid: false
+				},
+				lineSmooth: Chartist.Interpolation.simple( {
+					divisor: 2
+				} ),
+				plugins: [ Chartist.plugins.tooltip( { class: 'total-count-tooltip', appendToBody: true } ) ],
+				fullWidth: false
+			}
+		);
+
+		var totalCtrsChart = new Chartist.Line(
+			"#total-click-through-rate-chart",
+			{
+				series: [ totalCtrsChartData ]
 			},
 			{
 				chartPaddingTop: 5,

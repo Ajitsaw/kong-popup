@@ -14,21 +14,21 @@
                 <div class="final-action">
                     <!-- .radio starts -->
                     <div class="radio">
-                        <input id="radio-1" value="none" name="success_action" type="radio" <?php if ( trim( $popup_meta[ 'success_action' ] ) == 'none' ) echo 'checked'; ?> />
+                        <input id="radio-1" value="none" name="success_action" type="radio" class="bg_radio_color" <?php if ( trim( $popup_meta[ 'success_action' ] ) == 'none' ) echo 'checked'; ?> />
                         <label  for="radio-1" class="radio-label"><?php echo __( 'none', 'kong-popup' ); ?></label>
                     </div>
                     <!-- .radio ends -->
 
                     <!-- .radio starts -->
                     <div class="radio">
-                        <input id="radio-2" value="close" name="success_action" type="radio" <?php if ( trim( $popup_meta[ 'success_action' ] ) == 'close' ) echo 'checked'; ?> />
+                        <input id="radio-2" value="close" name="success_action" type="radio" class="bg_radio_color" <?php if ( trim( $popup_meta[ 'success_action' ] ) == 'close' ) echo 'checked'; ?> />
                         <label  for="radio-2" class="radio-label"><?php echo __( 'close widget', 'kong-popup' ); ?></label>
                     </div>
                     <!-- .radio ends -->
 
                     <!-- .radio starts -->
                     <div class="radio">
-                        <input id="radio-3" value="redirect" name="success_action" type="radio" <?php if ( trim( $popup_meta[ 'success_action' ] ) == 'redirect' ) echo 'checked'; ?> />
+                        <input id="radio-3" value="redirect" name="success_action" type="radio" class="bg_radio_color" <?php if ( trim( $popup_meta[ 'success_action' ] ) == 'redirect' ) echo 'checked'; ?> />
                         <label  for="radio-3" class="radio-label"><?php echo __( 'redirect to URL', 'kong-popup' ); ?></label>
                     </div>
                     <!-- .radio ends -->

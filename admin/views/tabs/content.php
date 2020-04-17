@@ -11,96 +11,96 @@
             if ( in_array( $slug, array( 'spin-wheel' ) ) ) {
                 ?>
                 <label for="pos-bot" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'bottom' ) echo 'selected'; ?>">
-                    <input type="radio" name="content_position" value="bottom" id="pos-bot" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="content_position" value="bottom" id="pos-bot" data-name="position" />
                     <div class="popview-icon popview-icon__pos-bot"></div>
                 </label>
 
                 <label for="pos-top" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'top' ) echo 'selected'; ?>">
-                    <input type="radio" name="content_position" value="top" id="pos-top" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="content_position" value="top" id="pos-top" data-name="position" />
                     <div class="popview-icon popview-icon__pos-top"></div>
                 </label>
 
                 <label for="pos-left" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'left' ) echo 'selected'; ?>">
-                    <input type="radio" name="content_position" value="left" id="pos-left" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="content_position" value="left" id="pos-left" data-name="position" />
                     <div class="popview-icon popview-icon__pos-left"></div>
                 </label>
 
                 <label for="pos-right" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'right' ) echo 'selected'; ?>">
-                    <input type="radio" name="content_position" value="bottom" id="pos-right" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="content_position" value="bottom" id="pos-right" data-name="position" />
                     <div class="popview-icon popview-icon__pos-right"></div>
                 </label>
 
                 <label for="pos-center" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'center' ) echo 'selected'; ?>">
-                    <input type="radio" name="content_position" value="bottom" id="pos-center" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="content_position" value="bottom" id="pos-center" data-name="position" />
                     <div class="popview-icon popview-icon__pos-center"></div>
                 </label>
                 <?php
             } else if ( in_array( $slug, array( 'two-step' ) ) ) {
                 ?>
                 <label for="content-center-center" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'center-center' ) echo 'selected'; ?>">
-                    <input type="radio" name="content_position" value="center-center" id="content-center-center" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="content_position" value="center-center" id="content-center-center" data-name="position" />
                     <div class="popview-icon popview-icon__one"></div>
                 </label>
 
                 <label for="content-bottom-left" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'bottom-left' ) echo 'selected'; ?>">
-                    <input type="radio" name="content_position" value="bottom-left" id="content-bottom-left" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="content_position" value="bottom-left" id="content-bottom-left" data-name="position" />
                     <div class="popview-icon popview-icon__two"></div>
                 </label>
 
                 <label for="content-bottom-right" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'bottom-right' ) echo 'selected'; ?>">
-                    <input type="radio" name="content_position" value="bottom-right" id="content-bottom-right" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="content_position" value="bottom-right" id="content-bottom-right" data-name="position" />
                     <div class="popview-icon popview-icon__three"></div>
                 </label>
 
                 <label for="content-top-full" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'top-full' ) echo 'selected'; ?>">
-                    <input type="radio" name="content_position" value="top-full" id="content-top-full" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="content_position" value="top-full" id="content-top-full" data-name="position" />
                     <div class="popview-icon popview-icon__four"></div>
                 </label>
                 <?php
             } else {
                 ?>
                 <label for="content-center-center" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'center-center' ) echo 'selected'; ?>">
-                    <input type="radio" name="content_position" value="center-center" id="content-center-center" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="content_position" value="center-center" id="content-center-center" data-name="position" />
                     <div class="popview-icon popview-icon__one"></div>
                 </label>
 
                 <label for="content-bottom-left" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'bottom-left' ) echo 'selected'; ?>">
-                    <input type="radio" name="content_position" value="bottom-left" id="content-bottom-left" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="content_position" value="bottom-left" id="content-bottom-left" data-name="position" />
                     <div class="popview-icon popview-icon__two"></div>
                 </label>
 
                 <label for="content-bottom-right" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'bottom-right' ) echo 'selected'; ?>">
-                    <input type="radio" name="content_position" value="bottom-right" id="content-bottom-right" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="content_position" value="bottom-right" id="content-bottom-right" data-name="position" />
                     <div class="popview-icon popview-icon__three"></div>
                 </label>
 
                 <label for="content-top-full" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'top-full' ) echo 'selected'; ?>">
-                    <input type="radio" name="content_position" value="top-full" id="content-top-full" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="content_position" value="top-full" id="content-top-full" data-name="position" />
                     <div class="popview-icon popview-icon__four"></div>
                 </label>
 
                 <label for="content-bottom-full" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'bottom-full' ) echo 'selected'; ?>">
-                    <input type="radio" name="content_position" value="bottom-full" id="content-bottom-full" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="content_position" value="bottom-full" id="content-bottom-full" data-name="position" />
                     <div class="popview-icon popview-icon__five"></div>
                 </label>
 
                 <label for="content-center-left" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'center-left' ) echo 'selected'; ?>">
-                    <input type="radio" name="content_position" value="center-left" id="content-center-left" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="content_position" value="center-left" id="content-center-left" data-name="position" />
                     <div class="popview-icon popview-icon__six"></div>
                 </label>
 
                 <label for="content-center-right" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'center-right' ) echo 'selected'; ?>">
-                    <input type="radio" name="content_position" value="center-right" id="content-center-right" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="content_position" value="center-right" id="content-center-right" data-name="position" />
                     <div class="popview-icon popview-icon__seven"></div>
                 </label>
 
                 <label for="content-baseline-left" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'baseline-left' ) echo 'selected'; ?>">
-                    <input type="radio" name="content_position" value="baseline-left" id="content-baseline-left" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="content_position" value="baseline-left" id="content-baseline-left" data-name="position" />
                     <div class="popview-icon popview-icon__eight"></div>
                 </label>
 
                 <label for="content-baseline-right" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'baseline-right' ) echo 'selected'; ?>">
-                    <input type="radio" name="content_position" value="baseline-right" id="content-baseline-right" data-name="position" />
+                    <input type="radio" class="bg_radio_color" name="content_position" value="baseline-right" id="content-baseline-right" data-name="position" />
                     <div class="popview-icon popview-icon__nine"></div>
                 </label>
                 <?php
@@ -405,7 +405,7 @@
                 <div class="pt-option-box">
                     <!-- .radio starts -->
                     <div class="radio">
-                        <input name="content_branching" type="radio" value="linear" <?php if ( isset( $popup_meta[ 'content_branching' ] ) && trim( $popup_meta[ 'content_branching' ] ) == "linear" ) echo "checked='checked'"; ?> />
+                        <input name="content_branching" type="radio" class="bg_radio_color" value="linear" <?php if ( isset( $popup_meta[ 'content_branching' ] ) && trim( $popup_meta[ 'content_branching' ] ) == "linear" ) echo "checked='checked'"; ?> />
                         <label><?php echo __( 'Linear', 'kong-popup' ); ?></label>
                         <span>
                             <a href="javascript:void(0);">
@@ -417,7 +417,7 @@
 
                     <!-- .radio starts -->
                     <div class="radio">
-                        <input name="content_branching" type="radio" value="skip" <?php if ( isset( $popup_meta[ 'content_branching' ] ) && trim( $popup_meta[ 'content_branching' ] ) == "skip" ) echo "checked='checked'"; ?> />
+                        <input name="content_branching" type="radio" class="bg_radio_color" value="skip" <?php if ( isset( $popup_meta[ 'content_branching' ] ) && trim( $popup_meta[ 'content_branching' ] ) == "skip" ) echo "checked='checked'"; ?> />
                         <label><?php echo __( 'Skip logic and branching', 'kong-popup' ); ?></label>
                         <span>
                             <a href="javascript:void(0);">
@@ -694,14 +694,14 @@
                     <label><?php echo __( 'URL to share', 'kong-popup' ); ?></label>
                     <!-- .radio starts -->
                     <div class="radio">
-                        <input name="url_to_share" type="radio" value="current_page" <?php if ( isset( $popup_meta[ 'url_to_share' ] ) && trim( $popup_meta[ 'url_to_share' ] ) == "current_page" ) echo "checked='checked'"; ?> />
+                        <input name="url_to_share" type="radio" class="bg_radio_color" value="current_page" <?php if ( isset( $popup_meta[ 'url_to_share' ] ) && trim( $popup_meta[ 'url_to_share' ] ) == "current_page" ) echo "checked='checked'"; ?> />
                         <label><?php echo __( 'current page', 'kong-popup' ); ?></label>
                     </div>
                     <!-- .radio ends -->
 
                     <!-- .radio starts -->
                     <div class="radio">
-                        <input name="url_to_share" type="radio" value="choose_page" <?php if ( isset( $popup_meta[ 'url_to_share' ] ) && trim( $popup_meta[ 'url_to_share' ] ) == "choose_page" ) echo "checked='checked'"; ?> />
+                        <input name="url_to_share" type="radio" class="bg_radio_color" value="choose_page" <?php if ( isset( $popup_meta[ 'url_to_share' ] ) && trim( $popup_meta[ 'url_to_share' ] ) == "choose_page" ) echo "checked='checked'"; ?> />
                         <label><?php echo __( 'choose page to share', 'kong-popup' ); ?></label>
                     </div>
                     <!-- .radio ends -->

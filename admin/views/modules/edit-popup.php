@@ -45,9 +45,10 @@ $slug = get_post_meta( $popup->ID, 'template', true );
 
                 <!-- .is-template-block starts -->
                 <div class="is-template-block">
-                    <input type="checkbox" name="is_template" class="is-template-box option-checkbox" id="is-template-box" <?php if ( isset( $popup_meta[ 'is_template' ] ) == 'on' ) echo 'checked'; ?> />
-                    <label>
-                        <span><?php echo __( 'Mark as Template?', 'kong-popup' ); ?></span>
+                    <label class="container">
+                        <input type="checkbox" name="is_template" class="is-template-box option-checkbox kg_checkbox_color" id="is-template-box" <?php if ( isset( $popup_meta[ 'is_template' ] ) && $popup_meta[ 'is_template' ] == 'on' ) echo 'checked'; ?> />
+                        <span class="checkmark"></span>
+                        <?php echo __( 'Mark as Template?', 'kong-popup' ); ?>
                     </label>
                 </div>
                 <!-- .is-template-block ends -->

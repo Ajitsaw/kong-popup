@@ -82,14 +82,14 @@
       <h4><?php echo __( 'Who should see this widget?', 'kong-popup' ); ?></h4>
       <!-- .radio starts -->
       <div class="radio">
-        <input id="radio-1" class="target-for-whom" name="target_for_whom" type="radio" value="all" <?php if ( trim( $popup_meta[ 'target_for_whom' ] ) == "all" ) echo "checked='checked'"; ?> />
+        <input id="radio-1" class="target-for-whom bg_radio_color" name="target_for_whom" type="radio" value="all" <?php if ( trim( $popup_meta[ 'target_for_whom' ] ) == "all" ) echo "checked='checked'"; ?> />
         <label for="radio-1" class="radio-label"><?php echo __( 'all visitors', 'kong-popup' ); ?></label>
       </div>
       <!-- .radio ends -->
 
       <!-- .radio starts -->
       <div class="radio">
-        <input id="radio-2" class="target-for-whom" name="target_for_whom" type="radio" value="specific" <?php if ( trim( $popup_meta[ 'target_for_whom' ] ) == "specific" ) echo "checked='checked'"; ?> />
+        <input id="radio-2" class="target-for-whom bg_radio_color" name="target_for_whom" type="radio" value="specific" <?php if ( trim( $popup_meta[ 'target_for_whom' ] ) == "specific" ) echo "checked='checked'"; ?> />
         <label  for="radio-2" class="radio-label"><?php echo __( 'visitors who meet the conditions below', 'kong-popup' ); ?></label>
       </div>
       <!-- .radio ends -->
