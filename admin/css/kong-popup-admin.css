@@ -2349,7 +2349,6 @@ button {
   cursor: pointer;
 }
 .kong-container .tabs-container {
-  border: 1px solid #98752e;
   background-color: #98752e;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
@@ -2384,6 +2383,9 @@ button {
 }
 .kong-container #tabs li:first-child {
   padding-left: 0;
+}
+li.kg_secondary_bg:first-child {
+  padding: 5px 20px !important;
 }
 .kong-container #tabs li.active:first-child {
 padding-left: 20px;
@@ -2554,7 +2556,7 @@ height:40px;
 .popup-thumb h3 {
   position: absolute;
   bottom: 0;
-  left: 10px;
+  left: 20px;
   z-index: 9;
   color: #fff;
   font-size: 18px;
@@ -2721,7 +2723,7 @@ div#template-listing {
     font-size: 18px;
     color: #fff;
     position: absolute;
-    left: 10px;
+    left: 20px;
     bottom: 15px;
     text-shadow: none;
 }
@@ -2788,6 +2790,7 @@ div#template-listing {
   border: 1px solid #ccc;
   text-decoration: none;
   width: 100%;
+  line-height: 1.4em;
 }
 
 .btn-setting {
@@ -4841,6 +4844,7 @@ background-color: #555;
   transform: none;
   z-index: 2;
   margin: 0px auto;
+  text-align: center;
 }
 .top-subscribe-image {
   text-align: center;
@@ -4871,6 +4875,47 @@ span.error-message {
   margin-top: 10px;
   text-align: center;
 }
+.not-valid {
+  border-bottom: 1px solid #f00;
+}
+.template-category-item {
+  width: 25%;
+  display: inline-block;
+  vertical-align: top;
+  margin-bottom: 35px;
+}
+
+.template-category-item a {
+  padding: 0 18px;
+  margin-left: -18px;
+  display: inline-block;
+  flex-flow: column;
+  text-align: center;
+}
+.template-category-item img {
+  width: 100%;
+}
+
+.template-category-item span {
+  display: block;
+  text-align: center;
+  padding: 10px 0;
+  font-weight: bold;
+  font-size: 14px;
+  color: #fff;
+}
+.pt-field div input {
+  width: 100% !important;
+}
+
+.image-editor-block {
+  display: none;
+  z-index: 99999;
+  position: relative;
+}
+
+
+
 
 
 

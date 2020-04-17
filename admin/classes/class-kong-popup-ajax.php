@@ -88,6 +88,7 @@ class Kong_Popup_Admin_Ajax
 
         $total_views_array = array();
         $total_clicks_array = array();
+        $total_ctr_array = array();
 
         $views_array = array();
         $clicks_array = array();
@@ -127,6 +128,11 @@ class Kong_Popup_Admin_Ajax
         " );
 
         /**========== Query for counting click through rate ==========**/
+        $total_ctr_query = round( ( ( $total_clicks_query[ 0 ]->total_clicks_count / $total_views_query[ 0 ]->total_views_count ) * 100 ), 2 ) . "%";
+        // print_data( $total_views_query[ 0 ]->total_views_count );
+        // print_data( $total_clicks_query[ 0 ]->total_clicks_count );
+        // print_data( $total_ctr_query );
+
         /**========== Query for counting average popup length ==========**/
 
         /**========== Query for views graph ==========**/
@@ -273,6 +279,7 @@ class Kong_Popup_Admin_Ajax
 
         $total_views_array[ 'views_count' ] = $total_views_query;
         $total_clicks_array[ 'clicks_count' ] = $total_clicks_query;
+        $total_ctr_array[ 'ctr_count' ] = $total_ctr_query;
 
         $views_array[ 'views_report' ] = $views_query;
         $clicks_array[ 'clicks_report' ] = $clicks_query;
@@ -280,7 +287,7 @@ class Kong_Popup_Admin_Ajax
         $views_statistics_array[ 'views_statistics_report' ] = $views_statistics_query;
         $clicks_statistics_array[ 'clicks_statistics_report' ] = $clicks_statistics_query;
 
-        echo json_encode( array_merge( $total_views_array, $total_clicks_array, $views_array, $clicks_array, $views_statistics_array, $clicks_statistics_array, $total_leads_array, $total_activity_result, $top_locations_result ) );
+        echo json_encode( array_merge( $total_views_array, $total_clicks_array, $total_ctr_array, $views_array, $clicks_array, $views_statistics_array, $clicks_statistics_array, $total_leads_array, $total_activity_result, $top_locations_result ) );
 
         die();
     }

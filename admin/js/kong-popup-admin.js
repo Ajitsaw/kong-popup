@@ -1450,6 +1450,9 @@ function dateRender( start, end )
 
 				var clicksCount = response.clicks_count;
 				jQuery( '#total-clicks' ).html( clicksCount[ 0 ].total_clicks_count );
+
+				var ctrCount = response.ctr_count;
+				jQuery( '#total-click-rate' ).html( ctrCount );
 				// $('#total_revenue').html('$'+rev[0].price);
 				// $('#total_discount').html('$'+dis[0].discount);
 
@@ -1694,7 +1697,7 @@ function dateRender( start, end )
 			[ 'top-activity-round-chart', topActivityRoundChartData ],
 			[ 'top-locations-round-chart', topLocationsRoundChartData ],
 		];
-	
+
 		am4core.ready( function() {
 			am4core.useTheme( am4themes_animated );
 
