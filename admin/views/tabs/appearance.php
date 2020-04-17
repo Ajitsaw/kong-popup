@@ -1,15 +1,3 @@
-<style type="text/css">
-    .pt-field div input {
-        width: 100% !important;
-    }
-
-    .image-editor-block {
-        display: none;
-        z-index: 99999;
-        position: relative;
-    }
-</style>
-
 <!-- .popup-tab-content starts -->
 <div class="popup-tab-content appearance" data-popup="<?php echo $_REQUEST[ 'id' ]; ?>">
     <!-- .left-panel starts -->

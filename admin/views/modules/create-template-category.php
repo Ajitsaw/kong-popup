@@ -1,33 +1,3 @@
-<style type="text/css">
-    .template-category-item {
-        width: 25%;
-        display: inline-block;
-        vertical-align: top;
-        margin-bottom: 35px;outline: 
-    }
-    
-    .template-category-item a {
-        padding: 0 18px;
-        margin-left: -18px;
-        display: inline-block;
-        flex-flow: column;
-        text-align: center;
-    }
-    .template-category-item img {
-        width: 100%;
-    }
-
-    .template-category-item span {
-        display: block;
-        text-align: center;
-        padding: 10px 0;
-        font-weight: bold;
-        font-size: 14px;
-        color: #fff;
-    }
-
-</style>
-
 <!-- .create-template-category starts -->
 <div class="wrap create-template-category settings-section kg_primary_bg_color">
     <!-- .kong-container-settings starts -->

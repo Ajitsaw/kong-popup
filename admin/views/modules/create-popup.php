@@ -1,15 +1,3 @@
-<style type="text/css">
-    .popup-building-block {
-        background: #95732D;
-        width: 100%;
-        height: 100vh;
-    }
-
-    .not-valid {
-    	border: 1px solid #f00;
-    }
-</style>
-
 <!-- .create-popup-section starts -->
 <div class="wrap create-popup-section kg_primary_bg_color">
     <!-- .kong-container starts -->
