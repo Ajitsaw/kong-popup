@@ -129,9 +129,6 @@ class Kong_Popup_Admin_Ajax
 
         /**========== Query for counting click through rate ==========**/
         $total_ctr_query = round( ( ( $total_clicks_query[ 0 ]->total_clicks_count / $total_views_query[ 0 ]->total_views_count ) * 100 ), 2 ) . "%";
-        // print_data( $total_views_query[ 0 ]->total_views_count );
-        // print_data( $total_clicks_query[ 0 ]->total_clicks_count );
-        // print_data( $total_ctr_query );
 
         /**========== Query for counting average popup length ==========**/
 
@@ -158,6 +155,30 @@ class Kong_Popup_Admin_Ajax
             GROUP BY created_at 
             -- ORDER BY created_at
         " );
+        // print_data( $views_query );
+        // print_data( $clicks_query );
+
+        // foreach ( $views_query as $view_query ) {
+        //     // print_data( $view_query );
+        //     print_data( $view_query->created_at );
+        //     // print_data( "*****************");
+        //     foreach ( $clicks_query as $click_query ) {
+        //         // print_data( $click_query->created_at );
+        //         if ( $view_query->created_at == $click_query->created_at ) {
+        //             print_data( "MATCH " . $click_query->created_at );
+        //             break;
+        //         } else {
+        //             print_data( "NOT MATCH " . $click_query->created_at );
+        //             // break;
+        //         }     
+        //         // if ( array_intersect( $view_query->created_at, $clicks_query ) ) {
+        //         //     print_data( "MATCH " . $view_query->created_at );
+        //         // } else {
+        //         //     print_data( "NOT MATCH " . $view_query->created_at );
+        //         // }        
+        //     }
+        //     print_data( "=================");
+        // }
 
         /**========== Query for click through rate graph ==========**/
         /**========== Query for average popup length graph ==========**/

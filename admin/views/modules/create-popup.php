@@ -8,6 +8,12 @@
 			<div class="create-popup" id="create-popup-form">
 			    <!-- .top-subscribe-image starts -->
 			    <div class="top-subscribe-image" id="top-subscribe-image">
+			    	<!-- .popup_plus starts -->
+			    	<div class="popup_plus">
+			    		 <img src="<?php echo PLUGIN_BASE_URL . 'admin/images/plus-p.png'; ?>" alt="Popup Image">
+			    	</div>
+			    	<!-- .popup_plus ends -->
+
 			        <img src="<?php echo PLUGIN_BASE_URL . 'admin/images/blank.png'; ?>" alt="Popup Image">
 			    </div>
 			    <!-- .top-subscribe-image ends -->

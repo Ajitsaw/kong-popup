@@ -177,7 +177,7 @@ class Kong_Popup_Admin
            
             wp_enqueue_script( 'amcharts-core', 'https://www.amcharts.com/lib/4/core.js', array( 'jquery' ), $this->version, true );
             wp_enqueue_script( 'amcharts-charts', 'https://www.amcharts.com/lib/4/charts.js', array( 'jquery' ), $this->version, true );
-            wp_enqueue_script( 'amcharts-theme-kelly', 'https://www.amcharts.com/lib/4/themes/kelly.js', array( 'jquery' ), $this->version, true );
+            // wp_enqueue_script( 'amcharts-theme-kelly', 'https://www.amcharts.com/lib/4/themes/kelly.js', array( 'jquery' ), $this->version, true );
             wp_enqueue_script( 'amcharts-animated', 'https://www.amcharts.com/lib/4/themes/animated.js', array( 'jquery' ), $this->version, true );
         }
         
@@ -532,7 +532,7 @@ class Kong_Popup_Admin
     public function add_popup_menus() 
     {
         $add_menu_pages = array(
-            'create-popup'              => array( 'Create A Popup Page', 'Create A Popup', ' ', ),
+            'create-popup'              => array( 'Create A Popup Page', 'Create A Popup', 'dashicons-plus', ),
             'recent-popups'             => array( 'Recent Popups Page', 'Recent Popups', 'dashicons-admin-generic', ),
             'popup-dashboard'           => array( 'Dashboard Page', 'Dashboard', 'dashicons-admin-generic', ),
             'popup-lists'               => array( 'Popups Page', 'Popups', 'dashicons-admin-generic', ),
