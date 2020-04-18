@@ -3211,7 +3211,7 @@ input.time-schedule {
   display: block;
   position: absolute;
   top: 7px;
-  left: 5px;
+  left: 6px;
   width: 4px;
   height: 9px;
   border: solid #ffffff;
@@ -4673,6 +4673,9 @@ a.close-popup {
   align-items: center;
   width: 100%;
 }
+span.pt-addfield-box-icon {
+  margin-right: 7px;
+}
 .pt-addfield-box input, .pt-addfield-box-title input {
   margin-bottom: 0 !important;
 }
@@ -4685,7 +4688,11 @@ a.close-popup {
   color: #717171;
   right: 10px;
   border-left: 1px solid #ccc;
-  padding-left: 10px
+  padding-left: 10px;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 .pt-addfield-box-arrow {
   position: absolute;

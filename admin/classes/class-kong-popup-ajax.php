@@ -102,6 +102,8 @@ class Kong_Popup_Admin_Ajax
         $total_activity = array();
         $total_activity_result = array();
 
+        $top_performing_popup_result = array();
+
         $top_locations = array();
         $top_locations_result = array();
 
@@ -168,64 +170,6 @@ class Kong_Popup_Admin_Ajax
             GROUP BY created 
             -- ORDER BY created_at
         " );
-
-        // $query = $wpdb->get_results( "
-        //     SELECT * FROM {$wpdb->prefix}kong_popup_analytics AS kong_popup_analytics
-        //     JOIN {$wpdb->prefix}kong_popup_click_targets AS kong_popup_click_targets 
-        //         ON kong_popup_click_targets.popup_id = kong_popup_analytics.popup_id 
-        //     JOIN {$wpdb->prefix}posts AS posts 
-        //         ON posts.ID = kong_popup_analytics.popup_id 
-        //     WHERE kong_popup_click_targets.template = kong_popup_analytics.template
-        //     AND posts.post_type = 'popup'
-        //     AND posts.post_status = 'publish'
-        //     AND kong_popup_analytics.created_at BETWEEN '$from_date' AND '$to_date' 
-        //     GROUP BY kong_popup_analytics.popup_id 
-        // " );
-        $views_queryy = $wpdb->get_results( "
-            SELECT kong_popup_analytics.template AS template, 
-                   COUNT( kong_popup_analytics.ID ) AS views 
-            FROM {$wpdb->prefix}kong_popup_analytics AS kong_popup_analytics
-            JOIN {$wpdb->prefix}posts AS posts 
-                ON posts.ID = kong_popup_analytics.popup_id
-            WHERE posts.post_type = 'popup'
-            AND posts.post_status = 'publish'
-            AND kong_popup_analytics.created_at BETWEEN '$from_date' AND '$to_date' 
-            GROUP BY template 
-            ORDER BY views DESC
-        " );
-
-        $clicks_queryy = $wpdb->get_results( "
-            SELECT kong_popup_click_targets.template AS template, 
-                   COUNT( kong_popup_click_targets.ID ) AS clicks 
-            FROM {$wpdb->prefix}kong_popup_click_targets AS kong_popup_click_targets 
-            JOIN {$wpdb->prefix}posts AS posts 
-                ON posts.ID = kong_popup_click_targets.popup_id
-            WHERE posts.post_type = 'popup'
-            AND posts.post_status = 'publish'
-            AND kong_popup_click_targets.created_at BETWEEN '$from_date' AND '$to_date' 
-            GROUP BY template 
-            ORDER BY clicks DESC
-        " );
-        print_data( $views_queryy );
-        print_data( $clicks_queryy );
-
-        print_data( $views_query );
-        print_data( $clicks_query );
-        exit;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         /**========== Query for click through rate graph ==========**/
         $ctrs_query = $wpdb->get_results( "
@@ -356,6 +300,58 @@ class Kong_Popup_Admin_Ajax
             $total_activity_result[ 'total_activity' ] = $total_activity;
         }
 
+        /**========== Query for counting top performing popup ==========**/
+        $top_views_query = $wpdb->get_results( "
+            SELECT kong_popup_analytics.template AS template, 
+                   COUNT( kong_popup_analytics.ID ) AS views, 
+                   posts.post_date AS created 
+            FROM {$wpdb->prefix}kong_popup_analytics AS kong_popup_analytics
+            JOIN {$wpdb->prefix}posts AS posts 
+                ON posts.ID = kong_popup_analytics.popup_id
+            WHERE posts.post_type = 'popup'
+            AND posts.post_status = 'publish'
+            AND kong_popup_analytics.created_at BETWEEN '$from_date' AND '$to_date' 
+            GROUP BY template 
+            ORDER BY template
+        " );
+
+        $top_clicks_query = $wpdb->get_results( "
+            SELECT kong_popup_click_targets.template AS template, 
+                   COUNT( kong_popup_click_targets.ID ) AS clicks,
+                   posts.post_date AS created 
+            FROM {$wpdb->prefix}kong_popup_click_targets AS kong_popup_click_targets 
+            JOIN {$wpdb->prefix}posts AS posts 
+                ON posts.ID = kong_popup_click_targets.popup_id
+            WHERE posts.post_type = 'popup'
+            AND posts.post_status = 'publish'
+            AND kong_popup_click_targets.created_at BETWEEN '$from_date' AND '$to_date' 
+            GROUP BY template 
+            ORDER BY template
+        " );
+        
+        foreach ( $top_views_query as $key => $top_view ) {
+            $top_view->clicks = $top_clicks_query[ $key ]->clicks;
+        }
+        array_multisort( 
+            array_column( $top_views_query, 'views' ), SORT_DESC,
+            array_column( $top_views_query, 'clicks' ), SORT_DESC,
+            $top_views_query
+        );
+        $top_performer = current( $top_views_query );
+
+        $top_performer_created = $top_performer->created;
+        $current_daytime = date( 'Y-m-d h:i:s', time() );
+        $days = $this->dateDiffInDays( $top_performer_created, $current_daytime );
+        $top_view->days = $days;
+
+        $template_category = get_term_by( 'slug', $top_performer->template, 'popup-template' );
+        $template_url = ( get_term_meta( $template_category->term_id, '_image_id', true ) ) ? wp_get_attachment_url( get_term_meta( $template_category->term_id, '_image_id', true ) ) : plugin_dir_url( __FILE__ ) . 'images/blank.png';
+        $top_view->url = $template_url;
+
+        $top_view->ctr = round( ( ( $top_performer->clicks / $top_performer->views ) * 100 ), 2 ) . "%";
+
+        $top_performing_popup_result[ 'top_performing_popup' ] = $top_view;
+
         /**========== Query for counting top locations ==========**/
         $top_locations_query = $wpdb->get_results( "
             SELECT kong_popup_analytics.data AS user_info
@@ -389,7 +385,7 @@ class Kong_Popup_Admin_Ajax
         $views_statistics_array[ 'views_statistics_report' ] = $views_statistics_query;
         $clicks_statistics_array[ 'clicks_statistics_report' ] = $clicks_statistics_query;
 
-        echo json_encode( array_merge( $total_views_array, $total_clicks_array, $total_ctr_array, $views_array, $clicks_array, $ctrs_array, $views_statistics_array, $clicks_statistics_array, $total_leads_array, $total_activity_result, $top_locations_result ) );
+        echo json_encode( array_merge( $total_views_array, $total_clicks_array, $total_ctr_array, $views_array, $clicks_array, $ctrs_array, $views_statistics_array, $clicks_statistics_array, $total_leads_array, $total_activity_result, $top_performing_popup_result, $top_locations_result ) );
 
         die();
     }
@@ -418,4 +414,10 @@ class Kong_Popup_Admin_Ajax
         die();
     }
 
+    function dateDiffInDays( $date1, $date2 )  
+    { 
+        $diff = strtotime( $date2 ) - strtotime( $date1 ); 
+          
+        return abs( round( $diff / 86400 ) ); 
+    } 
 }

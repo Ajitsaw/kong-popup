@@ -325,11 +325,41 @@
 					<!-- .chart-value starts -->
 					<div class="chart-value clearfix">
 						<!-- .round-chart starts -->
-						<div class="round-chart" id="top-performing-popup-round-chart"></div>
+						<div class="round-chart" id="top-performing-popup-round-chart">
+							<img src="#" alt="">
+						</div>
 						<!-- .round-chart ends -->
 
 						<!-- .chart-information starts -->
-						<div class="chart-information" id="top-performing-popup-block"></div>
+						<div class="chart-information" id="top-performing-popup-block">
+							<!-- .chart-value-row starts -->
+							<div class="chart-value-row">
+								<strong><?php echo __( 'subscribers', 'kong-popup' ); ?></strong>
+								<span>0</span>
+							</div>
+							<!-- .chart-value-row ends -->
+
+							<!-- .chart-value-row starts -->
+							<div class="chart-value-row">
+								<strong><?php echo __( 'contact messages', 'kong-popup' ); ?></strong>
+								<span>0</span>
+							</div>
+							<!-- .chart-value-row ends -->
+
+							<!-- .chart-value-row starts -->
+							<div class="chart-value-row">
+								<strong><?php echo __( 'promo clicks', 'kong-popup' ); ?></strong>
+								<span>0</span>
+							</div>
+							<!-- .chart-value-row ends -->
+
+							<!-- .chart-value-row starts -->
+							<div class="chart-value-row">
+								<strong><?php echo __( 'responses', 'kong-popup' ); ?></strong>
+								<span>0</span>
+							</div>
+							<!-- .chart-value-row ends -->
+						</div>
 						<!-- .chart-information ends -->
 					</div>
 					<!-- .chart-value ends -->
@@ -348,7 +378,7 @@
 						<!-- .round-chart ends -->
 
 						<!-- .chart-information starts -->
-						<div class="chart-information">
+						<div class="chart-information" id="top-refferers-block">
 							<!-- .chart-value-row starts -->
 							<div class="chart-value-row">
 								<strong><?php echo __( 'subscribers', 'kong-popup' ); ?></strong>
