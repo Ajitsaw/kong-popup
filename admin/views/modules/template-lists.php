@@ -111,7 +111,7 @@ if ( isset( $_REQUEST[ 'category' ] ) ) {
                                     <figcaption><?php echo $template->post_title; ?></figcaption>
 
                                     <!-- .btn-setting starts -->
-                                    <a href="javascript:void(0);" class="btn-setting">
+                                    <a href="javascript:void(0);" class="btn-setting kg_secondary_bg">
                                         <i class="fa fa-cog" aria-hidden="true"></i>
                                     </a>
                                     <!-- .btn-setting ends -->

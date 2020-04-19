@@ -62,6 +62,7 @@ class Kong_Popup_Activator
 					`ID` bigint(20) NOT NULL AUTO_INCREMENT,
 					`popup_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
 					`target` varchar(255) NULL,
+					`template` varchar(255) NULL,
 		            `created_at` date NOT NULL DEFAULT '0000-00-00',
 					PRIMARY KEY (ID)
 				) 

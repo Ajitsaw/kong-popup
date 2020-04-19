@@ -39,7 +39,7 @@
 
                         <!-- .popup-bottom starts -->
                         <div class="popup-bottom">
-                            <a href="javascript:void(0);" class="btn-setting btn-setting--item"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                            <a href="javascript:void(0);" class="btn-setting btn-setting--item kg_secondary_bg"><i class="fa fa-cog" aria-hidden="true"></i></a>
                             <!-- .popup-details starts -->
                             <div class="popup-details">
                                 <!-- ul starts -->

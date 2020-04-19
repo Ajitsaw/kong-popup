@@ -36,7 +36,7 @@ jQuery( document ).ready( function( e ) {
 	 */
 	jQuery( '#toplevel_page_edit-popup, #toplevel_page_edit-template, #toplevel_page_create-template, #toplevel_page_popups-under-folder' ).remove();
 	jQuery( '#toplevel_page_create-popup a' ).addClass( 'kg_secondary_bg btn p-0 site-action-toggle btn-raised' );
-	
+
 	jQuery( '.kong-container .tab-content' ).hide();
 	jQuery( '.kong-container #tabs li:first-child' ).next().addClass( 'active' );
 	jQuery( '.kong-container .tab-content:first-child' ).next().show();
@@ -1407,7 +1407,16 @@ jQuery( document ).ready( function( e ) {
 		} );
 	} );
 
-});
+	jQuery( this ).on( 'change', '#dashboard-popup-lists', function( e ) {
+		var dateStamp = jQuery( '#report-filter span' ).text();
+		var splitDateStamp = dateStamp.split( '-' );
+		var fromDate = moment( splitDateStamp[ 0 ].trim() ).format( 'YYYY-MM-DD' );
+		var toDate = moment( splitDateStamp[ 1 ].trim() ).format( 'YYYY-MM-DD' );
+
+		filteredReport( fromDate, toDate );
+	} );
+
+} );
 
 // function updatePopupData() 
 // {
@@ -1418,9 +1427,19 @@ function dateRender( start, end )
 {
 	jQuery( '#report-filter span' ).html( start.format( 'MMMM D, YYYY' ) + ' - ' + end.format( 'MMMM D, YYYY' ) );
 
+	var fromDate = start.format( 'YYYY-MM-DD' );
+	var toDate = end.format( 'YYYY-MM-DD' );
+
+	filteredReport( fromDate, toDate );
+}
+
+var filteredReport = ( fromDate, toDate ) => {
+	var selectedTemplate = jQuery( '#dashboard-popup-lists' ).val();
+
 	var totalViewsChartData = [];
 	var totalClicksChartData = [];
 	var totalCtrsChartData = [];
+	var totalPopupLengthChartData = [];
 
 	var splineTotalViewsStatisticsChartData = [];
 	var splineTotalClicksStatisticsChartData = [];
@@ -1430,11 +1449,6 @@ function dateRender( start, end )
 
 	var leadsHTML = totalActivityHTML = topLocationsHTML = '';
 
-	var fromDate = start.format( 'YYYY-MM-DD' );
-	var toDate = end.format( 'YYYY-MM-DD' );
-	console.log( "FROM " + fromDate );
-	console.log( "TO " + toDate );
-
 	jQuery.ajax( {
 		type: 'POST',
 		url: kongPopupSupports.ajax_url,
@@ -1442,6 +1456,7 @@ function dateRender( start, end )
 			action: 'get_filtered_report_ajax',
 			from_date: fromDate,
 			to_date: toDate,
+			template: selectedTemplate,
 		},
 		dataType: 'json',
 		async: false,
@@ -1457,29 +1472,188 @@ function dateRender( start, end )
 				var ctrCount = response.ctr_count;
 				jQuery( '#total-click-through-rate' ).html( ctrCount );
 
+				var averagePopupLengthCount = response.average_popup_length_count;
+				jQuery( '#popup-length' ).html( averagePopupLengthCount );
+
 				var viewsReport = response.views_report;
-				for ( var index = 0; index < viewsReport.length; index++ ) {
-					totalViewsChartData.push(
-						parseInt( viewsReport[ index ].count )
+				if ( kongPopupSupports.current_page == "popup-dashboard" && viewsReport ) {
+					for ( var index = 0; index < viewsReport.length; index++ ) {
+						totalViewsChartData.push(
+							parseInt( viewsReport[ index ].count )
+						);
+					}
+					jQuery( '#total-views-chart' ).html( ' ' );
+					var totalViewsChart = new Chartist.Line(
+						"#total-views-chart",
+						{
+							series: [ totalViewsChartData ]
+						},
+						{
+							chartPaddingTop: 5,
+							axisX: {
+								showLabel: false,
+								showGrid: false
+							},
+							axisY: {
+								showLabel: false,
+									showGrid: false
+							},
+							lineSmooth: Chartist.Interpolation.simple( {
+								divisor: 2
+							} ),
+							plugins: [ Chartist.plugins.tooltip( { class: 'total-count-tooltip', appendToBody: true } ) ],
+							fullWidth: false
+						}
 					);
+
+					totalViewsChart.on( 'created', function( data ) {
+						var defs = data.svg.querySelector( 'defs' ) || data.svg.elem( 'defs' );
+						defs
+							.elem( 'linearGradient', {
+								id: 'lineLinearStats',
+								x1: 0,
+								y1: 0,
+								x2: 1,
+								y2: 0
+							} )
+							.elem( 'stop', {
+								offset: '0%',
+								'stop-color': '#fff'
+							} )
+							.parent()
+							.elem( 'stop', {
+								offset: '10%',
+								'stop-color': '#fff'
+							} )
+							.parent()
+							.elem( 'stop', {
+								offset: '30%',
+								'stop-color': '#fff'
+							} )
+							.parent()
+							.elem( 'stop', {
+								offset: '95%',
+								'stop-color': '#fff'
+							} )
+							.parent()
+							.elem( 'stop', {
+								offset: '100%',
+								'stop-color': '#fff'
+							} );
+
+						return defs;
+					} );
+				} else {
+					jQuery( '#total-views-chart' ).html( '<i class="fa fa-minus" aria-hidden="true"></i>' );
 				}
 
 				var clicksReport = response.clicks_report;
-				for ( var index = 0; index < clicksReport.length; index++ ) {
-					totalClicksChartData.push(
-						parseInt( clicksReport[ index ].count )
+				if ( kongPopupSupports.current_page == "popup-dashboard" && clicksReport ) {
+					for ( var index = 0; index < clicksReport.length; index++ ) {
+						totalClicksChartData.push(
+							parseInt( clicksReport[ index ].count )
+						);
+					}
+					jQuery( '#total-clicks-chart' ).html( ' ' );
+					var totalClicksChart = new Chartist.Line(
+						"#total-clicks-chart",
+						{
+							series: [ totalClicksChartData ]
+						},
+						{
+							chartPaddingTop: 5,
+							axisX: {
+								showLabel: false,
+								showGrid: false
+							},
+							axisY: {
+								showLabel: false,
+									showGrid: false
+							},
+							lineSmooth: Chartist.Interpolation.simple( {
+								divisor: 2
+							} ),
+							plugins: [ Chartist.plugins.tooltip( { class: 'total-count-tooltip', appendToBody: true } ) ],
+							fullWidth: false
+						}
 					);
+				} else {
+					jQuery( '#total-clicks-chart' ).html( '<i class="fa fa-minus" aria-hidden="true"></i>' );
 				}
-					
-				var ctrsReport = Object.entries( response.ctrs_report );
-				ctrsReport.forEach( function( ctr ) {
-					totalCtrsChartData.push(
-						ctr[ 1 ].count
-					);
-				} );
 
-				console.log( ctrsReport );
-				console.log( totalCtrsChartData );
+				if ( response.ctrs_report != 0 ) {
+					var ctrsReport = Object.entries( response.ctrs_report );
+					if ( kongPopupSupports.current_page == "popup-dashboard" ) {
+						ctrsReport.forEach( function( ctr ) {
+							totalCtrsChartData.push(
+								ctr[ 1 ].count
+							);
+						} );
+
+						jQuery( '#total-click-through-rate-chart' ).html( ' ' );
+						var totalCtrsChart = new Chartist.Line(
+							"#total-click-through-rate-chart",
+							{
+								series: [ totalCtrsChartData ]
+							},
+							{
+								chartPaddingTop: 5,
+								axisX: {
+									showLabel: false,
+									showGrid: false
+								},
+								axisY: {
+									showLabel: false,
+										showGrid: false
+								},
+								lineSmooth: Chartist.Interpolation.simple( {
+									divisor: 2
+								} ),
+								plugins: [ Chartist.plugins.tooltip( { class: 'total-count-tooltip', appendToBody: true } ) ],
+								fullWidth: false
+							}
+						);
+					}
+				} else {
+					jQuery( '#total-click-through-rate-chart' ).html( '<i class="fa fa-minus" aria-hidden="true"></i>' );
+				}
+
+				if ( response.average_popup_length_report != 0 ) {
+					var averagePopupLengthReport = Object.entries( response.average_popup_length_report );
+					if ( kongPopupSupports.current_page == "popup-dashboard" ) {
+						averagePopupLengthReport.forEach( function( popup ) {
+							totalPopupLengthChartData.push(
+								popup[ 1 ].average
+							);
+						} );
+
+						jQuery( '#popup-length-chart' ).html( ' ' );
+						var totalPopupLengthChart = new Chartist.Line(
+							"#popup-length-chart",
+							{
+								series: [ totalPopupLengthChartData ]
+							},
+							{
+								chartPaddingTop: 5,
+								axisX: {
+									showLabel: false,
+									showGrid: false
+								},
+								axisY: {
+									showLabel: false,
+										showGrid: false
+								},
+								lineSmooth: Chartist.Interpolation.simple( {
+									divisor: 2
+								} ),
+								plugins: [ Chartist.plugins.tooltip( { class: 'total-count-tooltip', appendToBody: true } ) ],
+								fullWidth: false
+							}
+						);
+					}
+				} else {
+					jQuery( '#popup-length-chart' ).html( '<i class="fa fa-minus" aria-hidden="true"></i>' );
+				}
 
 				var viewsStatisticsReport = response.views_statistics_report;
 				for ( var index = 0; index < viewsStatisticsReport.length; index++ ) {
@@ -1504,7 +1678,7 @@ function dateRender( start, end )
 				}
 
 				var leadsCount = response.leads_count;
-				if ( leadsCount.length ) {
+				if ( leadsCount ) {
 					leadsCount.forEach( function( item ) {
 						leadsHTML += `
 							<!-- tr starts -->
@@ -1527,7 +1701,7 @@ function dateRender( start, end )
 				}
 
 				var totalActivity = Object.entries( response.total_activity );
-				if ( totalActivity.length ) {
+				if ( totalActivity ) {
 					totalActivity.forEach( popup => {
 						totalActivityHTML += `
 							<!-- .chart-value-row starts -->
@@ -1545,8 +1719,16 @@ function dateRender( start, end )
 				  	} );
 				}
 
+				var topPerformingPopup = response.top_performing_popup;
+				jQuery( '#tpp-url' ).attr( 'src', topPerformingPopup.url );
+				jQuery( '#tpp-title' ).text( topPerformingPopup.title );
+				jQuery( '#tpp-views' ).text( topPerformingPopup.views );
+				jQuery( '#tpp-clicks' ).text( topPerformingPopup.clicks );
+				jQuery( '#tpp-ctr' ).text( topPerformingPopup.ctr );
+				jQuery( '#tpp-days' ).text( topPerformingPopup.days );
+
 				var topLocations = Object.entries( response.top_locations );
-				if ( topLocations.length ) {
+				if ( topLocations ) {
 					topLocations.forEach( location => {
 						topLocationsHTML += `
 							<!-- .chart-value-row starts -->
@@ -1579,112 +1761,135 @@ function dateRender( start, end )
 
     if ( kongPopupSupports.current_page == "popup-dashboard" ) {
 		/** CHART START */
-		var totalViewsChart = new Chartist.Line(
-			"#total-views-chart",
-			{
-				series: [ totalViewsChartData ]
-			},
-			{
-				chartPaddingTop: 5,
-				axisX: {
-					showLabel: false,
-					showGrid: false
-				},
-				axisY: {
-					showLabel: false,
-						showGrid: false
-				},
-				lineSmooth: Chartist.Interpolation.simple( {
-					divisor: 2
-				} ),
-				plugins: [ Chartist.plugins.tooltip( { class: 'total-count-tooltip', appendToBody: true } ) ],
-				fullWidth: false
-			}
-		);
+		// var totalViewsChart = new Chartist.Line(
+		// 	"#total-views-chart",
+		// 	{
+		// 		series: [ totalViewsChartData ]
+		// 	},
+		// 	{
+		// 		chartPaddingTop: 5,
+		// 		axisX: {
+		// 			showLabel: false,
+		// 			showGrid: false
+		// 		},
+		// 		axisY: {
+		// 			showLabel: false,
+		// 				showGrid: false
+		// 		},
+		// 		lineSmooth: Chartist.Interpolation.simple( {
+		// 			divisor: 2
+		// 		} ),
+		// 		plugins: [ Chartist.plugins.tooltip( { class: 'total-count-tooltip', appendToBody: true } ) ],
+		// 		fullWidth: false
+		// 	}
+		// );
 
-		var totalClicksChart = new Chartist.Line(
-			"#total-clicks-chart",
-			{
-				series: [ totalClicksChartData ]
-			},
-			{
-				chartPaddingTop: 5,
-				axisX: {
-					showLabel: false,
-					showGrid: false
-				},
-				axisY: {
-					showLabel: false,
-						showGrid: false
-				},
-				lineSmooth: Chartist.Interpolation.simple( {
-					divisor: 2
-				} ),
-				plugins: [ Chartist.plugins.tooltip( { class: 'total-count-tooltip', appendToBody: true } ) ],
-				fullWidth: false
-			}
-		);
+		// var totalClicksChart = new Chartist.Line(
+		// 	"#total-clicks-chart",
+		// 	{
+		// 		series: [ totalClicksChartData ]
+		// 	},
+		// 	{
+		// 		chartPaddingTop: 5,
+		// 		axisX: {
+		// 			showLabel: false,
+		// 			showGrid: false
+		// 		},
+		// 		axisY: {
+		// 			showLabel: false,
+		// 				showGrid: false
+		// 		},
+		// 		lineSmooth: Chartist.Interpolation.simple( {
+		// 			divisor: 2
+		// 		} ),
+		// 		plugins: [ Chartist.plugins.tooltip( { class: 'total-count-tooltip', appendToBody: true } ) ],
+		// 		fullWidth: false
+		// 	}
+		// );
 
-		var totalCtrsChart = new Chartist.Line(
-			"#total-click-through-rate-chart",
-			{
-				series: [ totalCtrsChartData ]
-			},
-			{
-				chartPaddingTop: 5,
-				axisX: {
-					showLabel: false,
-					showGrid: false
-				},
-				axisY: {
-					showLabel: false,
-						showGrid: false
-				},
-				lineSmooth: Chartist.Interpolation.simple( {
-					divisor: 2
-				} ),
-				plugins: [ Chartist.plugins.tooltip( { class: 'total-count-tooltip', appendToBody: true } ) ],
-				fullWidth: false
-			}
-		);
+		// var totalCtrsChart = new Chartist.Line(
+		// 	"#total-click-through-rate-chart",
+		// 	{
+		// 		series: [ totalCtrsChartData ]
+		// 	},
+		// 	{
+		// 		chartPaddingTop: 5,
+		// 		axisX: {
+		// 			showLabel: false,
+		// 			showGrid: false
+		// 		},
+		// 		axisY: {
+		// 			showLabel: false,
+		// 				showGrid: false
+		// 		},
+		// 		lineSmooth: Chartist.Interpolation.simple( {
+		// 			divisor: 2
+		// 		} ),
+		// 		plugins: [ Chartist.plugins.tooltip( { class: 'total-count-tooltip', appendToBody: true } ) ],
+		// 		fullWidth: false
+		// 	}
+		// );
 
-		totalViewsChart.on( 'created', function( data ) {
-			var defs = data.svg.querySelector( 'defs' ) || data.svg.elem( 'defs' );
-			defs
-				.elem( 'linearGradient', {
-					id: 'lineLinearStats',
-					x1: 0,
-					y1: 0,
-					x2: 1,
-					y2: 0
-				} )
-				.elem( 'stop', {
-					offset: '0%',
-					'stop-color': '#fff'
-				} )
-				.parent()
-				.elem( 'stop', {
-					offset: '10%',
-					'stop-color': '#fff'
-				} )
-				.parent()
-				.elem( 'stop', {
-					offset: '30%',
-					'stop-color': '#fff'
-				} )
-				.parent()
-				.elem( 'stop', {
-					offset: '95%',
-					'stop-color': '#fff'
-				} )
-				.parent()
-				.elem( 'stop', {
-					offset: '100%',
-					'stop-color': '#fff'
-				} );
+		// var totalPopupLengthChart = new Chartist.Line(
+		// 	"#popup-length-chart",
+		// 	{
+		// 		series: [ totalPopupLengthChartData ]
+		// 	},
+		// 	{
+		// 		chartPaddingTop: 5,
+		// 		axisX: {
+		// 			showLabel: false,
+		// 			showGrid: false
+		// 		},
+		// 		axisY: {
+		// 			showLabel: false,
+		// 				showGrid: false
+		// 		},
+		// 		lineSmooth: Chartist.Interpolation.simple( {
+		// 			divisor: 2
+		// 		} ),
+		// 		plugins: [ Chartist.plugins.tooltip( { class: 'total-count-tooltip', appendToBody: true } ) ],
+		// 		fullWidth: false
+		// 	}
+		// );
 
-			return defs;
-		} );
+		// totalViewsChart.on( 'created', function( data ) {
+		// 	var defs = data.svg.querySelector( 'defs' ) || data.svg.elem( 'defs' );
+		// 	defs
+		// 		.elem( 'linearGradient', {
+		// 			id: 'lineLinearStats',
+		// 			x1: 0,
+		// 			y1: 0,
+		// 			x2: 1,
+		// 			y2: 0
+		// 		} )
+		// 		.elem( 'stop', {
+		// 			offset: '0%',
+		// 			'stop-color': '#fff'
+		// 		} )
+		// 		.parent()
+		// 		.elem( 'stop', {
+		// 			offset: '10%',
+		// 			'stop-color': '#fff'
+		// 		} )
+		// 		.parent()
+		// 		.elem( 'stop', {
+		// 			offset: '30%',
+		// 			'stop-color': '#fff'
+		// 		} )
+		// 		.parent()
+		// 		.elem( 'stop', {
+		// 			offset: '95%',
+		// 			'stop-color': '#fff'
+		// 		} )
+		// 		.parent()
+		// 		.elem( 'stop', {
+		// 			offset: '100%',
+		// 			'stop-color': '#fff'
+		// 		} );
+
+		// 	return defs;
+		// } );
 
 		var chart = new CanvasJS.Chart( 'statistics-graph', {
 			animationEnabled: true,

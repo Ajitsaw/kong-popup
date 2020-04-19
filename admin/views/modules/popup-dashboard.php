@@ -153,11 +153,27 @@
 			</div>
 
 			<div>
-				<select class="dashboard-popup-lists">
-					<option>ABCD</option>
-					<option>ABCD</option>
-					<option>ABCD</option>
-					<option>ABCD</option>
+				<select class="dashboard-popup-lists" id="dashboard-popup-lists">
+					<?php
+	                // get all items which belongs to popup-template category
+	                $popup_template_categories = get_terms( 
+	                	array(
+	                		'taxonomy'      => 'popup-template',
+	                		'hide_empty'    => false,
+	                	) 
+	                );
+	                // if popup_template_categories exists
+	                if ( $popup_template_categories ) {
+	                	?>
+	                	<option value=''><?php echo __( 'All', 'kong-popup' ); ?></option>
+	                	<?php
+	                    foreach ( $popup_template_categories as $popup_template_category ) {
+	                        ?>
+	                        <option value="<?php echo $popup_template_category->slug; ?>"><?php echo __( $popup_template_category->name, 'kong-popup' ); ?></option>
+	                        <?php
+	                    }
+	                }
+	                ?>
 				</select>
 			</div>
 		</div>
@@ -248,13 +264,13 @@
 			<div class="value-info">
 				<div class="card value-info--inner length animate fadeUp" id="length" style="display:none;">
 					<div class="heading"> 
-						<h5 id="total-length"></h5>
+						<h5 id="popup-length"></h5>
 						<h6><?php echo __( 'Average Popup Length', 'kong-popup' ); ?></h6>
 					</div>
 					<div class="right-icon">
 						<i class="fa fa-envelope-open-o fa-lg" aria-hidden="true"></i>
 					</div>
-					<div id="total-length-chart" class="chart-item chart-shadow"></div>
+					<div id="popup-length-chart" class="chart-item chart-shadow"></div>
 				</div>
 			</div>
 			<!-- .value-info ends -->
@@ -326,37 +342,38 @@
 					<div class="chart-value clearfix">
 						<!-- .round-chart starts -->
 						<div class="round-chart" id="top-performing-popup-round-chart">
-							<img src="#" alt="">
+							<img src="#" alt="" id="tpp-url" />
 						</div>
+						<h3 id="tpp-title"></h3>
 						<!-- .round-chart ends -->
 
 						<!-- .chart-information starts -->
 						<div class="chart-information" id="top-performing-popup-block">
 							<!-- .chart-value-row starts -->
 							<div class="chart-value-row">
-								<strong><?php echo __( 'subscribers', 'kong-popup' ); ?></strong>
-								<span>0</span>
+								<strong><?php echo __( 'VIEWS', 'kong-popup' ); ?></strong>
+								<span id="tpp-views">0</span>
 							</div>
 							<!-- .chart-value-row ends -->
 
 							<!-- .chart-value-row starts -->
 							<div class="chart-value-row">
-								<strong><?php echo __( 'contact messages', 'kong-popup' ); ?></strong>
-								<span>0</span>
+								<strong><?php echo __( 'CLICKS', 'kong-popup' ); ?></strong>
+								<span id="tpp-clicks">0</span>
 							</div>
 							<!-- .chart-value-row ends -->
 
 							<!-- .chart-value-row starts -->
 							<div class="chart-value-row">
-								<strong><?php echo __( 'promo clicks', 'kong-popup' ); ?></strong>
-								<span>0</span>
+								<strong><?php echo __( 'CTR', 'kong-popup' ); ?></strong>
+								<span id="tpp-ctr">0</span>
 							</div>
 							<!-- .chart-value-row ends -->
 
 							<!-- .chart-value-row starts -->
 							<div class="chart-value-row">
-								<strong><?php echo __( 'responses', 'kong-popup' ); ?></strong>
-								<span>0</span>
+								<strong><?php echo __( 'DAYS', 'kong-popup' ); ?></strong>
+								<span id="tpp-days">0</span>
 							</div>
 							<!-- .chart-value-row ends -->
 						</div>

@@ -640,7 +640,7 @@ class Kong_Popup_Admin
                     <figure>
                         <a href="javascript:void(0);"><img src="<?php echo $src; ?>" alt="<?php echo $template_category->name; ?>"></a>
                         <figcaption><?php echo $template->post_title; ?></figcaption>
-                        <a href="javascript:void(0);" class="btn-setting"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                        <a href="javascript:void(0);" class="btn-setting kg_secondary_bg"><i class="fa fa-cog" aria-hidden="true"></i></a>
                     </figure>
                     <div class="template-box__cnt">
                         <!-- .template-box__topinfo starts -->
@@ -726,7 +726,7 @@ class Kong_Popup_Admin
                         <figure>
                             <a href="javascript:void(0);"><img src="<?php echo $src; ?>" alt="<?php echo $template_category->name; ?>"></a>
                             <figcaption><?php echo $template->post_title; ?></figcaption>
-                            <a href="javascript:void(0);" class="btn-setting"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                            <a href="javascript:void(0);" class="btn-setting kg_secondary_bg"><i class="fa fa-cog" aria-hidden="true"></i></a>
                         </figure>
                         <div class="template-box__cnt">
                             <!-- .template-box__topinfo starts -->
