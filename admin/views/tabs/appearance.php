@@ -6,7 +6,7 @@
         <div class="form-wrap">
             <span><?php echo __( 'Position', 'kong-popup' ); ?></span>
             <!-- .form-position starts -->
-            <div class="form-position">
+            <div class="form-position" id="appearance">
                 <label for="appearance-center-center" class="pos-label <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'center-center' ) echo 'selected'; ?>">
                     <input type="radio" class="bg_radio_color" name="appearance_position" value="center-center" id="appearance-center-center" data-name="position" />
                     <div class="popview-icon popview-icon__one <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'center-center' ) echo 'kg_border_color'; ?>"></div>

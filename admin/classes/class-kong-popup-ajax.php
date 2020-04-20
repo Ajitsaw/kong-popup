@@ -50,10 +50,8 @@ class Kong_Popup_Admin_Ajax
                     $query = $wpdb->get_results( "SELECT structures FROM {$wpdb->prefix}kong_popup_content_structures WHERE popup_id = $post_id" );
                     if ( $query ) {
                         $wpdb->query( "UPDATE {$wpdb->prefix}kong_popup_content_structures SET structures = '$mdvalue' WHERE popup_id = $post_id" );
-                        echo "UPDATE QUERY";
                     } else {
                         $wpdb->query( "INSERT INTO {$wpdb->prefix}kong_popup_content_structures ( popup_id, structures, created_at ) VALUES ( $post_id, '$mdvalue', '$current_date' )" );
-                        echo "INSERT QUERY";
                     }
                 }
             } else {
@@ -478,10 +476,47 @@ class Kong_Popup_Admin_Ajax
 
     public function get_preview_popup()
     {
-        unset( $_COOKIE[ 'kong_popup_preview_rendered' ] );
-        setcookie( 'kong_popup_preview_rendered', null, -1 );
+        // unset( $_COOKIE[ 'kong_popup_preview_rendered' ] );
+        // setcookie( 'kong_popup_preview_rendered', null, -1 );
 
-        setcookie( 'kong_popup_preview_rendered', serialize( $_REQUEST[ 'popup_data' ] ) );
+        // setcookie( 'kong_popup_preview_rendered', serialize( $_REQUEST[ 'popup_data' ] ) );
+        // print_data( $_REQUEST );
+        $meta_data = $_REQUEST[ 'popup_data' ];
+        // print_data( get_post_meta( $meta_data[ 'popup_id' ] ) );
+        // print_data( $meta_data );
+        $post_id = $meta_data[ 'popup_id' ];
+        unset( $meta_data[ 'popup_id' ] );  // remove the popup_id from array
+
+        if ( $_REQUEST[ 'remove_fields' ] ) {
+            foreach ( $_REQUEST[ 'remove_fields' ] as $remove_field ) {
+                $this->delete_preview_popup_meta( $post_id, $remove_field );                                
+            }
+        }
+
+        $this->update_preview_popup_meta( $post_id, 'popup_structure', $_REQUEST[ 'popup_html' ] );
+
+        // loop the remaining and put in post meta
+        foreach ( $meta_data as $mdkey => $mdvalue ) {
+            if ( $mdvalue ) {
+                if ( is_array( $mdvalue ) ) {
+                    $mdvalue = array_values( array_filter( $mdvalue ) );    // for removing empty array element
+                } else {
+                    $expl_data = explode( ',', $mdvalue );
+                    if( isset( $expl_data[ 1 ] ) ) {
+                        $mdvalue = implode( ',', array_map( 'trim', $expl_data ) ); // for triming whitespace from array element
+                    } else {
+                        $mdvalue = trim( $expl_data[ 0 ] );
+                    }
+                }
+                $this->update_preview_popup_meta( $post_id, $mdkey, $mdvalue );
+            } else {
+                $this->delete_preview_popup_meta( $post_id, $mdkey );
+            }
+
+            if ( is_array( $mdvalue ) && empty( $mdvalue[ 0 ] ) ) {
+                $this->delete_preview_popup_meta( $post_id, $mdkey );
+            }
+        }
 
         die();
     }
@@ -500,10 +535,29 @@ class Kong_Popup_Admin_Ajax
         die();
     }
 
-    function dateDiffInDays( $date1, $date2 )  
+    private function dateDiffInDays( $date1, $date2 )  
     { 
         $diff = strtotime( $date2 ) - strtotime( $date1 ); 
           
         return abs( round( $diff / 86400 ) ); 
     } 
+
+    private function update_preview_popup_meta( $post_id, $mdkey, $mdvalue ) 
+    {
+        global $wpdb;
+
+        $query = $wpdb->get_results( "SELECT ID FROM {$wpdb->prefix}kong_popup_preview_meta WHERE popup_id = {$post_id} AND meta_key = '{$mdkey}'" );
+        if ( $query ) {
+            $wpdb->query( "UPDATE {$wpdb->prefix}kong_popup_preview_meta SET meta_value = '{$mdvalue}' WHERE popup_id = {$post_id} AND meta_key = '{$mdkey}'" );
+        } else {
+            $wpdb->query( "INSERT INTO {$wpdb->prefix}kong_popup_preview_meta ( popup_id, meta_key, meta_value ) VALUES ( $post_id, '$mdkey', '$mdvalue' )" );
+        }
+    }
+
+    private function delete_preview_popup_meta( $post_id, $mdkey ) 
+    {
+        global $wpdb;
+
+        $wpdb->query( "DELETE FROM {$wpdb->prefix}kong_popup_preview_meta WHERE popup_id = {$post_id} AND meta_key = '{$mdkey}'" );
+    }
 }

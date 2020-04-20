@@ -1183,6 +1183,7 @@ jQuery( document ).ready( function( e ) {
 		console.log( popupData );
 		jQuery( this ).closest( '.drugableSection' ).remove();
 		rearrangeSection();
+		popupPreview();
 	} );
 	jQuery(document).on('click', '.cloneSection', function() {
 		var $el = jQuery(this).closest('.drugableSection');
@@ -1648,7 +1649,7 @@ var filteredReport = ( fromDate, toDate ) => {
 								<td>` + item.popup_title + `</td>
 								<td>` + item.popup_template + `</td>
 								<td>` + item.count + `
-									<i class="large material-icons kg_secondary_color">equalizer</i>
+									<i class="large material-icons kg_color">equalizer</i>
 								</td>
 							</tr>
 							<!-- tr ends -->
@@ -1954,6 +1955,7 @@ var popupPreview = () => {
 	// }
 	var popupHTML = jQuery( '.popup-content' ).html();
 	console.log( popupHTML );
+	console.log( removeFieldsNameArray );
 	if ( popupData ) {
 		jQuery.ajax( {
 			type: 'POST',
@@ -1963,6 +1965,7 @@ var popupPreview = () => {
 				action: 'get_preview_popup_ajax',
 				popup_data: popupData,
 				popup_html: popupHTML,
+				remove_fields: removeFieldsNameArray,
 			},
 			beforeSend: ( x ) => {
 				if ( x && x.overrideMimeType ) {
