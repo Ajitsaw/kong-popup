@@ -3180,6 +3180,16 @@ select#time-schedule-option {
 .parameter-list {
   padding: 15px 0 0 35px;
 }
+.form-group.select-days {
+  display: flex;
+  flex-flow: row wrap;
+}
+label.container.sub-checkbox:before {
+  display: none;
+}
+.select-days label.container.sub-checkbox {
+  margin-right: 15px;
+}
 /*.form-group input {
   padding: 0;
   height: initial;
@@ -3318,6 +3328,7 @@ select#time-schedule-option {
 }
 .form-group input.time-duration.width--120{
   width: 120px !important;
+  margin-right: 10px !important;
 }
 .widget-parameter h4{
   font-size: 15px;
@@ -4113,7 +4124,14 @@ a.close-popup {
 .form-group label.container {
   width: auto;
   padding-top: 2px;
+<<<<<<< HEAD
   padding-left: 15px !important;
+=======
+  padding-left: 25px !important;
+  padding: 0;
+  margin: 0;
+  margin-right: 5px;
+>>>>>>> 77f19c90e3c26a33374a5d6e19e600cef4390277
 }
 /* Hide the browser's default checkbox */
 .pt-checkbox .container input, .is-template-block .container input, .form-group .container input{
@@ -4154,7 +4172,7 @@ a.close-popup {
 }
 .is-template-block [type=checkbox]:checked+span:not(.lever):before, .form-group .container [type=checkbox]:checked+span:not(.lever):before{
   top: 2px;
-  left: 0px;
+  left: 1px;
   width: 5px;
   height: 8px;
   margin-top: 0 !important;
@@ -4678,6 +4696,15 @@ a.close-popup {
 .pt-option-box {
   position: relative;
 }
+.pt-option-box span {
+  margin-left: 5px;
+}
+.pt-option-box span a {
+  color: #ccced9;
+}
+.container label span {
+  margin-left: 5px;
+}
 .pt-option-box:after{
   content: '';
   clear: both;
@@ -4815,7 +4842,8 @@ input:focus {
   box-shadow: none !important;
 }
 .timezone.select-option {
-  margin-top:10px;
+  margin-top: 0;
+  margin-left: 10px;
 }
 
 .btn.btn-raised, .btn.btn-raised:focus {
@@ -5025,7 +5053,8 @@ div#report-filter {
 /*Responsive Start*/
 @media (max-width: 1200px){
   .preview-viewport {
-    margin-top: 35px
+    margin-top: 35px;
+    
   }
   .pt-colors ul li {
     width: 30%

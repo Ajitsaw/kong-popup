@@ -6,7 +6,7 @@
         <div class="form-wrap">
             <label><?php echo __( 'Position', 'kong-popup' ); ?></label>
             <!-- .form-position starts -->
-            <div class="form-position">
+            <div class="form-position" id="content">
             <?php
             if ( in_array( $slug, array( 'spin-wheel' ) ) ) {
                 ?>

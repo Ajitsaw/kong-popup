@@ -171,7 +171,11 @@
               <?php echo __( 'stop on', 'kong-popup' ); ?>
             </label>
             <!-- .sub-checkbox ends -->
+<<<<<<< HEAD
             <input class="time-duration width--120" type="text" name="stop_on" id="date-start-field" placeholder="<?php echo date( 'M d,yy' ); ?>" value="<?php if ( isset( $popup_meta[ 'stop_on' ] ) ) echo $popup_meta[ 'stop_on' ]; ?>" <?php if ( isset( $popup_meta[ 'is_date_stop' ] ) && trim( $popup_meta[ 'is_date_stop' ] ) != "on" ) echo "disabled='disabled'"; ?> />
+=======
+            <input class="time-duration width--120" type="text" name="stop_on" id="date-stop-field" placeholder="<?php echo date( 'M d,yy' ); ?>" value="<?php if ( isset( $popup_meta[ 'stop_on' ] ) ) echo $popup_meta[ 'stop_on' ]; ?>" <?php if ( isset( $popup_meta[ 'is_date_stop' ] ) && trim( $popup_meta[ 'is_date_stop' ] ) != "on" ) echo "disabled='disabled'"; ?> />
+>>>>>>> 77f19c90e3c26a33374a5d6e19e600cef4390277
           </div>
           <!-- .form-group ends -->
         </div>

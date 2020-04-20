@@ -39,6 +39,8 @@ class Kong_Popup_Activator
 		$table_for_kong_popup_analytics = $wpdb->prefix . "kong_popup_analytics";
 		$table_for_kong_popup_click_targets = $wpdb->prefix . "kong_popup_click_targets";
 		$table_for_kong_popup_content_structures = $wpdb->prefix . "kong_popup_content_structures";
+		$table_for_kong_popup_preview_meta = $wpdb->prefix . "kong_popup_preview_meta";
+		$table_for_kong_popup_feeds = $wpdb->prefix . "kong_popup_feeds";
 		$kong_popup_analytics_db_version = '1.0.0';
 		$charset_collate = $wpdb->get_charset_collate();
 
@@ -76,6 +78,32 @@ class Kong_Popup_Activator
 					`ID` bigint(20) NOT NULL AUTO_INCREMENT,
 					`popup_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
 					`structures` longtext NULL,
+		            `created_at` date NOT NULL DEFAULT '0000-00-00',
+					PRIMARY KEY (ID)
+				) 
+				$charset_collate;
+			";
+		}
+
+		if ( $wpdb->get_var( "SHOW TABLES LIKE '{$table_for_kong_popup_preview_meta}'" ) != $table_for_kong_popup_preview_meta ) {
+			$sql[] = "
+				CREATE TABLE $table_for_kong_popup_preview_meta (
+					`ID` bigint(20) NOT NULL AUTO_INCREMENT,
+					`popup_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+					`meta_key` varchar(255) NULL,
+					`meta_value` longtext NULL,
+					PRIMARY KEY (ID)
+				) 
+				$charset_collate;
+			";
+		}
+
+		if ( $wpdb->get_var( "SHOW TABLES LIKE '{$table_for_kong_popup_feeds}'" ) != $table_for_kong_popup_feeds ) {
+			$sql[] = "
+				CREATE TABLE $table_for_kong_popup_feeds (
+					`ID` bigint(20) NOT NULL AUTO_INCREMENT,
+					`popup_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+					`feed` longtext NULL,
 		            `created_at` date NOT NULL DEFAULT '0000-00-00',
 					PRIMARY KEY (ID)
 				) 
