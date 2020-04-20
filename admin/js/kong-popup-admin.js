@@ -1,38 +1,10 @@
+// var popupData = {};
 $ = jQuery.noConflict();
 
 var removeFieldsNameArray = [];
 jQuery( document ).ready( function( e ) {
 	'use strict';
 
-	// console.log( kongPopupSupports );
-
-	/**
-	 * All of the code for your admin-facing JavaScript source
-	 * should reside in this file.
-	 *
-	 * Note: It has been assumed you will write jQuery code here, so the
-	 * $ function reference has been prepared for usage within the scope
-	 * of this function.
-	 *
-	 * This enables you to define handlers, for when the DOM is ready:
-	 *
-	 * $(function() {
-	 *
-	 * });
-	 *
-	 * When the window is loaded:
-	 *
-	 * $( window ).load(function() {
-	 *
-	 * });
-	 *
-	 * ...and/or other possibilities.
-	 *
-	 * Ideally, it is not considered best practise to attach more than a
-	 * single DOM-ready or window-load handler for a particular page.
-	 * Although scripts in the WordPress core, Plugins and Themes may be
-	 * practising this, we should strive to set a better example in our own work.
-	 */
 	jQuery( '#toplevel_page_edit-popup, #toplevel_page_edit-template, #toplevel_page_create-template, #toplevel_page_popups-under-folder' ).remove();
 	jQuery( '#toplevel_page_create-popup a' ).addClass( 'kg_secondary_bg btn p-0 site-action-toggle btn-raised' );
 
@@ -48,26 +20,7 @@ jQuery( document ).ready( function( e ) {
 		jQuery( '.kong-container ' + tabName ).show();
 	} );
 
-	/**
-	 * Select the template. 
-	 */
-	// jQuery( 'li.template-item' ).on( 'click', function( e ) {
-	// 	var templateName = jQuery( this ).data( 'choose-template' );
-	// 	var templateImage = jQuery( '.img-' + templateName ).attr( 'src' );
-	// 	jQuery( 'input#project-template' ).val( templateName );
-	// 	jQuery( '.create-popup-form-bg' ).show();
-	// 	jQuery( '#create-popup-form' ).show();
-	// 	jQuery( '#top-subscribe-image img' ).attr( 'src', templateImage );
-	// } );
-
-	// jQuery( '#create-popup-form .close-btn' ).on( 'click', function() {
-	// 	jQuery( 'input#project-name' ).val( '' );
-	// 	jQuery( '.create-popup-form-bg' ).hide();
-	// 	jQuery( '#create-popup-form' ).hide();
-	// 	jQuery( '#top-subscribe-image img' ).attr( 'src', '#' );
-	// } );
-
-	jQuery( '#create-popup' ).on( 'click', function( e ) {
+	jQuery( this ).on( 'click', '#create-popup', function( e ) {
 		e.preventDefault();
 
 		var isVaildate = true;
@@ -122,6 +75,7 @@ jQuery( document ).ready( function( e ) {
 	} );
 
 	jQuery( this ).on( 'change', '.kong-container input[type="text"]', ( e ) => {
+		console.log( "TEXT" );
 		if ( popupData.hasOwnProperty( 'display_in' ) && popupData.display_in.length > 0 ) {
 			var DisplayInArr = popupData[ 'display_in' ];
 		} else {
@@ -140,7 +94,7 @@ jQuery( document ).ready( function( e ) {
 			popupData[ key ] = value;
 		}
 
-		updatePopupData();
+		popupPreview();
 	} );
 
 	jQuery( this ).on( 'change', '.kong-container textarea', function( e ) {
@@ -150,7 +104,7 @@ jQuery( document ).ready( function( e ) {
 		console.log( value );
 		popupData[ key ] = value;
 
-		updatePopupData();
+		popupPreview();
 	} );
 
 	jQuery( this ).on( 'change', '.kong-container input[type="radio"]', function( e ) {
@@ -177,14 +131,14 @@ jQuery( document ).ready( function( e ) {
 		// }
 
 		if ( jQuery( this ).attr( 'data-name' ) == "position" ) {
-			console.log( "HERE1 = " + this.id );
-			jQuery( '.form-position' ).find( '.selected' ).removeClass( 'selected' );
-			jQuery( '.form-position' ).find( '.kg_border_color' ).removeClass( 'kg_border_color' );
+			var targetID = jQuery( this ).closest( '.form-position' )[ 0 ].id;
+			jQuery( '#' + targetID ).find( '.selected' ).removeClass( 'selected' );
+			jQuery( '#' + targetID ).find( '.kg_border_color' ).removeClass( 'kg_border_color' );
 			jQuery( 'label[for="' + this.id + '"]' ).addClass( 'selected' );
 			jQuery( 'label[for="' + this.id + '"] .popview-icon' ).addClass( 'kg_border_color' );
 		}
 
-		updatePopupData();
+		popupPreview();
 	} );
 
 	jQuery( this ).on( 'change', '.kong-container .option-checkbox', function( e ) {
@@ -217,7 +171,7 @@ jQuery( document ).ready( function( e ) {
 
 		console.log( popupData );
 
-		updatePopupData();
+		popupPreview();
 	} );
 
 	jQuery( '.kong-container .pos_label > *' ).on( 'click', function( e ) {
@@ -336,7 +290,7 @@ jQuery( document ).ready( function( e ) {
     	appearanceImageArray.splice( selectID, 1 );
     	popupData[ bgImage ] = appearanceImageArray;
 
-    	updatePopupData();
+    	popupPreview();
     } );
 
 	var appearanceSectionImageUploader;
@@ -422,7 +376,7 @@ jQuery( document ).ready( function( e ) {
 		popupData[ bgImage ] = appearanceImageArray;
 		appearanceSectionImageUploader.open();
 
-		updatePopupData();
+		popupPreview();
 	} );
 
 	// content upload image
@@ -447,7 +401,7 @@ jQuery( document ).ready( function( e ) {
 			jQuery( '#popup_image' ).val( attachment.url );
 			popupData[ 'popup_image' ] = attachment.url;
 			
-			updatePopupData();
+			popupPreview();
 		} );
 		mediaUploader2.open();
 	} );
@@ -503,7 +457,7 @@ jQuery( document ).ready( function( e ) {
 		}
 		popupData[ 'visitor' ] = visitorArray;
 		
-		updatePopupData();
+		popupPreview();
 
 		if ( isBlankVisitor == true ) visitorArray = [];
 	} );
@@ -536,7 +490,7 @@ jQuery( document ).ready( function( e ) {
 		}
 		popupData[ 'browser' ] = BrowserArr;
 
-		updatePopupData();
+		popupPreview();
 
 		if ( isBlankBrowser == true ) popupData[ 'browser' ] = [];
 	} );
@@ -569,7 +523,7 @@ jQuery( document ).ready( function( e ) {
 		}
 		popupData[ 'os' ] = OSArr;
 		
-		updatePopupData();
+		popupPreview();
 
 		if ( isBlankOS == true ) popupData[ 'os' ] = [];
 	} );
@@ -602,7 +556,7 @@ jQuery( document ).ready( function( e ) {
 		}
 		popupData[ 'device' ] = DeviceArr;
 		
-		updatePopupData();
+		popupPreview();
 
 		if ( isBlankDevice == true ) popupData[ 'device' ] = [];
 	} );
@@ -635,7 +589,7 @@ jQuery( document ).ready( function( e ) {
 		}
 		popupData[ 'days_of_week' ] = DaysOfWeekArr;
 		
-		updatePopupData();
+		popupPreview();
 
 		if ( isBlankDaysOfWeek == true ) popupData[ 'days_of_week' ] = [];
 	} );
@@ -649,7 +603,7 @@ jQuery( document ).ready( function( e ) {
 		var value = e.target.value;
 		popupData[ key ] = value;
 		
-		updatePopupData();
+		popupPreview();
 	} );
 
 	jQuery( '.my-color-field' ).wpColorPicker( {
@@ -658,12 +612,12 @@ jQuery( document ).ready( function( e ) {
 			var value = e.target.value;
 			popupData[ key ] = value;
 
-			updatePopupData();
+			popupPreview();
 		}
 	} );
 
 	jQuery( '#save' ).on( 'click', function() {
-		updatePopupData();
+		popupPreview();
 	} );
 
 	jQuery( '.open-popup-content' ).on( 'click', function() {
@@ -872,7 +826,7 @@ jQuery( document ).ready( function( e ) {
 	    }
 	    popupData[ 'display_in' ] = removeDisplayInArr;
 		
-		updatePopupData();
+		popupPreview();
     } );
     
     jQuery( this ).on( 'click', '.url-test', function( e ) {
@@ -979,7 +933,7 @@ jQuery( document ).ready( function( e ) {
 		} );
 	} );
 
-	// function updatePopupData() {
+	// function popupPreview() {
 	// 	if ( popupData ) {
 	// 		jQuery.ajax( {
 	// 			url: ajaxurl + '?action=updatepopup',
@@ -1092,7 +1046,7 @@ jQuery( document ).ready( function( e ) {
 	// 			var value = color.toHexString();
 	// 			popupData[ key ] = value;
 
-	// 			updatePopupData();
+	// 			popupPreview();
 	// 		}
 	// 	}
 	// } );
@@ -1156,7 +1110,7 @@ jQuery( document ).ready( function( e ) {
 		var value = e.value;
 		popupData[ key ] = value;
 
-		updatePopupData();
+		popupPreview();
 	} );
 
 	jQuery( this ).on( 'input', '#adons', function( e ) {
@@ -1164,7 +1118,7 @@ jQuery( document ).ready( function( e ) {
 		var value = e.target.value;
 		popupData[ key ] = value;
 
-		updatePopupData();
+		popupPreview();
 	} );
 
 	// function tabSelectedFunction($el) {
@@ -1248,6 +1202,7 @@ jQuery( document ).ready( function( e ) {
 		} else if(fldIdentity == 'ea') {
 			jQuery('#fldArea').append(emailAddressFld( title, id ));
 			rearrangeSection();
+			popupPreview();
 		} else if(fldIdentity == 'r') {
 			jQuery('#fldArea').append(ratingFld( title, id ));
 			rearrangeSection();
@@ -1271,8 +1226,9 @@ jQuery( document ).ready( function( e ) {
 	})
 	jQuery('#emailAddressBtn').click(function() {
 		var ind = jQuery( '#fldArea .drugableSection' ).length + 1;
-		console.log( "INDEX " + ind );
-		jQuery('#fldArea').append(emailAddressFld('Email address', 'ea_'+ind));
+		var structure = emailAddressFld('Email address', 'ea_'+ind);
+		console.log( structure );
+		jQuery('#fldArea').append(structure[ 1 ]);
 		toggleEl('#addFldList', 'hide');
 		jQuery( '.popup-form' ).append( 
 			`
@@ -1280,16 +1236,17 @@ jQuery( document ).ready( function( e ) {
 			`
 		);
 		rearrangeSection();
+		popupPreview();
 	});
 	jQuery('#welcomePageBtn').click(function() {
-		var ind = jQuery( '#fldArea .drugableSection' ).length;
+		var ind = jQuery( '#fldArea .drugableSection' ).length + 1;
 
 		jQuery('#fldArea').append(welcomePageField('Welcome Page', 'wp_'+ind));
 		toggleEl('#addFldList', 'hide');
 		rearrangeSection();
 	});
 	jQuery('#radioButtonsBtn').click(function() {
-		var ind = jQuery( '#fldArea .drugableSection' ).length;
+		var ind = jQuery( '#fldArea .drugableSection' ).length + 1;
 
 		jQuery('#fldArea').append(radioButtonFld('Radio Button', 'rb_'+ind));
 		toggleEl('#addFldList', 'hide');
@@ -1297,7 +1254,7 @@ jQuery( document ).ready( function( e ) {
 		rearrangeSection();
 	});
 	jQuery('#checkboxesBtn').click(function() {
-		var ind = jQuery( '#fldArea .drugableSection' ).length;
+		var ind = jQuery( '#fldArea .drugableSection' ).length + 1;
 
 		jQuery('#fldArea').append(radioButtonFld('Checkboxes', 'cb_'+ind));
 		toggleEl('#addFldList', 'hide');
@@ -1305,7 +1262,7 @@ jQuery( document ).ready( function( e ) {
 		rearrangeSection();
 	});
 	jQuery('#dropdownListBtn').click(function() {
-		var ind = jQuery( '#fldArea .drugableSection' ).length;
+		var ind = jQuery( '#fldArea .drugableSection' ).length + 1;
 
 		jQuery('#fldArea').append(radioButtonFld('Dropdown list', 'dl_'+ind));
 		toggleEl('#addFldList', 'hide');
@@ -1313,28 +1270,28 @@ jQuery( document ).ready( function( e ) {
 		rearrangeSection();
 	});
 	jQuery('#singleLineTextBtn').click(function() {
-		var ind = jQuery( '#fldArea .drugableSection' ).length;
+		var ind = jQuery( '#fldArea .drugableSection' ).length + 1;
 
 		jQuery('#fldArea').append(singleLineTextFld('Single line text', 'slt_'+ind));
 		toggleEl('#addFldList', 'hide');
 		rearrangeSection();
 	});
 	jQuery('#multiLineTextBtn').click(function() {
-		var ind = jQuery( '#fldArea .drugableSection' ).length;
+		var ind = jQuery( '#fldArea .drugableSection' ).length + 1;
 
 		jQuery('#fldArea').append(singleLineTextFld('Multiline text', 'mlt_'+ind));
 		toggleEl('#addFldList', 'hide');
 		rearrangeSection();
 	});
 	jQuery('#successPageBtn').click(function() {
-		var ind = jQuery( '#fldArea .drugableSection' ).length;
+		var ind = jQuery( '#fldArea .drugableSection' ).length + 1;
 
 		jQuery('#fldArea').append(successPageFld('Success Page', 'sp_'+ind));
 		toggleEl('#addFldList', 'hide');
 		rearrangeSection();
 	});
 	jQuery('#ratingBtn').click(function() {
-		var ind = jQuery( '#fldArea .drugableSection' ).length;
+		var ind = jQuery( '#fldArea .drugableSection' ).length + 1;
 
 		jQuery('#fldArea').append(ratingFld('Rating', 'r_'+ind));
 		toggleEl('#addFldList', 'hide');
@@ -1342,7 +1299,8 @@ jQuery( document ).ready( function( e ) {
 	});
 	colorPickerInit();
 	jQuery('#addSegmentBtn').click(function() {
-		var ind = jQuery('#segmentArea .drugableSection').length;
+		// var ind = jQuery('#segmentArea .drugableSection').length;
+		var ind = jQuery('#segmentArea .drugableSection').length + 1;
 
 		jQuery('#segmentArea').append(newSegment('Segment ' + ind, 'segment_'+ind));
 		colorPickerInit();
@@ -1422,7 +1380,7 @@ jQuery( document ).ready( function( e ) {
 
 } );
 
-// function updatePopupData() 
+// function popupPreview() 
 // {
 // 	console.log( "OK" );
 // }
@@ -1690,7 +1648,7 @@ var filteredReport = ( fromDate, toDate ) => {
 								<td>` + item.popup_title + `</td>
 								<td>` + item.popup_template + `</td>
 								<td>` + item.count + `
-									<i class="large material-icons">equalizer</i>
+									<i class="large material-icons kg_secondary_color">equalizer</i>
 								</td>
 							</tr>
 							<!-- tr ends -->
@@ -1983,7 +1941,8 @@ var filteredReport = ( fromDate, toDate ) => {
 	// } );
 }
 
-var updatePopupData = () => {
+var popupPreview = () => {
+	console.log( "PREVIEW" );
 	// // console.log( JSON.parse( JSON.stringify( popupData ) ) );
 
 	// if ( popupData ) {
@@ -1993,7 +1952,8 @@ var updatePopupData = () => {
 	// 	// Cookies.set( 'bookableDates', popupData );
 	// 	document.cookie = "kong_popup_preview_rendered=" + JSON.stringify( popupData );
 	// }
-
+	var popupHTML = jQuery( '.popup-content' ).html();
+	console.log( popupHTML );
 	if ( popupData ) {
 		jQuery.ajax( {
 			type: 'POST',
@@ -2002,6 +1962,7 @@ var updatePopupData = () => {
 			data: {
 				action: 'get_preview_popup_ajax',
 				popup_data: popupData,
+				popup_html: popupHTML,
 			},
 			beforeSend: ( x ) => {
 				if ( x && x.overrideMimeType ) {
@@ -2085,7 +2046,7 @@ var colorPickerInit = () => {
 				var value = color.toHexString();
 				popupData[ key ] = value;
 
-				updatePopupData();
+				popupPreview();
 			}
 		}
 	} );
@@ -2113,9 +2074,9 @@ var toggleEl = ( $el, action ) => {
 
 // markups
 var emailAddressFld = ( title, id ) => {
-	// var index = findNextIndex( id );
+	var returnStructure = [];
 	var index = formFieldIndex();
-	return `
+	var html = `
 		<div class="drugableSection" id="${id}" data-field="${index}">
 			<div class="pt-addfield-box">
 				<div class="accrodianBtn">
@@ -2174,6 +2135,8 @@ var emailAddressFld = ( title, id ) => {
 			</div>
 		</div>
   	`;
+  	returnStructure.push( index, html );
+  	return returnStructure;
 }
 
 var welcomePageField = ( title, id ) => {
