@@ -1275,6 +1275,11 @@ jQuery( document ).ready( function( e ) {
 		console.log( "INDEX " + ind );
 		jQuery('#fldArea').append(emailAddressFld('Email address', 'ea_'+ind));
 		toggleEl('#addFldList', 'hide');
+		jQuery( '.popup-form' ).append( 
+			`
+			<input type="email" name="test-email" />
+			`
+		);
 		rearrangeSection();
 	});
 	jQuery('#welcomePageBtn').click(function() {

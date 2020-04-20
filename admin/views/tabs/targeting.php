@@ -106,8 +106,13 @@
 
           <!-- .form-group starts -->
           <div class="form-group">
-            <input name="visitor" value="Returning" type="checkbox" id="returning" <?php if ( isset( $popup_meta[ 'visitor' ][ 0 ] ) == "Returning" ) echo "checked='checked'"; ?>>
-            <label for="returning"><?php echo __( 'Returning who have viewed', 'kong-popup' ); ?></label>
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input type="checkbox" name="visitor" value="Returning" class="option-checkbox kg_checkbox_color" id="returning" <?php if ( isset( $popup_meta[ 'visitor' ] ) && $popup_meta[ 'visitor' ][ 0 ] == "Returning" ) echo 'checked'; ?> />
+              <span class="checkmark"></span>
+              <?php echo __( 'Returning who have viewed', 'kong-popup' ); ?>
+            </label>
+            <!-- .sub-checkbox ends -->
           </div>
           <!-- .form-group ends -->
 
@@ -132,43 +137,73 @@
 
           <!-- .form-group starts -->
           <div class="form-group">
-            <input name="browser" value="Chrome" type="checkbox" id="Chrome" <?php if ( isset( $popup_meta[ 'browser' ] ) && in_array( "Chrome", $popup_meta[ 'browser' ] ) ) echo "checked='checked'"; ?>/>
-            <label for="Chrome"><?php echo __( 'Chrome', 'kong-popup' ); ?></label>
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input name="browser" value="Chrome" type="checkbox" class="kg_checkbox_color" id="chrome" <?php if ( isset( $popup_meta[ 'browser' ] ) && in_array( "Chrome", $popup_meta[ 'browser' ] ) ) echo 'checked'; ?>/>
+              <span class="checkmark"></span>
+              <?php echo __( 'Chrome', 'kong-popup' ); ?>
+            </label>
+            <!-- .sub-checkbox ends -->
           </div>
           <!-- .form-group ends -->
 
           <!-- .form-group starts -->
           <div class="form-group">
-            <input name="browser" value="Firefox" type="checkbox" id="firefox" <?php if ( isset( $popup_meta[ 'browser' ] ) && in_array( "Firefox", $popup_meta[ 'browser' ] ) ) echo "checked='checked'"; ?>/>
-            <label for="firefox"><?php echo __( 'Firefox', 'kong-popup' ); ?></label>
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input name="browser" value="Firefox" type="checkbox" class="kg_checkbox_color" id="firefox" <?php if ( isset( $popup_meta[ 'browser' ] ) && in_array( "Firefox", $popup_meta[ 'browser' ] ) ) echo 'checked'; ?>/>
+              <span class="checkmark"></span>
+              <?php echo __( 'Firefox', 'kong-popup' ); ?>
+            </label>
+            <!-- .sub-checkbox ends -->
           </div>
           <!-- .form-group ends -->
 
           <!-- .form-group starts -->
           <div class="form-group">
-            <input name="browser" value="Internet Explorer" type="checkbox" id="internet" <?php if ( isset( $popup_meta[ 'browser' ] ) && in_array( "Internet Explorer", $popup_meta[ 'browser' ] ) ) echo "checked='checked'"; ?>/>
-            <label for="internet"><?php echo __( 'Internet Explorer', 'kong-popup' ); ?></label>
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input name="browser" value="Internet Explorer" type="checkbox" class="kg_checkbox_color" id="internet" <?php if ( isset( $popup_meta[ 'browser' ] ) && in_array( "Internet Explorer", $popup_meta[ 'browser' ] ) ) echo 'checked'; ?>/>
+              <span class="checkmark"></span>
+              <?php echo __( 'Internet Explorer', 'kong-popup' ); ?>
+            </label>
+            <!-- .sub-checkbox ends -->
           </div>
           <!-- .form-group ends -->
 
           <!-- .form-group starts -->
           <div class="form-group">
-            <input name="browser" value="Safari" type="checkbox" id="safari" <?php if ( isset( $popup_meta[ 'browser' ] ) && in_array( "Safari", $popup_meta[ 'browser' ] ) ) echo "checked='checked'"; ?>/>
-            <label for="safari"><?php echo __( 'Safari', 'kong-popup' ); ?></label>
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input name="browser" value="Safari" type="checkbox" class="kg_checkbox_color" id="safari" <?php if ( isset( $popup_meta[ 'browser' ] ) && in_array( "Safari", $popup_meta[ 'browser' ] ) ) echo 'checked'; ?>/>
+              <span class="checkmark"></span>
+              <?php echo __( 'Safari', 'kong-popup' ); ?>
+            </label>
+            <!-- .sub-checkbox ends -->
           </div>
           <!-- .form-group ends -->
 
           <!-- .form-group starts -->
           <div class="form-group">
-            <input name="browser" value="Opera" type="checkbox" id="opera" <?php if ( isset( $popup_meta[ 'browser' ] ) && in_array( "Opera", $popup_meta[ 'browser' ] ) ) echo "checked='checked'"; ?>/>
-            <label for="opera"><?php echo __( 'Opera', 'kong-popup' ); ?></label>
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input name="browser" value="Opera" type="checkbox" class="kg_checkbox_color" id="opera" <?php if ( isset( $popup_meta[ 'browser' ] ) && in_array( "Opera", $popup_meta[ 'browser' ] ) ) echo 'checked'; ?>/>
+              <span class="checkmark"></span>
+              <?php echo __( 'Opera', 'kong-popup' ); ?>
+            </label>
+            <!-- .sub-checkbox ends -->
           </div>
           <!-- .form-group ends -->
 
           <!-- .form-group starts -->
           <div class="form-group">
-            <input name="browser" value="Other" type="checkbox" id="other-browser" <?php if ( isset( $popup_meta[ 'browser' ] ) && in_array( "Other", $popup_meta[ 'browser' ] ) ) echo "checked='checked'"; ?>/>
-            <label for="other-browser"><?php echo __( 'Other', 'kong-popup' ); ?></label>
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input name="browser" value="Other" type="checkbox" class="kg_checkbox_color" id="other-browser" <?php if ( isset( $popup_meta[ 'browser' ] ) && in_array( "Other", $popup_meta[ 'browser' ] ) ) echo 'checked'; ?>/>
+              <span class="checkmark"></span>
+              <?php echo __( 'Other', 'kong-popup' ); ?>
+            </label>
+            <!-- .sub-checkbox ends -->
           </div>
           <!-- .form-group ends -->
         </div>
@@ -184,43 +219,73 @@
 
           <!-- .form-group starts -->
           <div class="form-group">
-            <input type="checkbox" name="os" value="Windows" id="Windows" <?php if ( isset( $popup_meta[ 'os' ] ) && in_array( "Windows", $popup_meta[ 'os' ] ) ) echo "checked='checked'"; ?>/>
-            <label for="Windows"><?php echo __( 'Windows', 'kong-popup' ); ?></label>
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input name="os" value="Windows" type="checkbox" class="kg_checkbox_color" id="windows" <?php if ( isset( $popup_meta[ 'os' ] ) && in_array( "Windows", $popup_meta[ 'os' ] ) ) echo 'checked'; ?>/>
+              <span class="checkmark"></span>
+              <?php echo __( 'Windows', 'kong-popup' ); ?>
+            </label>
+            <!-- .sub-checkbox ends -->
           </div>
           <!-- .form-group ends -->
 
           <!-- .form-group starts -->
           <div class="form-group">
-            <input type="checkbox" name="os" value="Linux" id="linux" <?php if ( isset( $popup_meta[ 'os' ] ) && in_array( "Linux", $popup_meta[ 'os' ] ) ) echo "checked='checked'"; ?>/>
-            <label for="linux"><?php echo __( 'Linux/Unix', 'kong-popup' ); ?></label>
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input name="os" value="Linux" type="checkbox" class="kg_checkbox_color" id="linux" <?php if ( isset( $popup_meta[ 'os' ] ) && in_array( "Linux", $popup_meta[ 'os' ] ) ) echo 'checked'; ?>/>
+              <span class="checkmark"></span>
+              <?php echo __( 'Linux', 'kong-popup' ); ?>
+            </label>
+            <!-- .sub-checkbox ends -->
           </div>
           <!-- .form-group ends -->
 
           <!-- .form-group starts -->
           <div class="form-group">
-            <input type="checkbox" name="os" value="Mac OS X" id="mac" <?php if ( isset( $popup_meta[ 'os' ] ) && in_array( "Mac OS X", $popup_meta[ 'os' ] ) ) echo "checked='checked'"; ?>/>
-            <label for="mac"><?php echo __( 'Mac OS', 'kong-popup' ); ?></label>
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input name="os" value="Mac OS X" type="checkbox" class="kg_checkbox_color" id="mac" <?php if ( isset( $popup_meta[ 'os' ] ) && in_array( "Mac OS X", $popup_meta[ 'os' ] ) ) echo 'checked'; ?>/>
+              <span class="checkmark"></span>
+              <?php echo __( 'Mac OS X', 'kong-popup' ); ?>
+            </label>
+            <!-- .sub-checkbox ends -->
           </div>
           <!-- .form-group ends -->
 
           <!-- .form-group starts -->
           <div class="form-group">
-            <input type="checkbox" name="os" value="iOS" id="ios" <?php if ( isset( $popup_meta[ 'os' ] ) && in_array( "iOS", $popup_meta[ 'os' ] ) ) echo "checked='checked'"; ?>/>
-            <label for="ios"><?php echo __( 'iOS', 'kong-popup' ); ?></label>
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input name="os" value="iOS" type="checkbox" class="kg_checkbox_color" id="ios" <?php if ( isset( $popup_meta[ 'os' ] ) && in_array( "iOS", $popup_meta[ 'os' ] ) ) echo 'checked'; ?>/>
+              <span class="checkmark"></span>
+              <?php echo __( 'iOS', 'kong-popup' ); ?>
+            </label>
+            <!-- .sub-checkbox ends -->
           </div>
           <!-- .form-group ends -->
 
           <!-- .form-group starts -->
           <div class="form-group">
-            <input type="checkbox" name="os" value="Android" id="android" <?php if ( isset( $popup_meta[ 'os' ] ) && in_array( "Android", $popup_meta[ 'os' ] ) ) echo "checked='checked'"; ?>/>
-            <label for="android"><?php echo __( 'Android', 'kong-popup' ); ?></label>
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input name="os" value="Android" type="checkbox" class="kg_checkbox_color" id="android" <?php if ( isset( $popup_meta[ 'os' ] ) && in_array( "Android", $popup_meta[ 'os' ] ) ) echo 'checked'; ?>/>
+              <span class="checkmark"></span>
+              <?php echo __( 'Android', 'kong-popup' ); ?>
+            </label>
+            <!-- .sub-checkbox ends -->
           </div>
           <!-- .form-group ends -->
 
           <!-- .form-group starts -->
           <div class="form-group">
-            <input type="checkbox" name="os" value="Other" id="other-os" <?php if ( isset( $popup_meta[ 'os' ] ) && in_array( "Other", $popup_meta[ 'os' ] ) ) echo "checked='checked'"; ?>/>
-            <label for="other-os"><?php echo __( 'Other', 'kong-popup' ); ?></label>
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input name="os" value="Other" type="checkbox" class="kg_checkbox_color" id="other-os" <?php if ( isset( $popup_meta[ 'os' ] ) && in_array( "Other", $popup_meta[ 'os' ] ) ) echo 'checked'; ?>/>
+              <span class="checkmark"></span>
+              <?php echo __( 'Other', 'kong-popup' ); ?>
+            </label>
+            <!-- .sub-checkbox ends -->
           </div>
           <!-- .form-group ends -->
         </div>
@@ -236,29 +301,49 @@
 
           <!-- .form-group starts -->
           <div class="form-group">
-            <input type="checkbox" name="device" value="Desktop" id="desktop" <?php if ( isset( $popup_meta[ 'device' ] ) && in_array( "Desktop", $popup_meta[ 'device' ] ) ) echo "checked='checked'"; ?>/>
-            <label for="desktop"><?php echo __( 'Desktop', 'kong-popup' ); ?></label>
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input name="device" value="Desktop" type="checkbox" class="kg_checkbox_color" id="desktop" <?php if ( isset( $popup_meta[ 'device' ] ) && in_array( "Desktop", $popup_meta[ 'device' ] ) ) echo 'checked'; ?>/>
+              <span class="checkmark"></span>
+              <?php echo __( 'Desktop', 'kong-popup' ); ?>
+            </label>
+            <!-- .sub-checkbox ends -->
           </div>
           <!-- .form-group ends -->
 
           <!-- .form-group starts -->
           <div class="form-group">
-            <input type="checkbox" name="device" value="Tablet" id="tablet" <?php if ( isset( $popup_meta[ 'device' ] ) && in_array( "Tablet", $popup_meta[ 'device' ] ) ) echo "checked='checked'"; ?>/>
-            <label for="tablet"><?php echo __( 'Tablet', 'kong-popup' ); ?></label>
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input name="device" value="Tablet" type="checkbox" class="kg_checkbox_color" id="tablet" <?php if ( isset( $popup_meta[ 'device' ] ) && in_array( "Tablet", $popup_meta[ 'device' ] ) ) echo 'checked'; ?>/>
+              <span class="checkmark"></span>
+              <?php echo __( 'Tablet', 'kong-popup' ); ?>
+            </label>
+            <!-- .sub-checkbox ends -->
           </div>
           <!-- .form-group ends -->
 
           <!-- .form-group starts -->
           <div class="form-group">
-            <input type="checkbox" name="device" value="Mobile" id="mobile" <?php if ( isset( $popup_meta[ 'device' ] ) && in_array( "Mobile", $popup_meta[ 'device' ] ) ) echo "checked='checked'"; ?>/>
-            <label for="mobile"><?php echo __( 'Mobile', 'kong-popup' ); ?></label>
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input name="device" value="Mobile" type="checkbox" class="kg_checkbox_color" id="mobile" <?php if ( isset( $popup_meta[ 'device' ] ) && in_array( "Mobile", $popup_meta[ 'device' ] ) ) echo 'checked'; ?>/>
+              <span class="checkmark"></span>
+              <?php echo __( 'Mobile', 'kong-popup' ); ?>
+            </label>
+            <!-- .sub-checkbox ends -->
           </div>
           <!-- .form-group ends -->
 
           <!-- .form-group starts -->
           <div class="form-group">
-            <input type="checkbox" name="device" value="Other" id="other-device" <?php if ( isset( $popup_meta[ 'device' ] ) && in_array( "Other", $popup_meta[ 'device' ] ) ) echo "checked='checked'"; ?>/>
-            <label for="other-device"><?php echo __( 'Other', 'kong-popup' ); ?></label>
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input name="device" value="Other" type="checkbox" class="kg_checkbox_color" id="other-device" <?php if ( isset( $popup_meta[ 'device' ] ) && in_array( "Other", $popup_meta[ 'device' ] ) ) echo 'checked'; ?>/>
+              <span class="checkmark"></span>
+              <?php echo __( 'Other', 'kong-popup' ); ?>
+            </label>
+            <!-- .sub-checkbox ends -->
           </div>
           <!-- .form-group ends -->
         </div>

@@ -3290,9 +3290,10 @@ select#time-schedule-option {
 .select-group{
   padding: 5px 0 0 40px;
 }
-.behavior{
-  display: block;
+.behavior {
+  display: flex;
   margin-bottom: 15px;
+  align-items: center;
 }
 .behavior label:before, .behavior label:after {
   display: none;
@@ -4072,7 +4073,7 @@ a.close-popup {
 
 
 /* The container */
-.pt-checkbox .container, .is-template-block .container {
+.pt-checkbox .container, .is-template-block .container, .form-group .container {
   display: block;
   position: relative;
   padding-left: 30px;
@@ -4084,16 +4085,20 @@ a.close-popup {
   -ms-user-select: none;
   user-select: none;
 }
-.is-template-block .container {
+.is-template-block .container, .form-group .container {
   margin-bottom: 0;
   height: 18px;
   align-items: center;
   display: flex !important;
   padding-left: 20px;
 }
-
+.form-group label.container {
+  width: auto;
+  padding-top: 2px;
+  padding-left: 15px !important;
+}
 /* Hide the browser's default checkbox */
-.pt-checkbox .container input, .is-template-block .container input {
+.pt-checkbox .container input, .is-template-block .container input, .form-group .container input{
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -4103,7 +4108,7 @@ a.close-popup {
 
 
 /* Create a custom checkbox */
-.pt-checkbox .container .checkmark, .is-template-block .container .checkmark {
+.pt-checkbox .container .checkmark, .is-template-block .container .checkmark, .form-group .container .checkmark {
   position: absolute;
   top: auto;
   left: 0;
@@ -4114,12 +4119,13 @@ a.close-popup {
   border-radius: 3px;
   padding-left: 0;
 }
-.is-template-block .container .checkmark {
+.is-template-block .container .checkmark, .form-group .container .checkmark {
   height: 15px;
   width: 15px;
 }
 
-.pt-checkbox [type=checkbox]:checked+span:not(.lever):before, .is-template-block [type=checkbox]:checked+span:not(.lever):before{
+.pt-checkbox [type=checkbox]:checked+span:not(.lever):before, .is-template-block [type=checkbox]:checked+span:not(.lever):before, 
+.form-group .container [type=checkbox]:checked+span:not(.lever):before{
   top: 0;
   left: 1px;
   width: 7px;
@@ -4128,14 +4134,16 @@ a.close-popup {
   border-right: 2px solid #fff !important;
   border-bottom: 2px solid #fff !important;
 }
-.is-template-block [type=checkbox]:checked+span:not(.lever):before {
+.is-template-block [type=checkbox]:checked+span:not(.lever):before, .form-group .container [type=checkbox]:checked+span:not(.lever):before{
   top: 2px;
   left: 0px;
   width: 5px;
   height: 8px;
   margin-top: 0 !important;
 }
-.pt-checkbox [type=checkbox]+span:not(.lever):before, .is-template-block [type=checkbox]+span:not(.lever):before{
+.pt-checkbox [type=checkbox]+span:not(.lever):before, 
+.is-template-block [type=checkbox]+span:not(.lever):before, 
+.form-group .container [type=checkbox]+span:not(.lever):before {
   border: none !important;
 }
 

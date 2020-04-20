@@ -155,19 +155,23 @@
           <h4><?php echo __( 'Date', 'kong-popup' ); ?></h4>
           <!-- .form-group starts -->
           <div class="form-group behavior">
-            <!-- .option-checkbox starts -->
-            <input type="checkbox" name="is_date_start" class="option-checkbox" id="date-start" <?php if ( isset( $popup_meta[ 'is_date_start' ] ) ) echo "checked='checked'"; ?> />
-            <label for="date-start"><?php echo __( 'start on', 'kong-popup' ); ?>
-              <input class="time-duration width--120" type="text" name="start_on" id="date-start-field" placeholder="<?php echo date( 'M d,yy' ); ?>" value="<?php if ( isset( $popup_meta[ 'start_on' ] ) ) echo $popup_meta[ 'start_on' ]; ?>" <?php if ( isset( $popup_meta[ 'is_date_start' ] ) && trim( $popup_meta[ 'is_date_start' ] ) != "on" ) echo "disabled='disabled'"; ?> />
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input type="checkbox" name="is_date_start" class="option-checkbox kg_checkbox_color" id="date-start" <?php if ( isset( $popup_meta[ 'is_date_start' ] ) && $popup_meta[ 'is_date_start' ] == 'on' ) echo 'checked'; ?> />
+              <span class="checkmark"></span>
+              <?php echo __( 'start on', 'kong-popup' ); ?>
             </label>
-            <!-- .option-checkbox ends -->
+            <!-- .sub-checkbox ends -->
+            <input class="time-duration width--120" type="text" name="start_on" id="date-start-field" placeholder="<?php echo date( 'M d,yy' ); ?>" value="<?php if ( isset( $popup_meta[ 'start_on' ] ) ) echo $popup_meta[ 'start_on' ]; ?>" <?php if ( isset( $popup_meta[ 'is_date_start' ] ) && trim( $popup_meta[ 'is_date_start' ] ) != "on" ) echo "disabled='disabled'"; ?> />
 
-            <!-- .option-checkbox starts -->
-            <input type="checkbox" name="is_date_stop" class="option-checkbox" id="date-stop" <?php if ( isset( $popup_meta[ 'is_date_stop' ] ) ) echo "checked='checked'"; ?> />
-            <label for="date-stop"><?php echo __( 'stop on', 'kong-popup' ); ?>
-              <input class="time-duration width--120" type="text" name="stop_on" id="date-stop-field" placeholder="<?php echo date( 'M d,yy' ); ?>" value="<?php if ( isset( $popup_meta[ 'stop_on' ] ) ) echo $popup_meta[ 'stop_on' ]; ?>" <?php if ( isset( $popup_meta[ 'is_date_stop' ] ) && trim( $popup_meta[ 'is_date_stop' ] ) != "on" ) echo "disabled='disabled'"; ?> />
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input type="checkbox" name="is_date_stop" class="option-checkbox kg_checkbox_color" id="date-stop" <?php if ( isset( $popup_meta[ 'is_date_stop' ] ) && $popup_meta[ 'is_date_stop' ] == 'on' ) echo 'checked'; ?> />
+              <span class="checkmark"></span>
+              <?php echo __( 'stop on', 'kong-popup' ); ?>
             </label>
-            <!-- .option-checkbox ends -->
+            <!-- .sub-checkbox ends -->
+            <input class="time-duration width--120" type="text" name="stop_on" id="date-start-field" placeholder="<?php echo date( 'M d,yy' ); ?>" value="<?php if ( isset( $popup_meta[ 'stop_on' ] ) ) echo $popup_meta[ 'stop_on' ]; ?>" <?php if ( isset( $popup_meta[ 'is_date_stop' ] ) && trim( $popup_meta[ 'is_date_stop' ] ) != "on" ) echo "disabled='disabled'"; ?> />
           </div>
           <!-- .form-group ends -->
         </div>
@@ -178,19 +182,23 @@
           <h4><?php echo __( 'Time', 'kong-popup' ); ?></h4>
           <!-- .form-group starts -->
           <div class="form-group behavior">
-            <!-- .option-checkbox starts -->
-            <input type="checkbox" name="is_time_from" class="option-checkbox" id="time-from" <?php if ( isset( $popup_meta[ 'is_time_from' ] ) && $popup_meta[ 'is_time_from' ] ) echo "checked='checked'"; ?> />
-            <label for="time-from"><?php echo __( 'from', 'kong-popup' ); ?>
-              <input class="time-duration width--120" type="text" name="time_from" id="time-from-field" placeholder="23:55" value="<?php if ( isset( $popup_meta[ 'time_from' ] ) ) echo $popup_meta[ 'time_from' ]; ?>" <?php if ( isset( $popup_meta[ 'is_time_from' ] ) && trim( $popup_meta[ 'is_time_from' ] ) != "on" ) echo "disabled='disabled'"; ?> />
-            </label> 
-            <!-- .option-checkbox ends -->
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input type="checkbox" name="is_time_from" class="option-checkbox kg_checkbox_color" id="time-from" <?php if ( isset( $popup_meta[ 'is_time_from' ] ) && $popup_meta[ 'is_time_from' ] == 'on' ) echo 'checked'; ?> />
+              <span class="checkmark"></span>
+              <?php echo __( 'from', 'kong-popup' ); ?>
+            </label>
+            <!-- .sub-checkbox ends -->
+            <input class="time-duration width--120" type="text" name="time_from" id="time-from-field" placeholder="23:55" value="<?php if ( isset( $popup_meta[ 'time_from' ] ) ) echo $popup_meta[ 'time_from' ]; ?>" <?php if ( isset( $popup_meta[ 'is_time_from' ] ) && trim( $popup_meta[ 'is_time_from' ] ) != "on" ) echo "disabled='disabled'"; ?> />
 
-            <!-- .option-checkbox starts -->
-            <input type="checkbox" name="is_time_to" class="option-checkbox" id="time-to" <?php if ( isset( $popup_meta[ 'is_time_to' ] ) && $popup_meta[ 'is_time_to' ] ) echo "checked='checked'"; ?> />
-            <label for="time-to"><?php echo __( 'to', 'kong-popup' ); ?>
-              <input class="time-duration width--120" type="text" name="time_to" id="time-to-field" placeholder="23:55" value="<?php if ( isset( $popup_meta[ 'time_to' ] ) ) echo $popup_meta[ 'time_to' ]; ?>" <?php if ( isset( $popup_meta[ 'is_time_to' ] ) && trim( $popup_meta[ 'is_time_to' ] ) != "on" ) echo "disabled='disabled'"; ?> />
-            </label> 
-            <!-- .option-checkbox ends -->
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input type="checkbox" name="is_time_to" class="option-checkbox kg_checkbox_color" id="time-to" <?php if ( isset( $popup_meta[ 'is_time_to' ] ) && $popup_meta[ 'is_time_to' ] == 'on' ) echo 'checked'; ?> />
+              <span class="checkmark"></span>
+              <?php echo __( 'to', 'kong-popup' ); ?>
+            </label>
+            <!-- .sub-checkbox ends -->
+            <input class="time-duration width--120" type="text" name="time_to" id="time-to-field" placeholder="23:55" value="<?php if ( isset( $popup_meta[ 'time_to' ] ) ) echo $popup_meta[ 'time_to' ]; ?>" <?php if ( isset( $popup_meta[ 'is_time_to' ] ) && trim( $popup_meta[ 'is_time_to' ] ) != "on" ) echo "disabled='disabled'"; ?> />
 
             <?php echo __( 'time zone', 'kong-popup' ); ?>
             <!-- .select-option starts -->
@@ -215,40 +223,61 @@
           <h4><?php echo __( 'Days of the week', 'kong-popup' ); ?></h4>
           <!-- .form-group starts -->
           <div class="form-group select-days">
-            <input name="days_of_week" value="Sun" type="checkbox" id="sunday" <?php if ( isset( $popup_meta[ 'days_of_week' ] ) && in_array( "Sun", $popup_meta[ 'days_of_week' ] ) ) echo "checked='checked'"; ?> />
-            <label for="sunday">
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input type="checkbox" name="days_of_week" value="Sun" class="option-checkbox kg_checkbox_color" id="sunday" <?php if ( isset( $popup_meta[ 'days_of_week' ] ) && in_array( "Sun", $popup_meta[ 'days_of_week' ] ) ) echo 'checked'; ?> />
+              <span class="checkmark"></span>
               <?php echo __( 'Sun', 'kong-popup' ); ?>
             </label>
+            <!-- .sub-checkbox ends -->
 
-            <input name="days_of_week" value="Mon" type="checkbox" id="monday" <?php if ( isset( $popup_meta[ 'days_of_week' ] ) && in_array( "Mon", $popup_meta[ 'days_of_week' ] ) ) echo "checked='checked'"; ?> />
-            <label for="monday">
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input type="checkbox" name="days_of_week" value="Mon" class="option-checkbox kg_checkbox_color" id="monday" <?php if ( isset( $popup_meta[ 'days_of_week' ] ) && in_array( "Mon", $popup_meta[ 'days_of_week' ] ) ) echo 'checked'; ?> />
+              <span class="checkmark"></span>
               <?php echo __( 'Mon', 'kong-popup' ); ?>
             </label>
+            <!-- .sub-checkbox ends -->
 
-            <input name="days_of_week" value="Tue" type="checkbox" id="tuesday" <?php if ( isset( $popup_meta[ 'days_of_week' ] ) && in_array( "Tue", $popup_meta[ 'days_of_week' ] ) ) echo "checked='checked'"; ?> />
-            <label for="tuesday">
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input type="checkbox" name="days_of_week" value="Tue" class="option-checkbox kg_checkbox_color" id="tuesday" <?php if ( isset( $popup_meta[ 'days_of_week' ] ) && in_array( "Tue", $popup_meta[ 'days_of_week' ] ) ) echo 'checked'; ?> />
+              <span class="checkmark"></span>
               <?php echo __( 'Tue', 'kong-popup' ); ?>
             </label>
+            <!-- .sub-checkbox ends -->
 
-            <input name="days_of_week" value="Wed" type="checkbox" id="wednesday" <?php if ( isset( $popup_meta[ 'days_of_week' ] ) && in_array( "Wed", $popup_meta[ 'days_of_week' ] ) ) echo "checked='checked'"; ?> />
-            <label for="wednesday">
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input type="checkbox" name="days_of_week" value="Wed" class="option-checkbox kg_checkbox_color" id="wednesday" <?php if ( isset( $popup_meta[ 'days_of_week' ] ) && in_array( "Wed", $popup_meta[ 'days_of_week' ] ) ) echo 'checked'; ?> />
+              <span class="checkmark"></span>
               <?php echo __( 'Wed', 'kong-popup' ); ?>
             </label>
+            <!-- .sub-checkbox ends -->
 
-            <input name="days_of_week" value="Thu" type="checkbox" id="thursday" <?php if ( isset( $popup_meta[ 'days_of_week' ] ) && in_array( "Thu", $popup_meta[ 'days_of_week' ] ) ) echo "checked='checked'"; ?> />
-            <label for="thursday">
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input type="checkbox" name="days_of_week" value="Thu" class="option-checkbox kg_checkbox_color" id="thursday" <?php if ( isset( $popup_meta[ 'days_of_week' ] ) && in_array( "Thu", $popup_meta[ 'days_of_week' ] ) ) echo 'checked'; ?> />
+              <span class="checkmark"></span>
               <?php echo __( 'Thu', 'kong-popup' ); ?>
             </label>
+            <!-- .sub-checkbox ends -->
 
-            <input name="days_of_week" value="Fri" type="checkbox" id="friday" <?php if ( isset( $popup_meta[ 'days_of_week' ] ) && in_array( "Fri", $popup_meta[ 'days_of_week' ] ) ) echo "checked='checked'"; ?> />
-            <label for="friday">
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input type="checkbox" name="days_of_week" value="Fri" class="option-checkbox kg_checkbox_color" id="friday" <?php if ( isset( $popup_meta[ 'days_of_week' ] ) && in_array( "Fri", $popup_meta[ 'days_of_week' ] ) ) echo 'checked'; ?> />
+              <span class="checkmark"></span>
               <?php echo __( 'Fri', 'kong-popup' ); ?>
             </label>
+            <!-- .sub-checkbox ends -->
 
-            <input name="days_of_week" value="Sat" type="checkbox" id="saturday" <?php if ( isset( $popup_meta[ 'days_of_week' ] ) && in_array( "Sat", $popup_meta[ 'days_of_week' ] ) ) echo "checked='checked'"; ?> />
-            <label for="saturday">
+            <!-- .sub-checkbox starts -->
+            <label class="container sub-checkbox">
+              <input type="checkbox" name="days_of_week" value="Sat" class="option-checkbox kg_checkbox_color" id="saturday" <?php if ( isset( $popup_meta[ 'days_of_week' ] ) && in_array( "Sat", $popup_meta[ 'days_of_week' ] ) ) echo 'checked'; ?> />
+              <span class="checkmark"></span>
               <?php echo __( 'Sat', 'kong-popup' ); ?>
             </label>
+            <!-- .sub-checkbox ends -->
           </div>
           <!-- .form-group ends -->
         </div>
