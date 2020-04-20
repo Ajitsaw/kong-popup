@@ -9,47 +9,47 @@
             <div class="form-position">
                 <label for="appearance-center-center" class="pos-label <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'center-center' ) echo 'selected'; ?>">
                     <input type="radio" class="bg_radio_color" name="appearance_position" value="center-center" id="appearance-center-center" data-name="position" />
-                    <div class="popview-icon popview-icon__one"></div>
+                    <div class="popview-icon popview-icon__one <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'center-center' ) echo 'kg_border_color'; ?>"></div>
                 </label>
 
                 <label for="appearance-bottom-left" class="pos-label <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'bottom-left' ) echo 'selected'; ?>">
                     <input type="radio" class="bg_radio_color" name="appearance_position" value="bottom-left" id="appearance-bottom-left" data-name="position" />
-                    <div class="popview-icon popview-icon__two"></div>
+                    <div class="popview-icon popview-icon__two <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'bottom-left' ) echo 'kg_border_color'; ?>"></div>
                 </label>
 
                 <label for="appearance-bottom-right" class="pos-label <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'bottom-right' ) echo 'selected'; ?>">
                     <input type="radio" class="bg_radio_color" name="appearance_position" value="bottom-right" id="appearance-bottom-right" data-name="position" />
-                    <div class="popview-icon popview-icon__three"></div>
+                    <div class="popview-icon popview-icon__three <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'bottom-right' ) echo 'kg_border_color'; ?>"></div>
                 </label>
 
                 <label for="appearance-top-full" class="pos-label <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'top-full' ) echo 'selected'; ?>">
                     <input type="radio" class="bg_radio_color" name="appearance_position" value="top-full" id="appearance-top-full" data-name="position" />
-                    <div class="popview-icon popview-icon__four"></div>
+                    <div class="popview-icon popview-icon__four <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'top-full' ) echo 'kg_border_color'; ?>"></div>
                 </label>
 
                 <label for="appearance-bottom-full" class="pos-label <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'bottom-full' ) echo 'selected'; ?>">
                     <input type="radio" class="bg_radio_color" name="appearance_position" value="bottom-full" id="appearance-bottom-full" data-name="position" />
-                    <div class="popview-icon popview-icon__five"></div>
+                    <div class="popview-icon popview-icon__five <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'bottom-full' ) echo 'kg_border_color'; ?>"></div>
                 </label>
 
                 <label for="appearance-center-left" class="pos-label <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'center-left' ) echo 'selected'; ?>">
                     <input type="radio" class="bg_radio_color" name="appearance_position" value="center-left" id="appearance-center-left" data-name="position" />
-                    <div class="popview-icon popview-icon__six"></div>
+                    <div class="popview-icon popview-icon__six <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'center-left' ) echo 'kg_border_color'; ?>"></div>
                 </label>
 
                 <label for="appearance-center-right" class="pos-label <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'center-right' ) echo 'selected'; ?>">
                     <input type="radio" class="bg_radio_color" name="appearance_position" value="center-right" id="appearance-center-right" data-name="position" />
-                    <div class="popview-icon popview-icon__seven"></div>
+                    <div class="popview-icon popview-icon__seven <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'center-right' ) echo 'kg_border_color'; ?>"></div>
                 </label>
 
                 <label for="appearance-baseline-left" class="pos-label <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'baseline-left' ) echo 'selected'; ?>">
                     <input type="radio" class="bg_radio_color" name="appearance_position" value="baseline-left" id="appearance-baseline-left" data-name="position" />
-                    <div class="popview-icon popview-icon__eight"></div>
+                    <div class="popview-icon popview-icon__eight <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'baseline-left' ) echo 'kg_border_color'; ?>"></div>
                 </label>
 
                 <label for="appearance-baseline-right" class="pos-label <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'baseline-right' ) echo 'selected'; ?>">
                     <input type="radio" class="bg_radio_color" name="appearance_position" value="baseline-right" id="appearance-baseline-right" data-name="position" />
-                    <div class="popview-icon popview-icon__nine"></div>
+                    <div class="popview-icon popview-icon__nine <?php if ( isset( $popup_meta[ 'appearance_position' ] ) && trim( $popup_meta[ 'appearance_position' ] ) == 'baseline-right' ) echo 'kg_border_color'; ?>"></div>
                 </label>
             </div>
             <!-- .form-position ends -->
@@ -58,7 +58,7 @@
             <div class="pt-checkbox pt-inline-field">
                 <!-- .container starts -->
                 <label class="container">
-                    <input type="checkbox" name="add_image_appearance" class="option-checkbox" id="option-add-image-opener-appearance" data-info="add-image" <?php if ( isset( $popup_meta[ 'add_image_appearance' ] ) == 'on' ) echo 'checked'; ?> />
+                    <input type="checkbox" name="add_image_appearance" class="option-checkbox kg_checkbox_color" id="option-add-image-opener-appearance" data-info="add-image" <?php if ( isset( $popup_meta[ 'add_image_appearance' ] ) == 'on' ) echo 'checked'; ?> />
                     <span class="checkmark"></span>
                     <?php echo __( 'Add image', 'kong-popup' ); ?>
                 </label>
@@ -1633,13 +1633,16 @@
                 <div class="pt-checkbox pt-inline-field">
                     <!-- .container starts -->
                     <label class="container">
-                        <input type="checkbox" name="enable_unobtrusive" class="option-checkbox"  id="enable-unobtrusive" <?php if ( isset( $popup_meta[ 'enable_unobtrusive' ] ) == 'on' ) echo 'checked'; ?> />
-                        <span class="checkmark"></span><?php echo __( 'Enable unobtrusive mobile view', 'kong-popup' ); ?> 
-                        <span>
-                            <a href="javascript:void(0);">
-                                <i class="fa fa-question-circle" aria-hidden="true"></i>
-                            </a>
-                        </span>
+                        <input type="checkbox" name="enable_unobtrusive" class="option-checkbox kg_checkbox_color"  id="enable-unobtrusive" <?php if ( isset( $popup_meta[ 'enable_unobtrusive' ] ) == 'on' ) echo 'checked'; ?> />
+                        <span class="checkmark"></span>
+                        <label>
+                            <?php echo __( 'Enable unobtrusive mobile view', 'kong-popup' ); ?> 
+                            <span>
+                                <a href="javascript:void(0);">
+                                    <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                </a>
+                            </span>
+                        </label>
                     </label>
                     <!-- .container ends -->
                 </div>

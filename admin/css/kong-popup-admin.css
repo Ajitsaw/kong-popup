@@ -2850,7 +2850,7 @@ input.time-schedule {
 .display-in select:focus, .when-reach-percentage-option, .when-reach-percentage-option:focus, 
 .show-on-block input, .show-on-block input:focus, .parameter-list select, 
 .parameter-list select:focus, .parameter-list input[type="text"], .behavior-tab input[type="text"]:focus, 
-.behavior-tab input[type="text"], #time-schedule-option, #time-schedule-option:focus  {
+.behavior-tab input[type="text"], #time-schedule-option, #time-schedule-option:focus, #dashboard-popup-lists  {
   width: 100%;
   border: 1px solid #ccc;
   height: 40px;
@@ -3290,9 +3290,10 @@ select#time-schedule-option {
 .select-group{
   padding: 5px 0 0 40px;
 }
-.behavior{
-  display: block;
+.behavior {
+  display: flex;
   margin-bottom: 15px;
+  align-items: center;
 }
 .behavior label:before, .behavior label:after {
   display: none;
@@ -3539,9 +3540,11 @@ span.close-btn {
   border-radius: 5px;
   display: inline-block;
 }
-.dashboard-left{
+.dashboard-left {
   float: left;
   padding: 10px 0 0;
+  display: flex;
+  align-items: center;
 }
 .dashboard-left i{
   background: #9F9F9F;
@@ -3661,17 +3664,18 @@ li.folder-item img {
   background: #fff;
   border-radius: 10px;
 }
-.popup-list h3{
+.popup-list h3 {
   font-size: 18px;
   text-transform: capitalize;
   padding: 0 0 25px 0;
+  margin: 0;
 }
 .popuplist-box{
   width: 100%;
   text-align: left;
 }
-.popuplist-box thead{
-  font-size: 27px;
+.popuplist-box thead {
+  font-size: 24px;
   padding: 18px 25px;
 }
 .popuptitle{
@@ -3685,7 +3689,7 @@ li.folder-item img {
 }
 .popuplist-box thead th {
   padding: 18px 25px;
-  border-bottom: 1px solid #DBDEE3;
+  border: 1px solid #DBDEE3;
 }
 .popuplist-box tbody td {
   border-bottom: 1px solid #DBDEE3;
@@ -3701,6 +3705,7 @@ li.folder-item img {
   vertical-align: bottom;
   color: #9A7832;
   margin: 0 5px;
+  font-size: 20px;
 }
 .popuplist-box tbody tr:nth-child(2n-1) {
   background: #F2F2F2;
@@ -3711,7 +3716,7 @@ li.folder-item img {
   padding: 18px 25px;
 }
 .statistics{
-  padding: 24px;
+  padding: 24px !important;
   background: #fff;
   border-radius: 10px;
   margin: 0 0 20px 0;
@@ -3720,6 +3725,7 @@ li.folder-item img {
   font-size: 18px;
   text-transform: capitalize;
   padding: 0 0 25px 0;
+  margin: 0;
 }
 .top-value-inner{
   font-size: 0;
@@ -3736,15 +3742,15 @@ li.folder-item img {
   background: #ccc;
   min-height: 146px;
 }
-.activity-inner{
+.activity-inner {
   font-size: 0;
-  margin: 0 -30px 0;
+  margin: 0 -15px;
 }
-.chart-block{
+.chart-block {
   width: 50%;
   display: inline-block;
   vertical-align: top;
-  padding: 24px 30px;
+  padding: 30px 15px 0;
   box-sizing: border-box;
 }
 .chart-block-inner{
@@ -3762,10 +3768,23 @@ li.folder-item img {
   margin: 0;
   padding: 0 0 50px 0;
   text-transform: uppercase;
+  font-weight: 600;
 }
-.round-chart{
+
+.round-chart {
   width: 241px;
   float: left;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+.round-chart h3 {
+  font-weight: 400;
+  margin-top: 20px;
+  padding-bottom: 0 !important;
+}
+.round-chart img {
+  width: 100%;
 }
 .chart-information{
   float: right;
@@ -4072,7 +4091,7 @@ a.close-popup {
 
 
 /* The container */
-.pt-checkbox .container, .is-template-block .container {
+.pt-checkbox .container, .is-template-block .container, .form-group .container {
   display: block;
   position: relative;
   padding-left: 30px;
@@ -4084,16 +4103,20 @@ a.close-popup {
   -ms-user-select: none;
   user-select: none;
 }
-.is-template-block .container {
+.is-template-block .container, .form-group .container {
   margin-bottom: 0;
   height: 18px;
   align-items: center;
   display: flex !important;
   padding-left: 20px;
 }
-
+.form-group label.container {
+  width: auto;
+  padding-top: 2px;
+  padding-left: 15px !important;
+}
 /* Hide the browser's default checkbox */
-.pt-checkbox .container input, .is-template-block .container input {
+.pt-checkbox .container input, .is-template-block .container input, .form-group .container input{
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -4103,7 +4126,7 @@ a.close-popup {
 
 
 /* Create a custom checkbox */
-.pt-checkbox .container .checkmark, .is-template-block .container .checkmark {
+.pt-checkbox .container .checkmark, .is-template-block .container .checkmark, .form-group .container .checkmark {
   position: absolute;
   top: auto;
   left: 0;
@@ -4114,12 +4137,13 @@ a.close-popup {
   border-radius: 3px;
   padding-left: 0;
 }
-.is-template-block .container .checkmark {
+.is-template-block .container .checkmark, .form-group .container .checkmark {
   height: 15px;
   width: 15px;
 }
 
-.pt-checkbox [type=checkbox]:checked+span:not(.lever):before, .is-template-block [type=checkbox]:checked+span:not(.lever):before{
+.pt-checkbox [type=checkbox]:checked+span:not(.lever):before, .is-template-block [type=checkbox]:checked+span:not(.lever):before, 
+.form-group .container [type=checkbox]:checked+span:not(.lever):before{
   top: 0;
   left: 1px;
   width: 7px;
@@ -4128,14 +4152,16 @@ a.close-popup {
   border-right: 2px solid #fff !important;
   border-bottom: 2px solid #fff !important;
 }
-.is-template-block [type=checkbox]:checked+span:not(.lever):before {
+.is-template-block [type=checkbox]:checked+span:not(.lever):before, .form-group .container [type=checkbox]:checked+span:not(.lever):before{
   top: 2px;
   left: 0px;
   width: 5px;
   height: 8px;
   margin-top: 0 !important;
 }
-.pt-checkbox [type=checkbox]+span:not(.lever):before, .is-template-block [type=checkbox]+span:not(.lever):before{
+.pt-checkbox [type=checkbox]+span:not(.lever):before, 
+.is-template-block [type=checkbox]+span:not(.lever):before, 
+.form-group .container [type=checkbox]+span:not(.lever):before {
   border: none !important;
 }
 
@@ -4987,7 +5013,13 @@ span.error-message {
   margin: 0 !important;
   padding: 0 !important;
 }
-
+#dashboard-popup-lists {
+  margin-left: 15px;
+  margin-bottom: 0;
+}
+div#report-filter {
+  padding: 0 !important;
+}
 
 
 /*Responsive Start*/

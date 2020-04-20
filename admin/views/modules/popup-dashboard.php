@@ -152,7 +152,7 @@
 				<span class="date-box"></span>
 			</div>
 
-			<div>
+			<div class="dashboard-left_dropdown">
 				<select class="dashboard-popup-lists" id="dashboard-popup-lists">
 					<?php
 	                // get all items which belongs to popup-template category
@@ -343,8 +343,9 @@
 						<!-- .round-chart starts -->
 						<div class="round-chart" id="top-performing-popup-round-chart">
 							<img src="#" alt="" id="tpp-url" />
+							<h3 id="tpp-title"></h3>
 						</div>
-						<h3 id="tpp-title"></h3>
+						
 						<!-- .round-chart ends -->
 
 						<!-- .chart-information starts -->
@@ -393,7 +394,10 @@
 						<!-- .round-chart starts -->
 						<div class="round-chart" id="top-refferers-round-chart"></div>
 						<!-- .round-chart ends -->
-
+						<!--- image for demo -->
+						<div class="round-chart" id="top-performing-popup-round-chart">
+							<img src="http://localhost/kong-popup/wp-content/uploads/2020/03/graph.png" alt="" id="tpp-url">
+						</div>
 						<!-- .chart-information starts -->
 						<div class="chart-information" id="top-refferers-block">
 							<!-- .chart-value-row starts -->
