@@ -5027,7 +5027,8 @@ span.error-message {
 /*Responsive Start*/
 @media (max-width: 1200px){
   .preview-viewport {
-    margin-top: 35px
+    margin-top: 35px;
+    
   }
   .pt-colors ul li {
     width: 30%
