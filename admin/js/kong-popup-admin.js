@@ -1,4 +1,3 @@
-// var popupData = {};
 $ = jQuery.noConflict();
 
 var removeFieldsNameArray = [];
