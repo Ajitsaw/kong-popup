@@ -248,4 +248,52 @@ class Kong_Popup_Render
     //     }
     // }
 
+
+
+    public function get_popup_all_infoo() 
+    {
+        global $wpdb;
+
+        $infos = array();
+
+        $get_preview_data_query = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}kong_popup_preview_meta WHERE popup_id = {$this->popup_id}" );
+        foreach ( $get_preview_data_query as $key => $value ) {
+            if ( $value->meta_key != "popup_structure" ) {
+                $infos[ $value->meta_key ] = $value->meta_value;
+            }
+        }
+
+        return $infos;
+    }
+
+    public function get_popup_contentt() 
+    {
+        global $wpdb;
+
+        $get_preview_data_query = $wpdb->get_results( "SELECT meta_value FROM {$wpdb->prefix}kong_popup_preview_meta WHERE popup_id = {$this->popup_id} AND meta_key = 'popup_structure'" );
+
+        $content = $get_preview_data_query[ 0 ]->meta_value;
+
+        return $content;
+    }
+
+    public function generate_popup_contentt() 
+    {
+        $infos = $this->get_popup_all_infoo();
+        $content = $this->get_popup_contentt();
+        $content = str_replace( "{_ID_}", $this->popup_id, $content );
+            
+        // Replace the values from meta to template
+        preg_match_all( '/{([^}]*)}/', $content, $matches );
+
+        $search_arr = array_combine( $matches[ 1 ], $matches[ 0 ] );
+
+        foreach ( $search_arr as $k => $v ) {
+            $replace_value = $infos[ $k ];
+            $content = str_replace( $v, $replace_value, $content );
+        }
+
+        return $content;
+    }
+
 }

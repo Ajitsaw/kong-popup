@@ -366,7 +366,7 @@ class Kong_Popup_Admin
 
         $kong_popup = new Kong_Popup_Render($post_id);
         $dynamic_css = $kong_popup->generate_popup_css();
-        $content = $kong_popup->generate_popup_content();
+        $content = $kong_popup->generate_popup_contentt();
         $dynamic_js = $kong_popup->generate_popup_js();
 
         echo '<html><head>';

@@ -3,17 +3,19 @@ $ = jQuery.noConflict();
 
 var removeFieldsNameArray = [];
 const roundChartDataColor = [
-	'#daa520',
-	'#b38b6d',
-	'#cd7f32',
-	'#808000',
-	'#a0522d',
-	'#996515',
-	'#c2b280',
-	'#5b342e',
-	'#f8e076',
-	'#d6b75a',
-	'#ba9238',
+	'#369EA0',
+	'#f68b60',
+	'#52c27e',
+	'#f3556b',
+	'#76317c',
+	'#8b58d9',
+	'#29dce4',
+	'#9621d2',
+	'#3baadf',
+	'#9a2767',
+	'#428abd',
+	'#ef8856',
+	'#a6ef56',
 ];
 
 jQuery( document ).ready( function( e ) {
@@ -1183,19 +1185,17 @@ jQuery( document ).ready( function( e ) {
 	});
 
 	jQuery( this ).on( 'click', '.removeSection', function() {
-		// console.log( removeFieldsNameArray );
-		// console.log( removeFieldsNameArray.length );
-		// if ( removeFieldsNameArray.length > 0 ) {
-		// 	console.log( "OK" );
-		// }
-		// console.log( popupData );
 		jQuery( this ).closest( '.drugableSection' ).find( 'input, select, textarea' ).each( function() {
 		    removeFieldsNameArray.push( this.name );
 		    delete popupData[ this.name ];
 		} );
-		// console.log( removeFieldsNameArray );
-		console.log( popupData );
-		jQuery( this ).closest( '.drugableSection' ).remove();
+		
+		var $selectedElement = jQuery( this ).closest( '.drugableSection' );
+		var dataField = $selectedElement.attr( 'data-field' );
+
+		$selectedElement.remove();
+		jQuery( ".pt-frm-field[data-form-field='" + dataField + "']" ).remove();
+
 		rearrangeSection();
 		popupPreview();
 	} );
@@ -1217,7 +1217,7 @@ jQuery( document ).ready( function( e ) {
 		} else if(fldIdentity == 'ea') {
 			jQuery('#fldArea').append(emailAddressFld( title, id ));
 			rearrangeSection();
-			popupPreview();
+			// popupPreview();
 		} else if(fldIdentity == 'r') {
 			jQuery('#fldArea').append(ratingFld( title, id ));
 			rearrangeSection();
@@ -1241,13 +1241,15 @@ jQuery( document ).ready( function( e ) {
 	})
 	jQuery('#emailAddressBtn').click(function() {
 		var ind = jQuery( '#fldArea .drugableSection' ).length + 1;
-		var structure = emailAddressFld('Email address', 'ea_'+ind);
-		console.log( structure );
-		jQuery('#fldArea').append(structure[ 1 ]);
-		toggleEl('#addFldList', 'hide');
+		var structure = emailAddressFld( 'Email address', 'ea_' + ind );
+		jQuery( '#fldArea' ).append( structure[ 1 ] );
+		toggleEl( '#addFldList', 'hide' );
 		rearrangeSection();
 		popupPreview();
 	});
+		
+	popupPreview();
+
 	jQuery('#welcomePageBtn').click(function() {
 		var ind = jQuery( '#fldArea .drugableSection' ).length + 1;
 
@@ -1389,11 +1391,6 @@ jQuery( document ).ready( function( e ) {
 	} );
 
 } );
-
-// function popupPreview() 
-// {
-// 	console.log( "OK" );
-// }
 
 function dateRender( start, end ) 
 {
@@ -1795,7 +1792,7 @@ var filteredReport = ( fromDate, toDate ) => {
 					data: [ {
 						type: "doughnut",
 						startAngle: 60,
-						innerRadius: 75,
+						innerRadius: 70,
 						indexLabel: " ",
 						toolTipContent: "<b>{label}:</b> {y} (#percent%)",
 				    	indexLabelLineThickness: 0,
@@ -1804,49 +1801,13 @@ var filteredReport = ( fromDate, toDate ) => {
 				} );
 				roundChart.render();
 			} );
-
-			// var chartLocation = new CanvasJS.Chart( 'top-locations-round-chart', {
-			// 	animationEnabled: true,
-			// 	title:{
-			// 		text: "Email Categories",
-			// 		horizontalAlign: "left"
-			// 	},
-			// 	data: [ {
-			// 		type: "doughnut",
-			// 		startAngle: 60,
-			// 		//innerRadius: 60,
-			// 		// indexLabelFontSize: 17,
-			// 		// indexLabel: " ",
-			// 		toolTipContent: "<b>{label}:</b> {y} (#percent%)",
-			//     	// indexLabelLineThickness: 0,
-			// 		dataPoints: topLocationsRoundChartData
-			// 	} ]
-			// } );
-			// chartLocation.render();
-			/** CHART END */
 		}
 	}
-
-	// rearrangeSection();
-	// jQuery( '.pt-addfield' ).on( 'sortupdate', function( event, ui ) {
-	// 	rearrangeSection();
-	// } );
 }
 
 var popupPreview = () => {
-	console.log( "PREVIEW" );
-	// // console.log( JSON.parse( JSON.stringify( popupData ) ) );
-
-	// if ( popupData ) {
-		// setCookie( "kong_popup_preview_rendered", popupData );
-	// 	// var popupDataa = JSON.parse( popupData );
-	// 	// createCookie( 'kong_popup_preview_rendered', popupData );
-	// 	// Cookies.set( 'bookableDates', popupData );
-	// 	document.cookie = "kong_popup_preview_rendered=" + JSON.stringify( popupData );
-	// }
+	console.log( "PREVIEW WORKS HERE" );
 	var popupHTML = jQuery( '.popup-content' ).html();
-	console.log( popupHTML );
-	console.log( removeFieldsNameArray );
 	if ( popupData ) {
 		jQuery.ajax( {
 			type: 'POST',
@@ -1863,10 +1824,12 @@ var popupPreview = () => {
 					x.overrideMimeType( "application/j-son; charset=UTF-8" );
 				}
 			},
-			success: ( data ) => {}
+			success: ( data ) => {
+				var frameSRC = jQuery( '.preview-wrap iframe' ).attr( 'src' );
+				jQuery( '.preview-wrap iframe' ).attr( 'src', frameSRC ); 
+				jQuery( 'a.frame' ).attr( 'href', frameSRC );
+			}
 		} );
-	} else {
-		console.log( 'Not Preview...' );
 	}
 }
 
@@ -1879,11 +1842,7 @@ var updatePopupDataa = () => {
 			popupData[ 'content_html_structures' ] = contentHTMLStructures;
 		}
 
-		// if ( removeFieldsNameArray.length > 0 ) {
-		// 	console.log( "OK" );
-		// }
-
-		console.log( removeFieldsNameArray );
+		var popupHTML = jQuery( '.popup-content' ).html();
 
 		jQuery.ajax( {
 			type: 'POST',
@@ -1892,6 +1851,7 @@ var updatePopupDataa = () => {
 			data: {
 				action: 'update_popup_info_ajax',
 				popup_data: popupData,
+				popup_html: popupHTML,
 				remove_fields: removeFieldsNameArray,
 			},
 			beforeSend: ( x ) => {
@@ -1900,9 +1860,6 @@ var updatePopupDataa = () => {
 				}
 			},
 			success: ( data ) => {
-				frameSRC = jQuery('.preview-wrap iframe' ).attr( 'src' );
-				jQuery( '.preview-wrap iframe' ).attr( 'src', frameSRC ); 
-				jQuery( 'a.frame' ).attr( 'href', frameSRC );
 				jQuery( '#success-message' ).html( '<i class="fa fa-check" aria-hidden="true"></i>Saved!' ).show();
 				setTimeout( () => {
 					jQuery( '#success-message' ).hide( 'blind', {}, 500 );
@@ -1911,8 +1868,6 @@ var updatePopupDataa = () => {
 				removeFieldsNameArray = [];
 			}
 		} );
-	} else {
-		console.log( 'Not Updating...' );
 	}
 }
 
@@ -1970,6 +1925,7 @@ var toggleEl = ( $el, action ) => {
 var emailAddressFld = ( title, id ) => {
 	var returnStructure = [];
 	var index = formFieldIndex();
+	var order = findNextIndex( id );
 	var html = `
 		<div class="drugableSection" id="${id}" data-field="${index}">
 			<div class="pt-addfield-box">
@@ -2030,13 +1986,14 @@ var emailAddressFld = ( title, id ) => {
 		</div>
   	`;
   	returnStructure.push( index, html );
-  	jQuery( '.popup-form' ).append( 
-		`
-		<div class="pt-frm-field" id="fl-${id}" data-form-field="${index}">
+
+  	var formField = `
+		<div class="pt-frm-field" id="fl_${id}" data-form-field="${index}" data-order="${order}">
 			<input type="email" name="test-email" />
 		</div>
-		`
-	);
+	`;
+  	jQuery( '.form-fields-block' ).append( formField );
+
   	return returnStructure;
 }
 
@@ -2345,19 +2302,23 @@ var newSegment = ( title, id ) => {
 </div>`
 }
 
-// var findNextIndex =  ( id ) => {
-// 	var splitIndex = id.split( '_' );
+var findNextIndex =  ( id ) => {
+	var splitIndex = id.split( '_' );
 
-// 	return parseInt( splitIndex[ 1 ] );
-// }
+	return parseInt( splitIndex[ 1 ] );
+}
 
 var rearrangeSection = () => {
 	var length = jQuery( '#fldArea .drugableSection' ).length;
 	for ( var i = 1; i <= length; i++ ) {
+		var dataField = jQuery( '.drugableSection:nth-child( ' + i + ' )' ).attr( 'data-field' );
 		var splitIndex = jQuery( '.drugableSection:nth-child( ' + i + ' )' )[ 0 ].id.split( '_' );
 		// jQuery( '.drugableSection:nth-child( ' + i + ' )' ).removeClass().addClass( 'drugableSection drag-' + i ).attr( { 'id': splitIndex[ 0 ] + '_' + i, 'data-order': i } );
 		jQuery( '.drugableSection:nth-child( ' + i + ' )' ).attr( { 'id': splitIndex[ 0 ] + '_' + i } );
+		jQuery( '.form-fields-block' ).find( "[data-form-field='" + dataField + "']" ).attr( { 'id': 'fl_' + splitIndex[ 0 ] + '_' + i, 'data-order': i } );
 	}
+	sortFormFieldsPostion();
+	popupPreview();
 }
 
 var formFieldIndex = () => {
@@ -2369,4 +2330,12 @@ var formFieldIndex = () => {
     }
 
     return result;
+}
+
+var sortFormFieldsPostion = () => {
+	var fields = jQuery( '.pt-frm-field' );
+	fields.sort( ( a, b ) => {
+		return jQuery( a ).data( 'order' ) - jQuery( b ).data( 'order' );
+	} );
+	jQuery( '.form-fields-block' ).html( fields );
 }

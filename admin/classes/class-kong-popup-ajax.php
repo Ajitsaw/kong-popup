@@ -37,6 +37,14 @@ class Kong_Popup_Admin_Ajax
             }
         }
 
+        // update post content
+        $post = get_post( $post_id );
+        $post->post_content = $_REQUEST[ 'popup_html' ];
+        wp_update_post( $post );
+
+        // update preview table
+        $this->update_preview_popup_meta( $post_id, 'popup_structure', $_REQUEST[ 'popup_html' ] );
+
         // loop the remaining and put in post meta
         foreach ( $meta_data as $mdkey => $mdvalue ) {
             if ( $mdkey == "content_html_structures" ) {

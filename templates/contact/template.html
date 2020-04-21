@@ -26,17 +26,21 @@
         <p>{popup_body_description}</p>
 
         <form class="popup-form" onsubmit="javascript:submit_behaviour();">
-            <div class="pt-frm-field">
-                <label>Email</label>
-                <input type="email" name="">
+            <div class="form-fields-block">
+                <div class="pt-frm-field">
+                    <label>Email</label>
+                    <input type="email" name="">
+                </div>
+
+                <div class="pt-frm-field">
+                    <label>Message</label>
+                    <textarea></textarea>
+                </div>
             </div>
 
-            <div class="pt-frm-field">
-                <label>Message</label>
-                <textarea></textarea>
+            <div class="form-btn-block">
+                <button id="popup-submit">{popup_button_text}</button>
             </div>
-            
-            <button>{popup_button_text}</button>
         </form>
     </div>
 </div>

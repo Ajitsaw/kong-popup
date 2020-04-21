@@ -653,9 +653,9 @@
 
                 $popup_id = $_REQUEST[ 'id' ]; 
 
-                $get_structures = $wpdb->get_results( "SELECT structures FROM {$wpdb->prefix}kong_popup_content_structures WHERE popup_id = $popup_id", OBJECT );
+                $get_structures = $wpdb->get_results( "SELECT structures FROM {$wpdb->prefix}kong_popup_content_structures WHERE popup_id = {$popup_id}" );
                 if ( $get_structures ) {
-                    echo $get_structures[ 0 ] ->structures;
+                    echo $get_structures[ 0 ]->structures;
                 }
                 ?>
             </div>
