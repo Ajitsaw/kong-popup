@@ -3785,8 +3785,12 @@ li.folder-item img {
 .round-chart {
   width: 241px;
   float: left;
+  display: block;
+}
+div#top-performing-popup-round-chart {
   display: flex;
   flex-flow: column;
+  justify-content: center;
   align-items: center;
 }
 .round-chart h3 {
