@@ -4133,6 +4133,7 @@ a.close-popup {
   margin: 0;
   margin-right: 5px;
 }
+
 /* Hide the browser's default checkbox */
 .pt-checkbox .container input, .is-template-block .container input, .form-group .container input{
   position: absolute;
@@ -5048,7 +5049,9 @@ span.error-message {
 div#report-filter {
   padding: 0 !important;
 }
-
+.canvasjs-chart-container {
+  height: 230px;
+}
 
 /*Responsive Start*/
 @media (max-width: 1200px){
