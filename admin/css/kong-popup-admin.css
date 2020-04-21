@@ -4128,14 +4128,10 @@ a.close-popup {
 .form-group label.container {
   width: auto;
   padding-top: 2px;
-<<<<<<< HEAD
-  padding-left: 15px !important;
-=======
   padding-left: 25px !important;
   padding: 0;
   margin: 0;
   margin-right: 5px;
->>>>>>> 77f19c90e3c26a33374a5d6e19e600cef4390277
 }
 /* Hide the browser's default checkbox */
 .pt-checkbox .container input, .is-template-block .container input, .form-group .container input{
