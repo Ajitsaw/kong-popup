@@ -1247,7 +1247,7 @@ jQuery( document ).ready( function( e ) {
 		rearrangeSection();
 		popupPreview();
 	});
-		
+	
 	popupPreview();
 
 	jQuery('#welcomePageBtn').click(function() {

@@ -50,3 +50,27 @@
     <!-- .kong-container-create-folder ends -->
 </div>
 <!-- .create-folder-section ends -->
+
+<script>
+    var popupData = {};
+    <?php
+    if ( isset( $_REQUEST[ 'id' ] ) && $_REQUEST[ 'id' ] > 0 ) {
+        ?>
+        popupData.popup_id = <?php echo $_REQUEST[ 'id' ]; ?>;
+        <?php 
+        foreach ( $popup_meta as $key => $value ) {
+            if ( is_array( $value ) ) {
+                if ( $key != "publish_popup_date" ) {
+                    ?>
+                    popupData.<?php echo $key; ?> =  [<?php echo '"' . implode( '","',  $value ) . '"' ?>];
+                    <?php 
+                }
+            } else { 
+                ?>
+                popupData.<?php echo $key; ?> = '<?php echo trim( $value ); ?>';
+                <?php 
+            }
+        }
+    }
+    ?>
+</script>
