@@ -300,6 +300,7 @@ class Kong_Popup_Admin_Ajax
             GROUP BY created 
             -- ORDER BY created_at
         " );
+        $views_statistics_array[ 'views_statistics_report' ] = $views_statistics_query;
 
         /**========== Query for total clicks statistics graph ==========**/
         $template = ( $_REQUEST[ 'template' ] ) ? "AND kong_popup_click_targets.template = '{$_REQUEST[ 'template' ]}'" : '';
@@ -319,6 +320,7 @@ class Kong_Popup_Admin_Ajax
             GROUP BY created 
             -- ORDER BY created_at
         " );
+        $clicks_statistics_array[ 'clicks_statistics_report' ] = $clicks_statistics_query;
 
         /**========== Query for counting total leads ==========**/
         $total_leads_query = $wpdb->get_results( "
@@ -371,6 +373,7 @@ class Kong_Popup_Admin_Ajax
                     WHERE posts.post_type = 'popup'
                     AND posts.post_status = 'publish'
                     AND kong_popup_analytics.template = '$slug'
+                    AND kong_popup_analytics.created_at BETWEEN '{$from_date}' AND '{$to_date}' 
                 " );
                 if ( $total_activity_query[ 0 ]->popular_count ) {
                     $total_activity[ $name ] = $total_activity_query[ 0 ]->popular_count;
@@ -425,20 +428,22 @@ class Kong_Popup_Admin_Ajax
             array_column( $top_views_query, 'clicks' ), SORT_DESC,
             $top_views_query
         );
-        $top_performer = current( $top_views_query );
+        if ( $top_views_query ) {
+            $top_performer = current( $top_views_query );
+            $top_performer_created = $top_performer->created;
+            $current_daytime = date( 'Y-m-d h:i:s', time() );
+            $days = $this->dateDiffInDays( $top_performer_created, $current_daytime );
+            $top_view->days = $days;
 
-        $top_performer_created = $top_performer->created;
-        $current_daytime = date( 'Y-m-d h:i:s', time() );
-        $days = $this->dateDiffInDays( $top_performer_created, $current_daytime );
-        $top_view->days = $days;
+            $template_category = get_term_by( 'slug', $top_performer->template, 'popup-template' );
+            $template_url = ( get_term_meta( $template_category->term_id, '_image_id', true ) ) ? wp_get_attachment_url( get_term_meta( $template_category->term_id, '_image_id', true ) ) : plugins_url() . '/kong-popup/admin/images/blank.png';
+            $top_view->url = $template_url;
 
-        $template_category = get_term_by( 'slug', $top_performer->template, 'popup-template' );
-        $template_url = ( get_term_meta( $template_category->term_id, '_image_id', true ) ) ? wp_get_attachment_url( get_term_meta( $template_category->term_id, '_image_id', true ) ) : plugins_url() . '/kong-popup/admin/images/blank.png';
-        $top_view->url = $template_url;
-
-        $top_view->ctr = round( ( ( $top_performer->clicks / $top_performer->views ) * 100 ), 2 ) . "%";
-        $top_view->title = $top_performer->title;
-
+            $top_view->ctr = round( ( ( $top_performer->clicks / $top_performer->views ) * 100 ), 2 ) . "%";
+            $top_view->title = $top_performer->title;
+        } else {
+            $top_view = 0;
+        }
         $top_performing_popup_result[ 'top_performing_popup' ] = $top_view;
 
         /**========== Query for counting top locations ==========**/
@@ -451,6 +456,7 @@ class Kong_Popup_Admin_Ajax
             WHERE posts.post_type = 'popup'
             AND posts.post_status = 'publish'
             {$template}
+            AND kong_popup_analytics.created_at BETWEEN '{$from_date}' AND '{$to_date}' 
         " );
         foreach ( $top_locations_query as $top_location_data ) {
             $meta_data = maybe_unserialize( $top_location_data->user_info );
@@ -463,11 +469,7 @@ class Kong_Popup_Admin_Ajax
             }
         }
         arsort( $top_locations );
-        $top_locations_result[ 'top_locations' ] = array_slice( $top_locations, 0, 4 );
-
-
-        $views_statistics_array[ 'views_statistics_report' ] = $views_statistics_query;
-        $clicks_statistics_array[ 'clicks_statistics_report' ] = $clicks_statistics_query;
+        $top_locations_result[ 'top_locations' ] = array_slice( $top_locations, 0, 11 );
 
         echo json_encode( array_merge( $total_views_array, $total_clicks_array, $total_ctr_array, $total_average_popup_length_array, $views_array, $clicks_array, $ctrs_array, $average_popup_length_array, $views_statistics_array, $clicks_statistics_array, $total_leads_array, $total_activity_result, $top_performing_popup_result, $top_locations_result ) );
 

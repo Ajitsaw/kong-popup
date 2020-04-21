@@ -280,7 +280,7 @@
 	<!-- .top-value ends -->
 
 	<!-- .statistics starts -->
-	<div class="card statistics animate fadeUp" id="statistics" style="display:none;">
+	<div class="card statistics animate fadeUp" id="statistics" style="display: none;">
 		<h3><?php echo __( 'Popup Statistics', 'kong-popup' ); ?></h3>
 		<!-- .statistics-graph starts -->
 		<div class="statistics-graph" id="statistics-graph"></div>
@@ -289,7 +289,7 @@
 	<!-- .statistics ends -->
 
 	<!-- .popup-list starts -->
-	<div class="popup-list animate fadeUp" id="popup-list" style="display:none;">
+	<div class="popup-list animate fadeUp" id="popup-list" style="display: none;">
 		<h3><?php echo __( 'Top lead generating popups', 'kong-popup' ); ?></h3>
 		<!-- .popuplist-box starts -->
 		<table class="popuplist-box" id="popuplist-box" cellspacing="0" cellpadding="0">
@@ -396,7 +396,7 @@
 						<!-- .round-chart ends -->
 						<!--- image for demo -->
 						<div class="round-chart" id="top-performing-popup-round-chart">
-							<img src="http://localhost/kong-popup/wp-content/uploads/2020/03/graph.png" alt="" id="tpp-url">
+							<img src="<?php echo PLUGIN_BASE_URL . 'admin/images/round-chart.png'; ?>" alt="" id="tpp-url">
 						</div>
 						<!-- .chart-information starts -->
 						<div class="chart-information" id="top-refferers-block">

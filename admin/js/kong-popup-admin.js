@@ -2,6 +2,20 @@
 $ = jQuery.noConflict();
 
 var removeFieldsNameArray = [];
+const roundChartDataColor = [
+	'#daa520',
+	'#b38b6d',
+	'#cd7f32',
+	'#808000',
+	'#a0522d',
+	'#996515',
+	'#c2b280',
+	'#5b342e',
+	'#f8e076',
+	'#d6b75a',
+	'#ba9238',
+];
+
 jQuery( document ).ready( function( e ) {
 	'use strict';
 
@@ -1231,11 +1245,6 @@ jQuery( document ).ready( function( e ) {
 		console.log( structure );
 		jQuery('#fldArea').append(structure[ 1 ]);
 		toggleEl('#addFldList', 'hide');
-		jQuery( '.popup-form' ).append( 
-			`
-			<input type="email" name="test-email" />
-			`
-		);
 		rearrangeSection();
 		popupPreview();
 	});
@@ -1665,7 +1674,7 @@ var filteredReport = ( fromDate, toDate ) => {
 
 				var totalActivity = Object.entries( response.total_activity );
 				if ( totalActivity ) {
-					totalActivity.forEach( popup => {
+					totalActivity.forEach( ( popup, index ) => {
 						totalActivityHTML += `
 							<!-- .chart-value-row starts -->
 							<div class="chart-value-row">
@@ -1676,23 +1685,34 @@ var filteredReport = ( fromDate, toDate ) => {
 						`;
 
 						topActivityRoundChartData.push( {
+							y: parseInt( popup[ 1 ] ),
 							label: popup[ 0 ],
-							value: parseInt( popup[ 1 ] )
+							color: roundChartDataColor[ index ]
 						} );
 				  	} );
 				}
 
-				var topPerformingPopup = response.top_performing_popup;
-				jQuery( '#tpp-url' ).attr( 'src', topPerformingPopup.url );
-				jQuery( '#tpp-title' ).text( topPerformingPopup.title );
-				jQuery( '#tpp-views' ).text( topPerformingPopup.views );
-				jQuery( '#tpp-clicks' ).text( topPerformingPopup.clicks );
-				jQuery( '#tpp-ctr' ).text( topPerformingPopup.ctr );
-				jQuery( '#tpp-days' ).text( topPerformingPopup.days );
+				if ( response.top_performing_popup != 0 ) {
+					var topPerformingPopup = response.top_performing_popup;
+					jQuery( '#tpp-url' ).attr( 'src', topPerformingPopup.url );
+					jQuery( '#tpp-title' ).text( topPerformingPopup.title );
+					jQuery( '#tpp-views' ).text( topPerformingPopup.views );
+					jQuery( '#tpp-clicks' ).text( topPerformingPopup.clicks );
+					jQuery( '#tpp-ctr' ).text( topPerformingPopup.ctr );
+					jQuery( '#tpp-days' ).text( topPerformingPopup.days );
+				} else {
+					jQuery( '#tpp-url' ).attr( 'src', kongPopupSupports.base_url + 'admin/images/blank.png' );
+					jQuery( '#tpp-title' ).html( '<i class="fa fa-minus" aria-hidden="true"></i>' )
+					jQuery( '#tpp-views' ).html( '<i class="fa fa-minus" aria-hidden="true"></i>' )
+					jQuery( '#tpp-clicks' ).html( '<i class="fa fa-minus" aria-hidden="true"></i>' )
+					jQuery( '#tpp-ctr' ).html( '<i class="fa fa-minus" aria-hidden="true"></i>' )
+					jQuery( '#tpp-days' ).html( '<i class="fa fa-minus" aria-hidden="true"></i>' )
+				}
 
 				var topLocations = Object.entries( response.top_locations );
 				if ( topLocations ) {
-					topLocations.forEach( location => {
+					topLocations.forEach( ( location, index ) => {
+						console.log( "INDEX = " + index );
 						topLocationsHTML += `
 							<!-- .chart-value-row starts -->
 							<div class="chart-value-row">
@@ -1703,8 +1723,9 @@ var filteredReport = ( fromDate, toDate ) => {
 						`;
 
 						topLocationsRoundChartData.push( {
+							y: parseInt( location[ 1 ] ),
 							label: location[ 0 ],
-							value: parseInt( location[ 1 ] )
+							color: roundChartDataColor[ index ]
 						} );
 				  	} );
 				}
@@ -1723,217 +1744,87 @@ var filteredReport = ( fromDate, toDate ) => {
 	} );
 
     if ( kongPopupSupports.current_page == "popup-dashboard" ) {
-		/** CHART START */
-		// var totalViewsChart = new Chartist.Line(
-		// 	"#total-views-chart",
-		// 	{
-		// 		series: [ totalViewsChartData ]
-		// 	},
-		// 	{
-		// 		chartPaddingTop: 5,
-		// 		axisX: {
-		// 			showLabel: false,
-		// 			showGrid: false
-		// 		},
-		// 		axisY: {
-		// 			showLabel: false,
-		// 				showGrid: false
-		// 		},
-		// 		lineSmooth: Chartist.Interpolation.simple( {
-		// 			divisor: 2
-		// 		} ),
-		// 		plugins: [ Chartist.plugins.tooltip( { class: 'total-count-tooltip', appendToBody: true } ) ],
-		// 		fullWidth: false
-		// 	}
-		// );
-
-		// var totalClicksChart = new Chartist.Line(
-		// 	"#total-clicks-chart",
-		// 	{
-		// 		series: [ totalClicksChartData ]
-		// 	},
-		// 	{
-		// 		chartPaddingTop: 5,
-		// 		axisX: {
-		// 			showLabel: false,
-		// 			showGrid: false
-		// 		},
-		// 		axisY: {
-		// 			showLabel: false,
-		// 				showGrid: false
-		// 		},
-		// 		lineSmooth: Chartist.Interpolation.simple( {
-		// 			divisor: 2
-		// 		} ),
-		// 		plugins: [ Chartist.plugins.tooltip( { class: 'total-count-tooltip', appendToBody: true } ) ],
-		// 		fullWidth: false
-		// 	}
-		// );
-
-		// var totalCtrsChart = new Chartist.Line(
-		// 	"#total-click-through-rate-chart",
-		// 	{
-		// 		series: [ totalCtrsChartData ]
-		// 	},
-		// 	{
-		// 		chartPaddingTop: 5,
-		// 		axisX: {
-		// 			showLabel: false,
-		// 			showGrid: false
-		// 		},
-		// 		axisY: {
-		// 			showLabel: false,
-		// 				showGrid: false
-		// 		},
-		// 		lineSmooth: Chartist.Interpolation.simple( {
-		// 			divisor: 2
-		// 		} ),
-		// 		plugins: [ Chartist.plugins.tooltip( { class: 'total-count-tooltip', appendToBody: true } ) ],
-		// 		fullWidth: false
-		// 	}
-		// );
-
-		// var totalPopupLengthChart = new Chartist.Line(
-		// 	"#popup-length-chart",
-		// 	{
-		// 		series: [ totalPopupLengthChartData ]
-		// 	},
-		// 	{
-		// 		chartPaddingTop: 5,
-		// 		axisX: {
-		// 			showLabel: false,
-		// 			showGrid: false
-		// 		},
-		// 		axisY: {
-		// 			showLabel: false,
-		// 				showGrid: false
-		// 		},
-		// 		lineSmooth: Chartist.Interpolation.simple( {
-		// 			divisor: 2
-		// 		} ),
-		// 		plugins: [ Chartist.plugins.tooltip( { class: 'total-count-tooltip', appendToBody: true } ) ],
-		// 		fullWidth: false
-		// 	}
-		// );
-
-		// totalViewsChart.on( 'created', function( data ) {
-		// 	var defs = data.svg.querySelector( 'defs' ) || data.svg.elem( 'defs' );
-		// 	defs
-		// 		.elem( 'linearGradient', {
-		// 			id: 'lineLinearStats',
-		// 			x1: 0,
-		// 			y1: 0,
-		// 			x2: 1,
-		// 			y2: 0
-		// 		} )
-		// 		.elem( 'stop', {
-		// 			offset: '0%',
-		// 			'stop-color': '#fff'
-		// 		} )
-		// 		.parent()
-		// 		.elem( 'stop', {
-		// 			offset: '10%',
-		// 			'stop-color': '#fff'
-		// 		} )
-		// 		.parent()
-		// 		.elem( 'stop', {
-		// 			offset: '30%',
-		// 			'stop-color': '#fff'
-		// 		} )
-		// 		.parent()
-		// 		.elem( 'stop', {
-		// 			offset: '95%',
-		// 			'stop-color': '#fff'
-		// 		} )
-		// 		.parent()
-		// 		.elem( 'stop', {
-		// 			offset: '100%',
-		// 			'stop-color': '#fff'
-		// 		} );
-
-		// 	return defs;
-		// } );
-
-		var chart = new CanvasJS.Chart( 'statistics-graph', {
-			animationEnabled: true,
-			axisY :{
-				gridColor: '#DCDCDC',
-				includeZero: false,
-				labelFontColor: '#bfbfbf',
-			},
-			toolTip: {
-				shared: true
-			},
-			legend: {
-				fontSize: 15,
-				horizontalAlign: 'left',
-				verticalAlign: 'top'
-			},
-			data: [
-				{
-					type: 'splineArea', 
-					showInLegend: true,
-					color: '#9D8AF8',
-					legendMarkerType: 'circle',
-					name: 'Total Views',
-					yValueFormatString: '###',
-					//markerType: ' ',
-					dataPoints: splineTotalViewsStatisticsChartData
+    	window.onload = function () {
+			var chartStatistics = new CanvasJS.Chart( 'statistics-graph', {
+				animationEnabled: true,
+				axisY :{
+					gridColor: '#DCDCDC',
+					includeZero: false,
+					labelFontColor: '#bfbfbf',
 				},
-				{
-					type: 'splineArea', 
-					showInLegend: true,
-					color: '#4AD4DF',
-					legendMarkerType: 'circle',
-					name: 'Total Click',
-					yValueFormatString: '###',    
-					//markerType: ' ', 
-					dataPoints: splineTotalClicksStatisticsChartData
-				} 
-			]
-		} );
-		chart.render();
-		/** CHART END */
-
-		var roundChartArray = [
-			[ 'top-activity-round-chart', topActivityRoundChartData ],
-			[ 'top-locations-round-chart', topLocationsRoundChartData ],
-		];
-
-		am4core.ready( function() {
-			am4core.useTheme( am4themes_animated );
-
-			roundChartArray.forEach( chartData => {
-				var chart = am4core.create( chartData[ 0 ], am4charts.PieChart3D );
-				chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-				chart.data = chartData[ 1 ];
-				chart.innerRadius = am4core.percent( 90 );
-				chart.depth = 0;
-				chart.angle = 0;
-
-				var series = chart.series.push( new am4charts.PieSeries3D() );
-				series.dataFields.value = "value";
-				series.dataFields.depthValue = "value";
-				series.dataFields.category = "label";
-				series.slices.template.cornerRadius = 5;
-				series.colors.step = 3;
-				series.ticks.template.disabled = true;
-				series.labels.template.disabled = true;
-				series.colors.list = [
-					am4core.color( "#daa520" ),
-					am4core.color( "#b38b6d" ),
-					am4core.color( "#cd7f32" ),
-					am4core.color( "#808000" ),
-					am4core.color( "#a0522d" ),
-					am4core.color( "#996515" ),
-					am4core.color( "#c2b280" ),
-					am4core.color( "#5b342e" ),
-					am4core.color( "#f8e076" ),
-					am4core.color( "#d6b75a" ),
-					am4core.color( "#ba9238" ),
-				];
+				toolTip: {
+					shared: true
+				},
+				legend: {
+					fontSize: 15,
+					horizontalAlign: 'left',
+					verticalAlign: 'top'
+				},
+				data: [
+					{
+						type: 'splineArea', 
+						showInLegend: true,
+						color: '#9D8AF8',
+						legendMarkerType: 'circle',
+						name: 'Total Views',
+						yValueFormatString: '###',
+						//markerType: ' ',
+						dataPoints: splineTotalViewsStatisticsChartData
+					},
+					{
+						type: 'splineArea', 
+						showInLegend: true,
+						color: '#4AD4DF',
+						legendMarkerType: 'circle',
+						name: 'Total Click',
+						yValueFormatString: '###',    
+						//markerType: ' ', 
+						dataPoints: splineTotalClicksStatisticsChartData
+					} 
+				]
 			} );
-		} );
+			chartStatistics.render();
+
+			var roundChartArray = [
+				[ 'top-activity-round-chart', topActivityRoundChartData ],
+				[ 'top-locations-round-chart', topLocationsRoundChartData ],
+			];
+			roundChartArray.forEach( chartData => {
+				var roundChart = new CanvasJS.Chart( chartData[ 0 ], {
+					animationEnabled: true,
+					data: [ {
+						type: "doughnut",
+						startAngle: 60,
+						innerRadius: 75,
+						indexLabel: " ",
+						toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+				    	indexLabelLineThickness: 0,
+						dataPoints: chartData[ 1 ]
+					} ]
+				} );
+				roundChart.render();
+			} );
+
+			// var chartLocation = new CanvasJS.Chart( 'top-locations-round-chart', {
+			// 	animationEnabled: true,
+			// 	title:{
+			// 		text: "Email Categories",
+			// 		horizontalAlign: "left"
+			// 	},
+			// 	data: [ {
+			// 		type: "doughnut",
+			// 		startAngle: 60,
+			// 		//innerRadius: 60,
+			// 		// indexLabelFontSize: 17,
+			// 		// indexLabel: " ",
+			// 		toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+			//     	// indexLabelLineThickness: 0,
+			// 		dataPoints: topLocationsRoundChartData
+			// 	} ]
+			// } );
+			// chartLocation.render();
+			/** CHART END */
+		}
 	}
 
 	// rearrangeSection();
@@ -2139,6 +2030,13 @@ var emailAddressFld = ( title, id ) => {
 		</div>
   	`;
   	returnStructure.push( index, html );
+  	jQuery( '.popup-form' ).append( 
+		`
+		<div class="pt-frm-field" id="fl-${id}" data-form-field="${index}">
+			<input type="email" name="test-email" />
+		</div>
+		`
+	);
   	return returnStructure;
 }
 

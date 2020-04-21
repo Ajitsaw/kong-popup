@@ -174,11 +174,6 @@ class Kong_Popup_Admin
             wp_enqueue_script( 'chartist-min', plugin_dir_url( __FILE__ ) . 'js/chartist.min.js', array( 'jquery' ), $this->version, true );
             wp_enqueue_script( 'chartist-plugin-tooltip', plugin_dir_url( __FILE__ ) . 'js/chartist-plugin-tooltip.js', array( 'jquery' ), $this->version, true );
             wp_enqueue_script( 'chartist-plugin-fill-donut-min', plugin_dir_url( __FILE__ ) . 'js/chartist-plugin-fill-donut.min.js', array( 'jquery' ), $this->version, true );
-           
-            wp_enqueue_script( 'amcharts-core', 'https://www.amcharts.com/lib/4/core.js', array( 'jquery' ), $this->version, true );
-            wp_enqueue_script( 'amcharts-charts', 'https://www.amcharts.com/lib/4/charts.js', array( 'jquery' ), $this->version, true );
-            // wp_enqueue_script( 'amcharts-theme-kelly', 'https://www.amcharts.com/lib/4/themes/kelly.js', array( 'jquery' ), $this->version, true );
-            wp_enqueue_script( 'amcharts-animated', 'https://www.amcharts.com/lib/4/themes/animated.js', array( 'jquery' ), $this->version, true );
         }
         
         wp_enqueue_script( 'moment', plugin_dir_url( __FILE__ ) . 'js/moment.min.js', array( 'jquery' ), true );

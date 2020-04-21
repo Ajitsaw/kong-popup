@@ -2,7 +2,7 @@
 $kong_popup_supports = array(
 	'locale' 		=> get_locale(),
 	'ajax_url' 		=> admin_url( 'admin-ajax.php' ),
-	'base_url' 		=> plugin_dir_url( __FILE__ ),
+	'base_url' 		=> PLUGIN_BASE_URL,
 	'current_page' 	=> ( isset( $_REQUEST[ 'page' ] ) ) ? $_REQUEST[ 'page' ] : "",
 	// 'apply' 		=> __( 'Apply', 'kong-popup' ),
 	// 'cancel' 		=> __( 'Cancel', 'kong-popup' ),
