@@ -3029,11 +3029,12 @@ select#time-schedule-option {
 .hide {
   display: none;
 }
-.left-panel .form-wrap .form-bar textarea{
+.left-panel .form-wrap .form-bar textarea {
   border: 1px solid #ccc;
   height: 106px;
   resize: none;
   padding: 10px;
+  box-shadow: none;
 }
 .form-bar--success label{
   width: 100%;
@@ -5073,7 +5074,10 @@ div#report-filter {
 .canvasjs-chart-tooltip {
   bottom: auto !important;
 }
-
+select#select-visitor {
+  margin-top: 10px;
+}
+  
 /*Responsive Start*/
 @media (max-width: 1200px){
   .preview-viewport {
