@@ -5070,7 +5070,9 @@ div#report-filter {
   font-size: 13px;
   margin-left: 15px;
 }
-
+.canvasjs-chart-tooltip {
+  bottom: auto !important;
+}
 
 /*Responsive Start*/
 @media (max-width: 1200px){
