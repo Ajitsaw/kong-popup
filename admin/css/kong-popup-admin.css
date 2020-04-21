@@ -3731,6 +3731,8 @@ li.folder-item img {
   background: #fff;
   border-radius: 10px;
   margin: 0 0 20px 0;
+  height: auto !important;
+  box-shadow:none;
 }
 .statistics h3 {
   font-size: 18px;
@@ -5050,8 +5052,25 @@ div#report-filter {
   padding: 0 !important;
 }
 .canvasjs-chart-container {
-  height: 230px;
+  height: 250px;
 }
+.views, .click, .click-rate, .length {
+  min-height: 200px;
+}
+.chart-item {
+  text-align: center;
+  color: #fff;
+}
+.chart-item i {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 20px;
+}
+.chart-value-row i {
+  font-size: 13px;
+  margin-left: 15px;
+}
+
 
 /*Responsive Start*/
 @media (max-width: 1200px){
