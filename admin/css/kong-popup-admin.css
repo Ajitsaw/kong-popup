@@ -3789,6 +3789,7 @@ li.folder-item img {
   width: 241px;
   float: left;
   display: block;
+  position: relative;
 }
 div#top-performing-popup-round-chart {
   display: flex;
@@ -5053,7 +5054,7 @@ div#report-filter {
   padding: 0 !important;
 }
 .canvasjs-chart-container {
-  height: 250px;
+  height: 200px;
 }
 .views, .click, .click-rate, .length {
   min-height: 200px;
@@ -5077,7 +5078,104 @@ div#report-filter {
 select#select-visitor {
   margin-top: 10px;
 }
-  
+
+/*Dashboard page css*/
+.kc-dashboard .card .heading {
+  padding-left: 15px;
+  padding-right: 15px
+}
+.kc-dashboard .card .heading h5 {
+  color: #fff;
+  font-size: 24px;
+  margin-bottom: 0
+}
+.kc-dashboard .card .heading h6 {
+  color: #fff;
+  margin-top: 0
+}
+.kc-dashboard .card .right-icon {
+  color: #fff;
+  font-size: 20px;
+  position: absolute;
+  right: 10px;
+  top: 10px
+}
+.kc-dashboard .card-content h4 {
+  font-size: 24px
+}
+.kc-dashboard #card-notifi .card .heading h6 {
+  color: #424242;
+  margin-top: 15px;
+  text-align: center;
+  font-size: 20px
+}
+
+.views {
+  background-color: #369EA0;
+}
+
+.click {
+  background-color: #F78B60;
+}
+
+.click-rate {
+  background-color: #52C27E;
+}
+
+.length {
+  background-color: #F3556B;
+}
+
+.statistics {
+  height: 500px;
+  width: 100%;
+}
+
+div#report-filter {
+  color: #fff;
+  font-size: 15px;
+  width: 300px;
+  padding: 8px;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+input[type=text]:not(.browser-default){
+  font-size: 14px!important;
+}
+input.input-mini.form-control.kg_secondary_bg {
+  color: #fff;
+}
+input.input-mini.form-control.kg_secondary_bg + i {
+  color: #fff;
+}
+li.kg_secondary_bg {
+  color: #fff;
+}
+
+i.material-icons, span.date-box {
+  background: none;
+}
+
+button.applyBtn.kg_secondary_bg.btn.btn-sm.btn-success, button.cancelBtn.btn.btn-sm.btn-default {
+  border: none;
+}
+.cup-image {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: -25px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 20px;
+}
+
+
+
 /*Responsive Start*/
 @media (max-width: 1200px){
   .preview-viewport {
