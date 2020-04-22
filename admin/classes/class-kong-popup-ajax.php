@@ -4,6 +4,8 @@ class Kong_Popup_Admin_Ajax
 {
     public function __construct() 
     {
+        add_action( 'wp_ajax_get_all_templates_ajax', array( $this, 'get_all_templates' ) );
+
         add_action( 'wp_ajax_set_popup_form_fields_value_ajax', array( $this, 'set_popup_form_fields_value' ) );
         
         add_action( 'wp_ajax_update_popup_info_ajax', array( $this, 'update_popup_info' ) );
@@ -14,6 +16,29 @@ class Kong_Popup_Admin_Ajax
 
         add_action( 'wp_ajax_add_click_target_ajax', array( $this, 'add_click_target' ) );
         add_action( 'wp_ajax_nopriv_add_click_target_ajax', array( $this, 'add_click_target' ) );
+    }
+
+    public function get_all_templates() {
+        // get all items which belongs to popup-template category
+        $popup_template_categories = get_terms( 
+            array(
+                'taxonomy'      => 'popup-template',
+                'hide_empty'    => false,
+            ) 
+        );
+        // if popup_template_categories exists
+        if ( $popup_template_categories ) {
+            ?>
+            <option value=''><?php echo __( 'All', 'kong-popup' ); ?></option>
+            <?php
+            foreach ( $popup_template_categories as $popup_template_category ) {
+                ?>
+                <option value="<?php echo $popup_template_category->slug; ?>"><?php echo __( $popup_template_category->name, 'kong-popup' ); ?></option>
+                <?php
+            }
+        }
+
+        die();
     }
 
     public function set_popup_form_fields_value() {

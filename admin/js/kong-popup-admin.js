@@ -21,6 +21,28 @@ const roundChartDataColor = [
 jQuery( document ).ready( function( e ) {
 	'use strict';
 
+	getAllTemplates();
+
+	var headerPanel = `
+		<!-- .dashboard-top starts -->
+		<div class="dashboard-top clearfix">
+			<!-- .dashboard-left starts -->
+			<div class="dashboard-left">
+				<div class="kg_secondary_bg" id="report-filter">
+					<i class="material-icons"><?php echo __( 'more_vert', 'kong-popup' ); ?></i>
+					<span class="date-box"></span>
+				</div>
+
+				<div class="dashboard-left_dropdown">
+					<select class="dashboard-popup-lists" id="dashboard-popup-lists"></select>
+				</div>
+			</div>
+			<!-- .dashboard-left ends -->
+		</div>
+		<!-- .dashboard-top ends -->
+	`;
+	jQuery( headerPanel ).insertAfter( '.site-logo' );
+
 	jQuery( '#toplevel_page_edit-popup, #toplevel_page_edit-template, #toplevel_page_create-template, #toplevel_page_popups-under-folder' ).remove();
 	jQuery( '#toplevel_page_create-popup a' ).addClass( 'kg_secondary_bg btn p-0 site-action-toggle btn-raised' );
 
@@ -1402,6 +1424,19 @@ function dateRender( start, end )
 	filteredReport( fromDate, toDate );
 }
 
+var getAllTemplates = () => {
+	jQuery.ajax( {
+		type: 'POST',
+		url: ajaxurl,
+		data: {
+			action: 'get_all_templates_ajax',
+		},
+		success: ( data ) => {
+			jQuery( '#dashboard-popup-lists' ).html( data );
+		}
+	} );
+}
+
 var filteredReport = ( fromDate, toDate ) => {
 	var selectedTemplate = jQuery( '#dashboard-popup-lists' ).val();
 
@@ -1691,6 +1726,7 @@ var filteredReport = ( fromDate, toDate ) => {
 
 				if ( response.top_performing_popup != 0 ) {
 					var topPerformingPopup = response.top_performing_popup;
+					jQuery( '#tpp-cup' ).show();
 					jQuery( '#tpp-url' ).attr( 'src', topPerformingPopup.url );
 					jQuery( '#tpp-title' ).text( topPerformingPopup.title );
 					jQuery( '#tpp-views' ).text( topPerformingPopup.views );
@@ -1698,6 +1734,7 @@ var filteredReport = ( fromDate, toDate ) => {
 					jQuery( '#tpp-ctr' ).text( topPerformingPopup.ctr );
 					jQuery( '#tpp-days' ).text( topPerformingPopup.days );
 				} else {
+					jQuery( '#tpp-cup' ).hide();
 					jQuery( '#tpp-url' ).attr( 'src', kongPopupSupports.base_url + 'admin/images/blank.png' );
 					jQuery( '#tpp-title' ).html( '<i class="fa fa-minus" aria-hidden="true"></i>' )
 					jQuery( '#tpp-views' ).html( '<i class="fa fa-minus" aria-hidden="true"></i>' )
@@ -1709,7 +1746,6 @@ var filteredReport = ( fromDate, toDate ) => {
 				var topLocations = Object.entries( response.top_locations );
 				if ( topLocations ) {
 					topLocations.forEach( ( location, index ) => {
-						console.log( "INDEX = " + index );
 						topLocationsHTML += `
 							<!-- .chart-value-row starts -->
 							<div class="chart-value-row">
