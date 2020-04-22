@@ -24,22 +24,18 @@ jQuery( document ).ready( function( e ) {
 	getAllTemplates();
 
 	var headerPanel = `
-		<!-- .dashboard-top starts -->
-		<div class="dashboard-top clearfix">
-			<!-- .dashboard-left starts -->
-			<div class="dashboard-left">
-				<div class="kg_secondary_bg" id="report-filter">
-					<i class="material-icons"><?php echo __( 'more_vert', 'kong-popup' ); ?></i>
-					<span class="date-box"></span>
-				</div>
-
-				<div class="dashboard-left_dropdown">
-					<select class="dashboard-popup-lists" id="dashboard-popup-lists"></select>
-				</div>
+		<!-- .dashboard-left starts -->
+		<div class="dashboard-left">
+			<div class="kg_secondary_bg" id="report-filter">
+				<i class="material-icons"><?php echo __( 'more_vert', 'kong-popup' ); ?></i>
+				<span class="date-box"></span>
 			</div>
-			<!-- .dashboard-left ends -->
+
+			<div class="dashboard-left_dropdown">
+				<select class="dashboard-popup-lists" id="dashboard-popup-lists"></select>
+			</div>
 		</div>
-		<!-- .dashboard-top ends -->
+		<!-- .dashboard-left ends -->
 	`;
 	jQuery( headerPanel ).insertAfter( '.site-logo' );
 
@@ -1828,7 +1824,7 @@ var filteredReport = ( fromDate, toDate ) => {
 					data: [ {
 						type: "doughnut",
 						startAngle: 60,
-						innerRadius: 70,
+						innerRadius: 60,
 						indexLabel: " ",
 						toolTipContent: "<b>{label}:</b> {y} (#percent%)",
 				    	indexLabelLineThickness: 0,
