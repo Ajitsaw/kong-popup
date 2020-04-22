@@ -21,23 +21,27 @@ const roundChartDataColor = [
 jQuery( document ).ready( function( e ) {
 	'use strict';
 
-	getAllTemplates();
+	var searchParams = new URLSearchParams( window.location.search );
+	var param = searchParams.get( 'page' );
+	if ( searchParams.get( 'page' ) == "popup-dashboard" ) {
+		getAllTemplates();
 
-	var headerPanel = `
-		<!-- .dashboard-left starts -->
-		<div class="dashboard-left">
-			<div class="kg_secondary_bg" id="report-filter">
-				<i class="material-icons"><?php echo __( 'more_vert', 'kong-popup' ); ?></i>
-				<span class="date-box"></span>
-			</div>
+		var headerPanel = `
+			<!-- .dashboard-left starts -->
+			<div class="dashboard-left">
+				<div class="kg_secondary_bg" id="report-filter">
+					<i class="material-icons"><?php echo __( 'more_vert', 'kong-popup' ); ?></i>
+					<span class="date-box"></span>
+				</div>
 
-			<div class="dashboard-left_dropdown">
-				<select class="dashboard-popup-lists" id="dashboard-popup-lists"></select>
+				<div class="dashboard-left_dropdown">
+					<select class="dashboard-popup-lists" id="dashboard-popup-lists"></select>
+				</div>
 			</div>
-		</div>
-		<!-- .dashboard-left ends -->
-	`;
-	jQuery( headerPanel ).insertAfter( '.site-logo' );
+			<!-- .dashboard-left ends -->
+		`;
+		jQuery( headerPanel ).insertAfter( '.site-logo' );
+	}
 
 	jQuery( '#toplevel_page_edit-popup, #toplevel_page_edit-template, #toplevel_page_create-template, #toplevel_page_popups-under-folder' ).remove();
 	jQuery( '#toplevel_page_create-popup a' ).addClass( 'kg_secondary_bg btn p-0 site-action-toggle btn-raised' );
@@ -134,8 +138,6 @@ jQuery( document ).ready( function( e ) {
 	jQuery( this ).on( 'change', '.kong-container textarea', function( e ) {
 		var key = e.target.name;
 		var value = e.target.value;
-		console.log( key );
-		console.log( value );
 		popupData[ key ] = value;
 
 		popupPreview();
@@ -144,8 +146,6 @@ jQuery( document ).ready( function( e ) {
 	jQuery( this ).on( 'change', '.kong-container input[type="radio"]', function( e ) {
 		var key = e.target.name;
 		var value = e.target.value;
-		console.log( key );
-		console.log( value );
 		popupData[ key ] = value;
 
 		if ( value == "specific" ) {
@@ -179,11 +179,7 @@ jQuery( document ).ready( function( e ) {
 		var key = e.target.name;
 		var id = e.target.id;
 
-		console.log( "KEY = " + key );
-		console.log( "ID = " + id );
-
 		if ( jQuery( '#' + id ).is( ':checked' ) ) {
-			console.log( "YOYO" );
 			popupData[ key ] = e.target.value;
 
 			if ( id == "date-start" || id == "date-stop" ) {
@@ -192,8 +188,6 @@ jQuery( document ).ready( function( e ) {
 				jQuery( '#' + id + '-field' ).removeAttr( 'disabled' );
 			} else { }
 		} else {
-			console.log( "HONEY SINGH" );
-
 			popupData[ key ] = 0;
 
 			if ( id == "date-start" || id == "date-stop" ) {
@@ -203,13 +197,10 @@ jQuery( document ).ready( function( e ) {
 			} else { }
 		}
 
-		console.log( popupData );
-
 		popupPreview();
 	} );
 
 	jQuery( '.kong-container .pos_label > *' ).on( 'click', function( e ) {
-		console.log( "HERE2" );
 		jQuery( '.pos_label' ).removeClass( 'selected' );
 		jQuery( this ).parents( '.pos_label' ).addClass( 'selected' );
 	} );
@@ -1233,7 +1224,8 @@ jQuery( document ).ready( function( e ) {
 			jQuery('#fldArea').append(singleLineTextFld( title, id ));
 			rearrangeSection();
 		} else if(fldIdentity == 'ea') {
-			jQuery('#fldArea').append(emailAddressFld( title, id ));
+			var structure = emailAddressFld( title, id );
+			jQuery( '#fldArea' ).append( structure[ 1 ] );
 			rearrangeSection();
 			// popupPreview();
 		} else if(fldIdentity == 'r') {
@@ -1364,10 +1356,7 @@ jQuery( document ).ready( function( e ) {
 	
 	dateRender( moment().subtract( 6, 'month' ), moment() );
 
-
-
-
-
+	
 
 
 	jQuery( '.drugableSection' ).find( 'input, select, textarea' ).each( function() {
@@ -1376,9 +1365,9 @@ jQuery( document ).ready( function( e ) {
 		jQuery.ajax( {
 			type: 'POST',
 			url: ajaxurl,
-			async: false,
+			// async: false,
 			data: {
-				action: 'set_popup_form_fields_value_ajax',
+				action: 'set_backend_popup_form_fields_value_ajax',
 				popup_id: popupData.popup_id,
 				field_name: fieldName,
 			},
@@ -1399,6 +1388,9 @@ jQuery( document ).ready( function( e ) {
 		} );
 	} );
 
+
+
+
 	jQuery( this ).on( 'change', '#dashboard-popup-lists', function( e ) {
 		var dateStamp = jQuery( '#report-filter span' ).text();
 		var splitDateStamp = dateStamp.split( '-' );
@@ -1410,8 +1402,67 @@ jQuery( document ).ready( function( e ) {
 
 } );
 
-function dateRender( start, end ) 
-{
+var popupPreview = () => {
+	console.log( "PREVIEW WORKS HERE" );
+	var popupHTML = jQuery( '.popup-content' ).html();
+	if ( popupData ) {
+		jQuery.ajax( {
+			type: 'POST',
+			url: ajaxurl,
+			dataType: 'json',
+			data: {
+				action: 'get_preview_popup_ajax',
+				popup_data: popupData,
+				popup_html: popupHTML,
+				remove_fields: removeFieldsNameArray,
+			},
+			beforeSend: ( x ) => {
+				if ( x && x.overrideMimeType ) {
+					x.overrideMimeType( "application/j-son; charset=UTF-8" );
+				}
+			},
+			success: ( data ) => {
+				var frameSRC = jQuery( '.preview-wrap iframe' ).attr( 'src' );
+				jQuery( '.preview-wrap iframe' ).attr( 'src', frameSRC ); 
+				jQuery( 'a.frame' ).attr( 'href', frameSRC );
+				
+				test();
+			}
+		} );
+	}
+}
+
+var test = () => {
+	console.log( "TEST IS HERE" );
+	jQuery( '.pt-frm-field' ).find( 'input, select, textarea' ).each( function() {
+		var fieldType = this.type;
+		var fieldID = this.id;
+		var splitFieldID = fieldID.split( '_' );
+		var ID = splitFieldID[ 1 ];
+
+		jQuery.ajax( {
+			type: 'POST',
+			url: ajaxurl,
+			dataType: 'json',
+			async: false,
+			data: {
+				action: 'set_frontend_popup_form_fields_value_ajax',
+				popup_id: popupData.popup_id,
+				field_type: fieldType,
+				field_id: ID,
+			},
+			success: function( response ) {
+				if ( fieldType == "radio" ) {
+					jQuery( '.popup-content #label-' + ID ).text( response[ 0 ] );
+					jQuery( '.popup-content #' + fieldID ).attr( 'placeholder', response[ 1 ] );
+
+				}
+			}
+		} );
+	} );
+}
+
+var dateRender = ( start, end ) => {
 	jQuery( '#report-filter span' ).html( start.format( 'MMMM D, YYYY' ) + ' - ' + end.format( 'MMMM D, YYYY' ) );
 
 	var fromDate = start.format( 'YYYY-MM-DD' );
@@ -1461,7 +1512,6 @@ var filteredReport = ( fromDate, toDate ) => {
 		dataType: 'json',
 		async: false,
 		success: function( response ) {
-			// console.log( response );
 			if ( response !== 0 ) {
 				var viewsCount = response.views_count;
 				jQuery( '#total-views' ).html( viewsCount[ 0 ].total_views_count );
@@ -1544,7 +1594,7 @@ var filteredReport = ( fromDate, toDate ) => {
 						return defs;
 					} );
 				} else {
-					jQuery( '#total-views-chart' ).html( '<i class="fa fa-minus" aria-hidden="true"></i>' );
+					jQuery( '#total-views-chart' ).html( '<i class="material-icons">error_outline</i>' );
 				}
 
 				var clicksReport = response.clicks_report;
@@ -1578,7 +1628,7 @@ var filteredReport = ( fromDate, toDate ) => {
 						}
 					);
 				} else {
-					jQuery( '#total-clicks-chart' ).html( '<i class="fa fa-minus" aria-hidden="true"></i>' );
+					jQuery( '#total-clicks-chart' ).html( '<i class="material-icons">error_outline</i>' );
 				}
 
 				if ( response.ctrs_report != 0 ) {
@@ -1615,7 +1665,7 @@ var filteredReport = ( fromDate, toDate ) => {
 						);
 					}
 				} else {
-					jQuery( '#total-click-through-rate-chart' ).html( '<i class="fa fa-minus" aria-hidden="true"></i>' );
+					jQuery( '#total-click-through-rate-chart' ).html( '<i class="material-icons">error_outline</i>' );
 				}
 
 				if ( response.average_popup_length_report != 0 ) {
@@ -1652,29 +1702,39 @@ var filteredReport = ( fromDate, toDate ) => {
 						);
 					}
 				} else {
-					jQuery( '#popup-length-chart' ).html( '<i class="fa fa-minus" aria-hidden="true"></i>' );
+					jQuery( '#popup-length-chart' ).html( '<i class="material-icons">error_outline</i>' );
 				}
 
 				var viewsStatisticsReport = response.views_statistics_report;
-				for ( var index = 0; index < viewsStatisticsReport.length; index++ ) {
-					var year = viewsStatisticsReport[ index ].year;
-					var month = viewsStatisticsReport[ index ].month - 1;
-					var day = viewsStatisticsReport[ index ].day;
-					splineTotalViewsStatisticsChartData.push( {
-						x: new Date( year, month, day ),
-						y: parseInt( viewsStatisticsReport[ index ].count )
-					} );
-				}
-
 				var clicksStatisticsReport = response.clicks_statistics_report;
-				for ( var index = 0; index < clicksStatisticsReport.length; index++ ) {
-					var year = clicksStatisticsReport[ index ].year;
-					var month = clicksStatisticsReport[ index ].month - 1;
-					var day = clicksStatisticsReport[ index ].day;
-					splineTotalClicksStatisticsChartData.push( {
-						x: new Date( year, month, day ),
-						y: parseInt( clicksStatisticsReport[ index ].count )
-					} );
+
+				if ( viewsStatisticsReport.length > 0 && clicksStatisticsReport.length > 0 ) {
+					jQuery( '#statistics-graph-no-data-block' ).hide();
+					jQuery( '#statistics-graph' ).show();
+
+					for ( var index = 0; index < viewsStatisticsReport.length; index++ ) {
+						var year = viewsStatisticsReport[ index ].year;
+						var month = viewsStatisticsReport[ index ].month - 1;
+						var day = viewsStatisticsReport[ index ].day;
+						splineTotalViewsStatisticsChartData.push( {
+							x: new Date( year, month, day ),
+							y: parseInt( viewsStatisticsReport[ index ].count )
+						} );
+					}
+
+					for ( var index = 0; index < clicksStatisticsReport.length; index++ ) {
+						var year = clicksStatisticsReport[ index ].year;
+						var month = clicksStatisticsReport[ index ].month - 1;
+						var day = clicksStatisticsReport[ index ].day;
+						splineTotalClicksStatisticsChartData.push( {
+							x: new Date( year, month, day ),
+							y: parseInt( clicksStatisticsReport[ index ].count )
+						} );
+					}
+
+				} else {
+					jQuery( '#statistics-graph' ).hide();
+					jQuery( '#statistics-graph-no-data-block' ).show();
 				}
 
 				var leadsCount = response.leads_count;
@@ -1695,13 +1755,19 @@ var filteredReport = ( fromDate, toDate ) => {
 				} else {
 					leadsHTML = `
 						<tr>
-							<td>No record found</td>
+							<td colspan="3" style="text-align: center;">
+								<i class="material-icons">error_outline</i>
+							</td>
 						</tr>
 					`;
 				}
+				jQuery( '#popuplist-box tbody' ).html( leadsHTML );
 
 				var totalActivity = Object.entries( response.total_activity );
-				if ( totalActivity ) {
+				if ( totalActivity.length > 0 ) {
+					jQuery( '#top-activity-no-data-block' ).hide();
+					jQuery( '#top-activity .chart-value' ).show();
+
 					totalActivity.forEach( ( popup, index ) => {
 						totalActivityHTML += `
 							<!-- .chart-value-row starts -->
@@ -1718,11 +1784,17 @@ var filteredReport = ( fromDate, toDate ) => {
 							color: roundChartDataColor[ index ]
 						} );
 				  	} );
+					jQuery( '#total-activity-block' ).html( totalActivityHTML );
+				} else {
+					jQuery( '#top-activity .chart-value' ).hide();
+					jQuery( '#top-activity-no-data-block' ).show();
 				}
 
 				if ( response.top_performing_popup != 0 ) {
 					var topPerformingPopup = response.top_performing_popup;
-					jQuery( '#tpp-cup' ).show();
+					jQuery( '#top-performing-no-data-block' ).hide();
+					jQuery( '#top-performing .chart-value' ).show();
+
 					jQuery( '#tpp-url' ).attr( 'src', topPerformingPopup.url );
 					jQuery( '#tpp-title' ).text( topPerformingPopup.title );
 					jQuery( '#tpp-views' ).text( topPerformingPopup.views );
@@ -1730,17 +1802,15 @@ var filteredReport = ( fromDate, toDate ) => {
 					jQuery( '#tpp-ctr' ).text( topPerformingPopup.ctr );
 					jQuery( '#tpp-days' ).text( topPerformingPopup.days );
 				} else {
-					jQuery( '#tpp-cup' ).hide();
-					jQuery( '#tpp-url' ).attr( 'src', kongPopupSupports.base_url + 'admin/images/blank.png' );
-					jQuery( '#tpp-title' ).html( '<i class="fa fa-minus" aria-hidden="true"></i>' )
-					jQuery( '#tpp-views' ).html( '<i class="fa fa-minus" aria-hidden="true"></i>' )
-					jQuery( '#tpp-clicks' ).html( '<i class="fa fa-minus" aria-hidden="true"></i>' )
-					jQuery( '#tpp-ctr' ).html( '<i class="fa fa-minus" aria-hidden="true"></i>' )
-					jQuery( '#tpp-days' ).html( '<i class="fa fa-minus" aria-hidden="true"></i>' )
+					jQuery( '#top-performing .chart-value' ).hide();
+					jQuery( '#top-performing-no-data-block' ).show();
 				}
 
 				var topLocations = Object.entries( response.top_locations );
-				if ( topLocations ) {
+				if ( topLocations.length > 0 ) {
+					jQuery( '#top-locations-no-data-block' ).hide();
+					jQuery( '#top-locations .chart-value' ).show();
+
 					topLocations.forEach( ( location, index ) => {
 						topLocationsHTML += `
 							<!-- .chart-value-row starts -->
@@ -1757,23 +1827,17 @@ var filteredReport = ( fromDate, toDate ) => {
 							color: roundChartDataColor[ index ]
 						} );
 				  	} );
-				}
-
-				jQuery( '#popuplist-box tbody' ).html( leadsHTML );
-
-				if ( totalActivityHTML.length > 0 ) {
-					jQuery( '#total-activity-block' ).html( totalActivityHTML );
-				}
-
-				if ( topLocationsHTML.length > 0 ) {
 					jQuery( '#top-locations-block' ).html( topLocationsHTML );
+				} else {
+					jQuery( '#top-locations .chart-value' ).hide();
+					jQuery( '#top-locations-no-data-block' ).show();
 				}
 			}
 		}
 	} );
 
     if ( kongPopupSupports.current_page == "popup-dashboard" ) {
-    	window.onload = function () {
+    	// window.onload = function () {
 			var chartStatistics = new CanvasJS.Chart( 'statistics-graph', {
 				animationEnabled: true,
 				axisY :{
@@ -1833,35 +1897,7 @@ var filteredReport = ( fromDate, toDate ) => {
 				} );
 				roundChart.render();
 			} );
-		}
-	}
-}
-
-var popupPreview = () => {
-	console.log( "PREVIEW WORKS HERE" );
-	var popupHTML = jQuery( '.popup-content' ).html();
-	if ( popupData ) {
-		jQuery.ajax( {
-			type: 'POST',
-			url: ajaxurl,
-			dataType: 'json',
-			data: {
-				action: 'get_preview_popup_ajax',
-				popup_data: popupData,
-				popup_html: popupHTML,
-				remove_fields: removeFieldsNameArray,
-			},
-			beforeSend: ( x ) => {
-				if ( x && x.overrideMimeType ) {
-					x.overrideMimeType( "application/j-son; charset=UTF-8" );
-				}
-			},
-			success: ( data ) => {
-				var frameSRC = jQuery( '.preview-wrap iframe' ).attr( 'src' );
-				jQuery( '.preview-wrap iframe' ).attr( 'src', frameSRC ); 
-				jQuery( 'a.frame' ).attr( 'href', frameSRC );
-			}
-		} );
+		// }
 	}
 }
 
@@ -1896,8 +1932,8 @@ var updatePopupDataa = () => {
 				setTimeout( () => {
 					jQuery( '#success-message' ).hide( 'blind', {}, 500 );
 				}, 1500 );
-				// location.reload();
 				removeFieldsNameArray = [];
+				location.reload();
 			}
 		} );
 	}
@@ -1940,7 +1976,7 @@ var tabSelectedFunction = ( $el ) => {
 
 var newTitle = ( $el ) => {
   var currentVal = $el.val();
-  console.log(currentVal);
+  // console.log(currentVal);
   $el.attr('readonly', true).css({background:'transparent', padding:0});
   $el.closest('.accrodianBtn1').removeClass('accrodianBtn1').addClass('accrodianBtn');
 }
@@ -1967,7 +2003,7 @@ var emailAddressFld = ( title, id ) => {
 					</span>
 
 					<span class="pt-addfield-box-title">
-						<input type="text" class="editableTitle" name="conent_form_email_field_${index}" readonly value="${title}" />
+						<input type="text" class="editableTitle" name="content_form_email_field_${index}" readonly value="${title}" />
 					</span>
 
 					<span class="pt-addfield-box-arrow">
@@ -1989,13 +2025,13 @@ var emailAddressFld = ( title, id ) => {
 			<div class="pt-addfield-box-edit">
 				<div class="pt-option-box">
 					<label>Title</label>
-					<input type="text" name="conent_form_email_title_${index}" placeholder="Title" />
+					<input type="text" name="content_form_email_title_${index}" placeholder="Title" />
 				</div>
 
 				<section>
 					<div class="pt-checkbox pt-inline-field">
 						<label class="container">
-							<input type="checkbox" name="conent_form_email_consent_${index}" id="conent-form-email-consent-${index}" class="sectionOpener option-checkbox" />
+							<input type="checkbox" name="content_form_email_consent_${index}" id="conent-form-email-consent-${index}" class="sectionOpener option-checkbox" />
 							<span class="checkmark"></span>Add a consent checkbox
 						</label>
 					</div>
@@ -2003,12 +2039,12 @@ var emailAddressFld = ( title, id ) => {
 					<div class="subSection">
 						<div class="pt-option-box">
 							<label>Text</label>
-							<input type="text" name="conent_form_email_message_${index}" placeholder="Spacify consent message" />
+							<input type="text" name="content_form_email_message_${index}" placeholder="Spacify consent message" />
 						</div>
 
 						<div class="pt-checkbox pt-inline-field">
 							<label class="container">
-								<input type="checkbox" name="conent_form_email_required_${index}" id="conent-form-email-required-${index}" class="option-checkbox" />
+								<input type="checkbox" name="content_form_email_required_${index}" id="conent-form-email-required-${index}" class="option-checkbox" />
 								<span class="checkmark"></span>Required
 							</label>
 						</div>
@@ -2021,7 +2057,8 @@ var emailAddressFld = ( title, id ) => {
 
   	var formField = `
 		<div class="pt-frm-field" id="fl_${id}" data-form-field="${index}" data-order="${order}">
-			<input type="email" name="test-email" />
+			<label id="label-${index}"></label>
+			<input type="email" name="${index}" id="field_${index}" placeholder="" />
 		</div>
 	`;
   	jQuery( '.form-fields-block' ).append( formField );
@@ -2041,7 +2078,7 @@ var welcomePageField = ( title, id ) => {
   					</span>
   					
   					<span class="pt-addfield-box-title">
-  						<input type="text" class="editableTitle" name="conent_form_welcome_field_${index}" readonly value="${title}" />
+  						<input type="text" class="editableTitle" name="content_form_welcome_field_${index}" readonly value="${title}" />
   					</span>
   					
   					<span class="pt-addfield-box-arrow">
@@ -2063,12 +2100,12 @@ var welcomePageField = ( title, id ) => {
   			<div class="pt-addfield-box-edit">
   				<div class="pt-option-box">
   					<label>Title</label>
-  					<input type="text" name="conent_form_welcome_title_${index}" placeholder="Welcome!" />
+  					<input type="text" name="content_form_welcome_title_${index}" placeholder="Welcome!" />
   				</div>
   				
   				<div class="pt-option-box">
   					<label>Description</label>
-  					<textarea name="conent_form_welcome_description_${index}"></textarea>
+  					<textarea name="content_form_welcome_description_${index}"></textarea>
   				</div>
   				
   				<div class="pt-option-box">
@@ -2076,27 +2113,27 @@ var welcomePageField = ( title, id ) => {
   					
   					<div class="pt-radio">
   						<label class="container">
-	  						<input type="radio" name="conent_form_welcome_action_${index}" value="none" />
+	  						<input type="radio" name="content_form_welcome_action_${index}" value="none" />
 	  						<span class="checkmark"></span>none
   						</label>
   					</div>
 				  	
 				  	<div class="pt-radio">
 					  	<label class="container">
-						  	<input type="radio" name="conent_form_welcome_action_${index}" value="close" />
+						  	<input type="radio" name="content_form_welcome_action_${index}" value="close" />
 						  	<span class="checkmark"></span>close widget
 					  	</label>
 				  	</div>
 				  	
 				  	<div class="pt-radio">
 					  	<label class="container">
-						  	<input type="radio" name="conent_form_welcome_action_${index}" value="redirect" />
+						  	<input type="radio" name="content_form_welcome_action_${index}" value="redirect" />
 						  	<span class="checkmark"></span>redirect to URL
 					  	</label>
 				  	</div>
   					
   					<div class="redirect-url">
-  						<input type="text" name="conent_form_welcome_redirect_url_${index}" class="success-redirect-url" id="success-redirect-url-${index}" placeholder="Redirect URL" />
+  						<input type="text" name="content_form_welcome_redirect_url_${index}" class="success-redirect-url" id="success-redirect-url-${index}" placeholder="Redirect URL" />
   						<button type="button" id="btn-${index}" class="url-test">Test</button>
   					</div>
   				</div>
@@ -2157,6 +2194,7 @@ var radioButtonFld = ( title, id ) => {
 
   </div>`;
 }
+
 var singleLineTextFld =  ( title, id ) => {
   return `<div class="drugableSection" id="${id}">
     <div class="pt-addfield-box">
@@ -2354,7 +2392,7 @@ var rearrangeSection = () => {
 }
 
 var formFieldIndex = () => {
-	const length = 10;
+	const length = 12;
 	const characters = '0123456789abcdefghijklmnopqrstuvwxyz';
     var result = '';
     for ( var i = length; i > 0; --i ) {

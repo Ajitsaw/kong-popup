@@ -6,7 +6,9 @@ class Kong_Popup_Admin_Ajax
     {
         add_action( 'wp_ajax_get_all_templates_ajax', array( $this, 'get_all_templates' ) );
 
-        add_action( 'wp_ajax_set_popup_form_fields_value_ajax', array( $this, 'set_popup_form_fields_value' ) );
+        add_action( 'wp_ajax_set_backend_popup_form_fields_value_ajax', array( $this, 'set_backend_popup_form_fields_value' ) );
+
+        add_action( 'wp_ajax_set_frontend_popup_form_fields_value_ajax', array( $this, 'set_frontend_popup_form_fields_value' ) );
         
         add_action( 'wp_ajax_update_popup_info_ajax', array( $this, 'update_popup_info' ) );
         
@@ -41,18 +43,38 @@ class Kong_Popup_Admin_Ajax
         die();
     }
 
-    public function set_popup_form_fields_value() {
+    public function set_backend_popup_form_fields_value() {
         echo get_post_meta( $_REQUEST[ 'popup_id' ], $_REQUEST[ 'field_name' ], true );
+
+        die();
+    }
+
+    public function set_frontend_popup_form_fields_value() {
+        $result = array();
+
+        $popup_id = $_REQUEST[ 'popup_id' ];
+        if ( $_REQUEST[ 'field_type' ] == "email" ) {
+            $title_key = 'content_form_' . $_REQUEST[ 'field_type' ] . '_title_' . $_REQUEST[ 'field_id' ];
+            $title = ( $this->get_preview_popup_meta( $popup_id, $title_key ) ) ? $this->get_preview_popup_meta( $_REQUEST[ 'popup_id' ], $title_key ) : '';
+
+            $message_key = 'content_form_' . $_REQUEST[ 'field_type' ] . '_message_' . $_REQUEST[ 'field_id' ];
+            $message = ( $this->get_preview_popup_meta( $popup_id, $message_key ) ) ? $this->get_preview_popup_meta( $popup_id, $message_key ) : '';
+
+            $required_key = 'content_form_' . $_REQUEST[ 'field_type' ] . '_required_' . $_REQUEST[ 'field_id' ];
+            $required = ( $this->get_preview_popup_meta( $popup_id, $required_key ) ) ? $this->get_preview_popup_meta( $popup_id, $required_key ) : '';
+            
+            $result = array( $title, $message, $required );
+        }
+
+        echo json_encode( $result );
 
         die();
     }
 
     public function update_popup_info() 
     {
-        // print_data( $_REQUEST );
         $meta_data = $_REQUEST[ 'popup_data' ];
-        // print_data( get_post_meta( $meta_data[ 'popup_id' ] ) );
-        // print_data( $meta_data );
+
         $post_id = $meta_data[ 'popup_id' ];
         unset( $meta_data[ 'popup_id' ] );  // remove the popup_id from array
 
@@ -64,7 +86,7 @@ class Kong_Popup_Admin_Ajax
 
         // update post content
         $post = get_post( $post_id );
-        $post->post_content = $_REQUEST[ 'popup_html' ];
+        $post->post_content = wp_unslash( $_REQUEST[ 'popup_html' ] );
         wp_update_post( $post );
 
         // update preview table
@@ -78,13 +100,13 @@ class Kong_Popup_Admin_Ajax
                 $current_date = date( 'Y-m-d', time() );
 
                 if ( empty( $mdvalue ) ) {
-                    $wpdb->query( "DELETE FROM {$wpdb->prefix}kong_popup_content_structures WHERE popup_id = $post_id" );
+                    $wpdb->query( "DELETE FROM {$wpdb->prefix}kong_popup_content_structures WHERE popup_id = {$post_id}" );
                 } else {
-                    $query = $wpdb->get_results( "SELECT structures FROM {$wpdb->prefix}kong_popup_content_structures WHERE popup_id = $post_id" );
+                    $query = $wpdb->get_results( "SELECT structures FROM {$wpdb->prefix}kong_popup_content_structures WHERE popup_id = {$post_id}" );
                     if ( $query ) {
-                        $wpdb->query( "UPDATE {$wpdb->prefix}kong_popup_content_structures SET structures = '$mdvalue' WHERE popup_id = $post_id" );
+                        $wpdb->query( "UPDATE {$wpdb->prefix}kong_popup_content_structures SET structures = '{$mdvalue}' WHERE popup_id = {$post_id}" );
                     } else {
-                        $wpdb->query( "INSERT INTO {$wpdb->prefix}kong_popup_content_structures ( popup_id, structures, created_at ) VALUES ( $post_id, '$mdvalue', '$current_date' )" );
+                        $wpdb->query( "INSERT INTO {$wpdb->prefix}kong_popup_content_structures ( popup_id, structures, created_at ) VALUES ( {$post_id}, '{$mdvalue}', '{$current_date}' )" );
                     }
                 }
             } else {
@@ -156,7 +178,7 @@ class Kong_Popup_Admin_Ajax
             AND kong_popup_analytics.created_at BETWEEN '{$from_date}' AND '{$to_date}'
         " );
         if ( $total_views_query[ 0 ]->total_views_count == 0 ) {
-            $total_views_query[ 0 ]->total_views_count = "-";
+            $total_views_query[ 0 ]->total_views_count = "";
         }
         $total_views_array[ 'views_count' ] = $total_views_query;
 
@@ -174,7 +196,7 @@ class Kong_Popup_Admin_Ajax
             AND kong_popup_click_targets.created_at BETWEEN '{$from_date}' AND '{$to_date}'
         " );
         if ( $total_clicks_query[ 0 ]->total_clicks_count == 0 ) {
-            $total_clicks_query[ 0 ]->total_clicks_count = "-";
+            $total_clicks_query[ 0 ]->total_clicks_count = "";
         }
         $total_clicks_array[ 'clicks_count' ] = $total_clicks_query;
 
@@ -182,12 +204,12 @@ class Kong_Popup_Admin_Ajax
         if ( $total_views_query[ 0 ]->total_views_count > 0 ) {
             $total_ctr_query = round( ( ( $total_clicks_query[ 0 ]->total_clicks_count / $total_views_query[ 0 ]->total_views_count ) * 100 ), 2 );
             if ( is_nan( $total_ctr_query ) ) {
-                $total_ctr_query = "-";
+                $total_ctr_query = "";
             } else {
                 $total_ctr_query = $total_ctr_query . "%";
             }
         } else {
-            $total_ctr_query = "-";
+            $total_ctr_query = "";
         }
         $total_ctr_array[ 'ctr_count' ] = $total_ctr_query;
 
@@ -204,7 +226,7 @@ class Kong_Popup_Admin_Ajax
             AND posts.post_date BETWEEN '{$from_date}' AND '{$to_date}'
         " );
         if ( empty( $total_average_popup_length_query[ 0 ]->average ) ) {
-            $average_length = "-";
+            $average_length = "";
         } else {
             $average_length = $total_average_popup_length_query[ 0 ]->average . " days";
         }
@@ -511,14 +533,8 @@ class Kong_Popup_Admin_Ajax
 
     public function get_preview_popup()
     {
-        // unset( $_COOKIE[ 'kong_popup_preview_rendered' ] );
-        // setcookie( 'kong_popup_preview_rendered', null, -1 );
-
-        // setcookie( 'kong_popup_preview_rendered', serialize( $_REQUEST[ 'popup_data' ] ) );
-        // print_data( $_REQUEST );
         $meta_data = $_REQUEST[ 'popup_data' ];
-        // print_data( get_post_meta( $meta_data[ 'popup_id' ] ) );
-        // print_data( $meta_data );
+
         $post_id = $meta_data[ 'popup_id' ];
         unset( $meta_data[ 'popup_id' ] );  // remove the popup_id from array
 
@@ -576,6 +592,15 @@ class Kong_Popup_Admin_Ajax
           
         return abs( round( $diff / 86400 ) ); 
     } 
+
+    private function get_preview_popup_meta( $post_id, $mdkey ) 
+    {
+        global $wpdb;
+
+        $query = $wpdb->get_results( "SELECT meta_value FROM {$wpdb->prefix}kong_popup_preview_meta WHERE popup_id = {$post_id} AND meta_key = '{$mdkey}'" );
+
+        return $query[ 0 ]->meta_value;
+    }
 
     private function update_preview_popup_meta( $post_id, $mdkey, $mdvalue ) 
     {

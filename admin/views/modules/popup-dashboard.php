@@ -74,6 +74,12 @@
 		<!-- .statistics-graph starts -->
 		<div class="statistics-graph" id="statistics-graph"></div>
 		<!-- .statistics-graph ends -->
+
+		<!-- .chart-value-row starts -->
+		<div class="chart-value-row" id="statistics-graph-no-data-block" style="display: none;">
+			<span class="no-data"><i class="material-icons">error_outline</i></span>
+		</div>
+		<!-- .chart-value-row ends -->
 	</div>
 	<!-- .statistics ends -->
 
@@ -106,7 +112,7 @@
 		<div class="activity-inner">
 			<!-- .chart-block starts -->
 			<div class="chart-block">
-				<div class="chart-block-inner claerfix">
+				<div class="chart-block-inner clearfix" id="top-activity">
 					<h3><?php echo __( 'total activity', 'kong-popup' ); ?></h3>
 					<!-- .chart-value starts -->
 					<div class="chart-value clearfix">
@@ -119,13 +125,19 @@
 						<!-- .chart-information ends -->
 					</div>
 					<!-- .chart-value ends -->
+
+					<!-- .chart-value-row starts -->
+					<div class="chart-value-row" id="top-activity-no-data-block" style="display: none;">
+						<span class="no-data"><i class="material-icons">error_outline</i></span>
+					</div>
+					<!-- .chart-value-row ends -->
 				</div>
 			</div>
 			<!-- .chart-block ends -->
 
 			<!-- .chart-block starts -->
 			<div class="chart-block">
-				<div class="chart-block-inner claerfix">
+				<div class="chart-block-inner clearfix" id="top-performing">
 					<h3><?php echo __( 'top performing popup', 'kong-popup' ); ?></h3>
 					<!-- .chart-value starts -->
 					<div class="chart-value clearfix">
@@ -138,7 +150,6 @@
 							<img src="#" alt="" id="tpp-url" />
 							<h3 id="tpp-title"></h3>
 						</div>
-						
 						<!-- .round-chart ends -->
 
 						<!-- .chart-information starts -->
@@ -174,13 +185,19 @@
 						<!-- .chart-information ends -->
 					</div>
 					<!-- .chart-value ends -->
+
+					<!-- .chart-value-row starts -->
+					<div class="chart-value-row" id="top-performing-no-data-block" style="display: none;">
+						<span class="no-data"><i class="material-icons">error_outline</i></span>
+					</div>
+					<!-- .chart-value-row ends -->
 				</div>
 			</div>
 			<!-- .chart-block ends -->
 
 			<!-- .chart-block starts -->
 			<div class="chart-block">
-				<div class="chart-block-inner claerfix">
+				<div class="chart-block-inner clearfix" id="top-refferers">
 					<h3><?php echo __( 'top refferers', 'kong-popup' ); ?></h3>
 					<!-- .chart-value starts -->
 					<div class="chart-value clearfix">
@@ -251,7 +268,7 @@
 
 			<!-- .chart-block starts -->
 			<div class="chart-block">
-				<div class="chart-block-inner claerfix">
+				<div class="chart-block-inner clearfix" id="top-locations">
 					<h3><?php echo __( 'top locations', 'kong-popup' ); ?></h3>
 					<!-- .chart-value starts -->
 					<div class="chart-value clearfix">
@@ -264,6 +281,12 @@
 						<!-- .chart-information ends -->
 					</div>
 					<!-- .chart-value ends -->
+
+					<!-- .chart-value-row starts -->
+					<div class="chart-value-row" id="top-locations-no-data-block" style="display: none;">
+						<span class="no-data"><i class="material-icons">error_outline</i></span>
+					</div>
+					<!-- .chart-value-row ends -->
 				</div>
 			</div>
 			<!-- .chart-block ends -->
