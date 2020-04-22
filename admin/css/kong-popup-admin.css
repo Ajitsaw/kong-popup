@@ -5066,10 +5066,10 @@ div#report-filter {
 .chart-item i {
   text-align: center;
   margin-top: 20px;
-  font-size: 20px;
+  font-size: 28px;
 }
 .chart-value-row i {
-  font-size: 13px;
+  font-size: 15px;
   margin-left: 15px;
 }
 .canvasjs-chart-tooltip {
