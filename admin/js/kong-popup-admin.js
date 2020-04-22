@@ -1823,7 +1823,7 @@ var filteredReport = ( fromDate, toDate ) => {
 					animationEnabled: true,
 					data: [ {
 						type: "doughnut",
-						startAngle: 60,
+						startAngle: 0,
 						innerRadius: 60,
 						indexLabel: " ",
 						toolTipContent: "<b>{label}:</b> {y} (#percent%)",
