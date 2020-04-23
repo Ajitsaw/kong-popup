@@ -99,7 +99,7 @@
         <!-- .parameter-row starts -->
         <div class="parameter-row">
           <!-- .exclude-list starts -->
-          <select class="exclude-list" name="" id="">
+          <select class="exclude-list custom-width" name="" id="">
             <option><?php echo __( 'Exclude visitors', 'kong-popup' ); ?></option>
           </select>
           <!-- .exclude-list ends -->
@@ -130,7 +130,7 @@
         <!-- .parameter-row starts -->
         <div class="parameter-row">
           <!-- .exclude-list starts -->
-          <select class="exclude-list" name="" id="">
+          <select class="exclude-list custom-width" name="" id="">
             <option><?php echo __( 'Exclude browsers', 'kong-popup' ); ?></option>
           </select>
           <!-- .exclude-list ends -->
@@ -212,7 +212,7 @@
         <!-- .parameter-row starts -->
         <div class="parameter-row">
           <!-- .exclude-list starts -->
-          <select class="exclude-list" name="" id="">
+          <select class="exclude-list custom-width" name="" id="">
             <option><?php echo __( 'Exclude OS', 'kong-popup' ); ?></option>
           </select>
           <!-- .exclude-list ends -->
@@ -294,7 +294,7 @@
         <!-- .parameter-row starts -->
         <div class="parameter-row">
           <!-- .exclude-list starts -->
-          <select class="exclude-list" name="" id="">
+          <select class="exclude-list custom-width" name="" id="">
             <option><?php echo __( 'Exclude devices', 'kong-popup' ); ?></option>
           </select>
           <!-- .exclude-list ends -->
@@ -352,17 +352,17 @@
         <!-- .parameter-row starts -->
         <div class="parameter-row">
           <!-- .exclude-list starts -->
-          <select class="exclude-list" name="" id="">
+          <select class="exclude-list custom-width" name="" id="">
             <option><?php echo __( 'Exclude referrers', 'kong-popup' ); ?></option>
           </select>
           <!-- .exclude-list ends -->
 
           <span>
-            <input type="text" name="referrer_url" class="referrer-url" value="<?php if ( isset( $popup_meta[ 'referrer_url' ] ) ) echo $popup_meta[ 'referrer_url' ]; ?>" placeholder="Type referrer URL">
+            <input type="text" name="referrer_url" class="referrer-url custom-width" value="<?php if ( isset( $popup_meta[ 'referrer_url' ] ) ) echo $popup_meta[ 'referrer_url' ]; ?>" placeholder="Type referrer URL">
           </span>
 
           <!-- .template-select starts -->
-          <select class="template-select" name="" id="">
+          <select class="template-select custom-width" name="" id="">
             <option><?php echo __( 'Templates', 'kong-popup' ); ?></option>
             <option><?php echo __( 'Templates', 'kong-popup' ); ?></option>
           </select>
@@ -373,13 +373,13 @@
         <!-- .parameter-row starts -->
         <div class="parameter-row">
           <!-- .exclude-list starts -->
-          <select class="exclude-list" name="" id="">
+          <select class="exclude-list custom-width" name="" id="">
             <option><?php echo __( 'Exclude UTM tags', 'kong-popup' ); ?></option>
           </select>
           <!-- .exclude-list ends -->
 
           <span>
-            <input type="text" name="utm_tag" class="input-block" value="<?php if ( isset( $popup_meta[ 'utm_tag' ] ) ) echo $popup_meta[ 'utm_tag' ]; ?>" placeholder="Type UTM value">
+            <input type="text" name="utm_tag" class="input-block custom-width" value="<?php if ( isset( $popup_meta[ 'utm_tag' ] ) ) echo $popup_meta[ 'utm_tag' ]; ?>" placeholder="Type UTM value">
           </span>
         </div>
         <!-- .parameter-row ends -->
@@ -387,13 +387,13 @@
         <!-- .parameter-row starts -->
         <div class="parameter-row">
           <!-- .exclude-list starts -->
-          <select class="exclude-list" name="" id="">
+          <select class="exclude-list custom-width" name="" id="">
             <option><?php echo __( 'Exclude IP addresses', 'kong-popup' ); ?></option>
           </select>
           <!-- .exclude-list ends -->
 
           <span>
-            <input type="text" name="ip_address" class="input-block" value="<?php if ( isset( $popup_meta[ 'ip_address' ] ) ) echo $popup_meta[ 'ip_address' ]; ?>" placeholder="Type IP address" />
+            <input type="text" name="ip_address" class="input-block custom-width" value="<?php if ( isset( $popup_meta[ 'ip_address' ] ) ) echo $popup_meta[ 'ip_address' ]; ?>" placeholder="Type IP address" />
           </span>
         </div>
         <!-- .parameter-row ends -->
@@ -401,13 +401,13 @@
         <!-- .parameter-row starts -->
         <div class="parameter-row">
           <!-- .exclude-list starts -->
-          <select class="exclude-list" name="" id="">
+          <select class="exclude-list custom-width" name="" id="">
             <option><?php echo __( 'Exclude locations', 'kong-popup' ); ?></option>
           </select>
           <!-- .exclude-list ends -->
 
           <span>
-            <input type="text" name="location" class="input-block" value="<?php if ( isset( $popup_meta[ 'location' ] ) ) echo $popup_meta[ 'location' ]; ?>" placeholder="Type location" />
+            <input type="text" name="location" class="input-block custom-width" value="<?php if ( isset( $popup_meta[ 'location' ] ) ) echo $popup_meta[ 'location' ]; ?>" placeholder="Type location" />
           </span>
         </div>
         <!-- .parameter-row ends -->
@@ -415,13 +415,13 @@
         <!-- .parameter-row starts -->
         <div class="parameter-row">
           <!-- .exclude-list starts -->
-          <select class="exclude-list" name="" id="">
+          <select class="exclude-list custom-width" name="" id="">
             <option><?php echo __( 'Exclude languages', 'kong-popup' ); ?></option>
           </select>
           <!-- .exclude-list ends -->
 
           <span>
-            <input type="text" name="language" class="input-block" value="<?php if ( isset( $popup_meta[ 'language' ] ) ) echo $popup_meta[ 'language' ]; ?>" placeholder="Type language">
+            <input type="text" name="language" class="input-block custom-width" value="<?php if ( isset( $popup_meta[ 'language' ] ) ) echo $popup_meta[ 'language' ]; ?>" placeholder="Type language">
           </span>
         </div>
         <!-- .parameter-row ends -->

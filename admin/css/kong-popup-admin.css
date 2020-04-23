@@ -2866,11 +2866,7 @@ input.time-schedule {
 .behavior-tab input[type="text"]:focus{
   width: auto;
 }
-select#time-schedule-option {
-  margin-top:10px;
-  width: 25rem !important;
-  width: 50% !important;
-}
+
 .when-reach-percentage-option {
   margin-top: 10px;
 }
@@ -3175,6 +3171,23 @@ select#time-schedule-option {
 .widget-parameter label{
   font-size: 16px;
 }
+.widget-parameter label[for="frequency-condition"] {
+  display: flex;
+  align-items: center;
+}
+.widget-parameter label[for="frequency-condition"] select, .widget-parameter label[for="frequency-condition"] input[type="text"] {
+  width: 60px !important;
+  margin-left: 10px;
+  margin-top: 0  !important;
+  margin-bottom: 0 !important;
+}
+.widget-parameter label[for="frequency-condition"] select {
+  margin-right: 10px;
+  width: 100px !important;
+}
+.widget-parameter label[for="frequency-condition"]::before {
+  margin-top: 8px;
+}
 /*custom checkbox*/
 .form-group{
   display: inline;
@@ -3244,11 +3257,15 @@ label.container.sub-checkbox:before {
 
 .parameter-row {
   margin: 0 0 20px 0;
+  display: flex;
+  align-items: center;
+  flex-flow: row wrap;
 }
 .parameter-row .form-group {
   margin-bottom: 15px !important;
   display: flex;
   margin-top: 15px !important;
+  margin-right: 5px;
 }
 .parameter-row .form-group input[type="checkbox"] {
   position: absolute;
@@ -3259,11 +3276,22 @@ label.container.sub-checkbox:before {
   left: 6px;
 }
 .parameter-row input[type="text"] {
-  width: 100% !important;
-  margin-bottom: 10px !important;
+  margin-bottom: 0px !important;
+  margin-right: 10px !important;
 }
 .parameter-row span:last-child input {
   margin-bottom: 0;
+}
+.parameter-row select {
+  margin-bottom: 0 !important;
+  margin-right: 10px;
+}
+
+select#site-pages {
+  width: 60px;
+}
+.custom-width {
+  width: 180px !important;
 }
 .referrer-url, .input-block{
   margin-right: 10px;
@@ -3280,9 +3308,13 @@ label.container.sub-checkbox:before {
 .show-visitor{
   padding: 16px 0 10px 0;
   border-top: 1px solid #E8E8E8;
-}
-.show-visitor {
   font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+.show-visitor select {
+  width: 60px !important;
+  margin: 0 10px !important;
 }
 .preview-wrap iframe{
   position: absolute;
@@ -3307,6 +3339,7 @@ label.container.sub-checkbox:before {
   display: flex;
   margin-bottom: 15px;
   align-items: center;
+  flex-flow: row wrap;
 }
 .behavior label:before, .behavior label:after {
   display: none;
@@ -5274,6 +5307,9 @@ button.applyBtn.kg_secondary_bg.btn.btn-sm.btn-success, button.cancelBtn.btn.btn
   .kong-container #tabs {
     width: 60%;
   }
+  .parameter-row .form-group label.container, .parameter-row label {
+    font-size: 14px;
+  }
 }
 @media (max-width: 767px){
   .form-conainer {
@@ -5374,7 +5410,29 @@ button.applyBtn.kg_secondary_bg.btn.btn-sm.btn-success, button.cancelBtn.btn.btn
   .kong-container .tabs-container {
     display: block;
   }
-
+  .custom-width {
+    width: 100% !important;
+    margin-top: 10px !important;
+    margin-right: 0 !important;
+  }
+  .parameter-row .form-group {
+    margin-bottom: 0 !important;
+  }
+  .parameter-row span {
+    width: 100%;
+    
+  }
+  select#site-pages {
+    width: 100%;
+    margin: 10px 0;
+  }
+  select#site-pages {
+    width: 100%;
+    margin: 10px 0;
+  }
+  .show-visitor {
+    display: block;
+  }
 }
 @media (max-width: 567px){
   .project-title {
