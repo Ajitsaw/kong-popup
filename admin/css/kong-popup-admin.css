@@ -2343,6 +2343,8 @@ readers do not read off random characters that represent icons */
 
 body {
   font-family: 'Open Sans', sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 button {
@@ -5067,6 +5069,10 @@ div#report-filter {
   text-align: center;
   margin-top: 20px;
   font-size: 28px;
+  position: absolute;
+  left: 50%;
+  top: 30px;
+  transform: translate(-50%, 0);
 }
 .chart-value-row i {
   font-size: 15px;
