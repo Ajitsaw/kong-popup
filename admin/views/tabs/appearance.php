@@ -67,7 +67,7 @@
             <!-- .pt-checkbox ends -->
 
             <!-- .pt-add-image-field starts -->
-            <div class="pt-add-image-field add-image hide" <?php if ( isset( $popup_meta[ 'add_image_appearance' ] ) == 'on' ) echo 'style="display: block"'; ?>>
+            <div class="pt-add-image-field add-image hide-app" <?php if ( isset( $popup_meta[ 'add_image_appearance' ] ) == 'on' ) echo 'style="display: block"'; ?>>
                 <!-- .pt-add-image-field_tab starts -->
                 <ul class="pt-add-image-field_tab">
                     <li class="selected" data-id="step1-desktop-size-appearance">

@@ -11,9 +11,9 @@ $generated_js .= "
             jQuery( '.kong-popup' ).addClass( 'animate' );
         }, 1000 );
 
-        jQuery( this ).on( 'click', '.kong-popup', function() {
-            jQuery( this ).hide();
-        } );
+        // jQuery( this ).on( 'click', '.kong-popup', function() {
+        //     jQuery( this ).hide();
+        // } );
 
         setTimeout( function() {
                 jQuery( '.kong-popup' ).removeAttr( 'style' );

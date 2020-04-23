@@ -13,9 +13,9 @@
 	</div>
 </div> -->
 
-<div class="pt-popup pt-popup--contact popup-container kong-popup" id="contact" data-id="{_ID_}" style="display: none;" data-template="Contact">
+<!-- <div class="pt-popup pt-popup--contact popup-container kong-popup" id="contact" data-id="{_ID_}" style="display: none;" data-template="Contact">
     <div class="pt-popup__header">
-        <a class="pt-popup__close" href="javascript:void(0);" onclick="close_kong_popup(); clickTarget( {_ID_}, 'close' );">
+        <a class="pt-popup__close" href="javascript:void(0);" onclick="close_kong_popup();">
         	<i class="fa fa-times" aria-hidden="true"></i>
         </a>
 
@@ -25,7 +25,7 @@
     <div class="pt-popup__body">
         <p>{popup_body_description}</p>
 
-        <form class="popup-form" onsubmit="javascript:submit_behaviour();">
+        <form class="popup-form" onsubmit="javascript:submit_behaviour( {_ID_}, event, this );" novalidate>
             <div class="form-fields-block">
                 <div class="pt-frm-field">
                     <label>Email</label>
@@ -35,6 +35,33 @@
                 <div class="pt-frm-field">
                     <label>Message</label>
                     <textarea></textarea>
+                </div>
+            </div>
+
+            <div class="form-btn-block">
+                <button id="popup-submit">{popup_button_text}</button>
+            </div>
+        </form>
+    </div>
+</div> -->
+
+<div class="pt-popup pt-popup--contact popup-container kong-popup" id="contact" data-id="{_ID_}" style="display: none;" data-template="Contact">
+    <div class="pt-popup__header">
+        <a class="pt-popup__close" href="javascript:void(0);" onclick="close_kong_popup();">
+            <i class="fa fa-times" aria-hidden="true"></i>
+        </a>
+
+        <h2>{popup_body_title}</h2>
+    </div>
+
+    <div class="pt-popup__body">
+        <p>{popup_body_description}</p>
+
+        <form class="popup-form" method="POST" onsubmit="javascript:submit_behaviour( {_ID_}, event, this );">
+            <div class="form-fields-block">
+                <div class="pt-frm-field" id="fl_ea_1" data-form-field="e2xinp3ug8hp" data-order="1">
+                    <label id="label-e2xinp3ug8hp">First Title</label>
+                    <input type="email" name="email_name_e2xinp3ug8hp" id="field_e2xinp3ug8hp" placeholder="vcvvuybibibasd" required="">
                 </div>
             </div>
 

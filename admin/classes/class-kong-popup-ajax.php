@@ -18,6 +18,11 @@ class Kong_Popup_Admin_Ajax
 
         add_action( 'wp_ajax_add_click_target_ajax', array( $this, 'add_click_target' ) );
         add_action( 'wp_ajax_nopriv_add_click_target_ajax', array( $this, 'add_click_target' ) );
+
+        add_action( 'wp_ajax_save_popup_feeds_ajax', array( $this, 'save_popup_feeds' ) );
+        add_action( 'wp_ajax_nopriv_save_popup_feeds_ajax', array( $this, 'save_popup_feeds' ) );
+
+        add_action( 'wp_ajax_update_popup_status_ajax', array( $this, 'update_popup_status' ) );
     }
 
     public function get_all_templates() {
@@ -131,6 +136,12 @@ class Kong_Popup_Admin_Ajax
                 delete_post_meta( $post_id, $mdkey );
             }
         }
+
+        $post = array( 
+            'ID' => $post_id, 
+            'post_status' => 'publish',   // The post status - publish|pending|draft|private|static|object|attachment|inherit|future|trash.
+        );
+        wp_update_post( $post );
 
         die();
     }
@@ -586,6 +597,19 @@ class Kong_Popup_Admin_Ajax
         die();
     }
 
+    public function save_popup_feeds()
+    {
+        global $wpdb;
+
+        $popup_id = $_REQUEST[ 'popup_id' ]; 
+        $feeds = sanitize_text_field( $_REQUEST[ 'form_data' ] );
+        $current_date = date( 'Y-m-d', time() );
+
+        $wpdb->query( "INSERT INTO {$wpdb->prefix}kong_popup_feeds ( popup_id, feeds, created_at ) VALUES ( $popup_id, '$feeds', '$current_date' )" );
+
+        die();
+    }
+
     private function dateDiffInDays( $date1, $date2 )  
     { 
         $diff = strtotime( $date2 ) - strtotime( $date1 ); 
@@ -619,5 +643,18 @@ class Kong_Popup_Admin_Ajax
         global $wpdb;
 
         $wpdb->query( "DELETE FROM {$wpdb->prefix}kong_popup_preview_meta WHERE popup_id = {$post_id} AND meta_key = '{$mdkey}'" );
+    }
+
+    public function update_popup_status() 
+    {
+        $request_data = $_REQUEST;
+
+        $post = array( 
+            'ID' => $request_data[ 'id' ], 
+            'post_status' => $request_data[ 'status' ],   // The post status - publish|pending|draft|private|static|object|attachment|inherit|future|trash.
+        );
+        wp_update_post( $post );
+
+        die();
     }
 }

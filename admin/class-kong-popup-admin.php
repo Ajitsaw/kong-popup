@@ -86,7 +86,7 @@ class Kong_Popup_Admin
         add_action( 'wp_ajax_savepopup', array( $this, 'savePopup' ) );
         //add_action( 'wp_ajax_nopriv_savepopup', array( $this, 'savePopup' ) );
         // add_action( 'wp_ajax_update_popup_info_ajax', array( $this, 'update_popup_info' ) );
-        add_action( 'wp_ajax_update_popup_status_ajax', array( $this, 'update_popup_status' ) );
+        // add_action( 'wp_ajax_update_popup_status_ajax', array( $this, 'update_popup_status' ) );
         add_action( 'wp_ajax_preview', array( $this, 'preview' ) );
         add_action( 'admin_menu', array( $this, 'add_folders' ) );
 
@@ -306,18 +306,18 @@ class Kong_Popup_Admin
     //     die();
     // }
 
-    public function update_popup_status() 
-    {
-        $request_data = $_REQUEST;
+    // public function update_popup_status() 
+    // {
+    //     $request_data = $_REQUEST;
 
-        $post = array( 
-            'ID' => $request_data[ 'id' ], 
-            'post_status' => $request_data[ 'status' ],   // The post status - publish|pending|draft|private|static|object|attachment|inherit|future|trash.
-        );
-        wp_update_post( $post );
+    //     $post = array( 
+    //         'ID' => $request_data[ 'id' ], 
+    //         'post_status' => $request_data[ 'status' ],   // The post status - publish|pending|draft|private|static|object|attachment|inherit|future|trash.
+    //     );
+    //     wp_update_post( $post );
 
-        die();
-    }
+    //     die();
+    // }
 
     public function preview()
     {
@@ -782,10 +782,11 @@ class Kong_Popup_Admin
         $title = get_the_title( $original_post_id ) . " Copy";
         $original_post = get_post( $original_post_id );
         $post = array(
-            'post_title'    => $title,
-            'post_status'   => 'publish',
-            'post_type'     => $original_post->post_type,
-            'post_author'   => 1
+            'post_title'        => $title,
+            'post_status'       => 'publish',
+            'post_content'      => $original_post->post_content,
+            'post_type'         => $original_post->post_type,
+            'post_author'       => 1
         );
         $clone_post_id = wp_insert_post( $post );
         // Copy post metadata
