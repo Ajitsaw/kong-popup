@@ -442,7 +442,8 @@
 
       <!-- .btn-group starts -->
       <div class="btn-group">
-        <button class="btn-publish-popup kg_secondary_bg btn" id="publish-popup">
+        <!-- <button class="save-popup btn-publish-popup kg_secondary_bg btn" id="publish-popup"> -->
+        <button class="save-popup btn-publish-popup kg_secondary_bg btn">
           <?php echo __( 'Publish', 'kong-popup' ); ?>
         </button>
 

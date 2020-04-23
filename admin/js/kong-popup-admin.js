@@ -30,7 +30,7 @@ jQuery( document ).ready( function( e ) {
 			<!-- .dashboard-left starts -->
 			<div class="dashboard-left">
 				<div class="kg_secondary_bg" id="report-filter">
-					<i class="material-icons"><?php echo __( 'more_vert', 'kong-popup' ); ?></i>
+					<i class="material-icons">more_vert</i>
 					<span class="date-box"></span>
 				</div>
 
@@ -46,7 +46,7 @@ jQuery( document ).ready( function( e ) {
 	jQuery( '#toplevel_page_edit-popup, #toplevel_page_edit-template, #toplevel_page_create-template, #toplevel_page_popups-under-folder' ).remove();
 	jQuery( '#toplevel_page_create-popup a' ).addClass( 'kg_secondary_bg btn p-0 site-action-toggle btn-raised' );
 
-	jQuery( '.kong-container .tab-content' ).hide();
+	jQuery( '.kong-container .tab-content, .pt-add-image-field' ).hide();
 	jQuery( '.kong-container #tabs li:first-child' ).next().addClass( 'active' );
 	jQuery( '.kong-container .tab-content:first-child' ).next().show();
 	
@@ -144,9 +144,14 @@ jQuery( document ).ready( function( e ) {
 	} );
 
 	jQuery( this ).on( 'change', '.kong-container input[type="radio"]', function( e ) {
+		console.log( "RADIO" );
 		var key = e.target.name;
 		var value = e.target.value;
 		popupData[ key ] = value;
+
+		console.log( "RADIO KEY = " + key );
+		console.log( "RADIO VALUE = " + value );
+		console.log( popupData );
 
 		if ( value == "specific" ) {
 			jQuery( '.conditional-block' ).removeClass( 'hide-parameter-list' ).addClass( 'show-parameter-list' );
@@ -649,27 +654,27 @@ jQuery( document ).ready( function( e ) {
 		jQuery( '.advance-hidden' ).toggleClass( 'hide' );
 	} );
 
-	jQuery( '#publish-popup' ).on( 'click', function( e ) {
-		e.preventDefault();
+	// jQuery( '#publish-popup' ).on( 'click', function( e ) {
+	// 	e.preventDefault();
 
-		var getPopupID = popupData.popup_id;
-		var getStatus = 'publish';
-		jQuery.ajax( {
-			url: ajaxurl + '?action=update_popup_status_ajax',
-			type: 'POST',
-			data: {
-				id: getPopupID,
-				status: getStatus
-			},
-		} )
-		.done( function( data ) {
-			alert( "Popup Publish" );
-			location.reload();
-		} )
-		.fail( function( data ) {
+	// 	var getPopupID = popupData.popup_id;
+	// 	var getStatus = 'publish';
+	// 	jQuery.ajax( {
+	// 		url: ajaxurl + '?action=update_popup_status_ajax',
+	// 		type: 'POST',
+	// 		data: {
+	// 			id: getPopupID,
+	// 			status: getStatus
+	// 		},
+	// 	} )
+	// 	.done( function( data ) {
+	// 		alert( "Popup Publish" );
+	// 		location.reload();
+	// 	} )
+	// 	.fail( function( data ) {
 			
-		} );
-	} );
+	// 	} );
+	// } );
 
 	jQuery( '.target-clone' ).on( 'click', function( e ) {
 		e.preventDefault();
@@ -986,6 +991,8 @@ jQuery( document ).ready( function( e ) {
 	/**
 	 * New Codes
 	 */
+	popupPreview();
+
 	jQuery( '.pt-addfield' ).sortable( {
 	 	update: function( event, ui ) {
 	 		rearrangeSection();
@@ -1160,7 +1167,7 @@ jQuery( document ).ready( function( e ) {
 	// }
 
 	jQuery( this ).on( 'click', '.save-popup', function( e ) {
-		updatePopupDataa();
+		updatePopupData();
 	} );
 
 	jQuery('#addFldBtn').click(function() {
@@ -1208,73 +1215,93 @@ jQuery( document ).ready( function( e ) {
 		rearrangeSection();
 		popupPreview();
 	} );
-	jQuery(document).on('click', '.cloneSection', function() {
-		var $el = jQuery(this).closest('.drugableSection');
-		var fldIdentity = $el.attr('id').split('_')[0];
+
+	jQuery( this ).on( 'click', '.cloneSection', function() {
+		var $el = jQuery( this ).closest( '.drugableSection' );
+		var fldIdentity = $el.attr( 'id' ).split( '_' )[ 0 ];
 		var id = fldIdentity + '_' + jQuery( '#fldArea .drugableSection' ).length;
-		var title = $el.find('.editableTitle').val() + ' Cloned';
-		if(fldIdentity == 'wp') {
-			jQuery('#fldArea').append(welcomePageField( title, id ));
-			rearrangeSection();
-		} else if (fldIdentity == 'rb' || fldIdentity == 'cb' || fldIdentity == 'dl') {
-			jQuery('#fldArea').append(radioButtonFld( title, id ));
-			jQuery(".optionUl").sortable();
-			rearrangeSection();
-		} else if (fldIdentity == 'slt' || fldIdentity == 'mlt' ) {
-			jQuery('#fldArea').append(singleLineTextFld( title, id ));
-			rearrangeSection();
+		var title = $el.find( '.editableTitle' ).val() + ' Cloned';
+
+		if ( fldIdentity == 'wp' ) {
+			var structure = welcomePageField( title, id );
+			jQuery( '#fldArea').append( structure[ 1 ] );
+		} else if ( fldIdentity == 'rb' || fldIdentity == 'cb' || fldIdentity == 'dl' ) {
+			var structure = radioButtonFld( title, id );
+			jQuery( '#fldArea').append( structure[ 1 ] );
+			jQuery( '.optionUl' ).sortable();
+		} else if ( fldIdentity == 'slt' || fldIdentity == 'mlt' ) {
+			jQuery( '#fldArea' ).append( singleLineTextFld( title, id ) );
 		} else if(fldIdentity == 'ea') {
 			var structure = emailAddressFld( title, id );
 			jQuery( '#fldArea' ).append( structure[ 1 ] );
-			rearrangeSection();
-			// popupPreview();
 		} else if(fldIdentity == 'r') {
-			jQuery('#fldArea').append(ratingFld( title, id ));
-			rearrangeSection();
+			jQuery( '#fldArea' ).append( ratingFld( title, id ) );
 		} else if(fldIdentity == 'sp') {
-			jQuery('#fldArea').append(successPageFld( title, id ));
-			rearrangeSection();
+			jQuery( '#fldArea' ).append( successPageFld( title, id ) );
 		}
-		jQuery(this).closest('ul').hide();
-	});
-	jQuery(document).on('click', '.optionRemove', function() {
-		jQuery(this).closest('li').remove();
-	});
-	jQuery(document).on('click', '.addOptionBtn', function() {
-		var ind = jQuery(this).prev().find('li').length + 1;
-		var markUp = `<li>
-		<div class="barIcon"><i class="fa fa-bars" aria-hidden="true"></i></div>
-		<div class="optnTxtArea"><input type="text" name="" placeholder="Option ${ind}"></div>
-		<div class="optionRemove"><i class="fa fa-trash" aria-hidden="true"></i></div>
-		</li>`;
-		jQuery(this).prev().append(markUp);
-	})
-	jQuery('#emailAddressBtn').click(function() {
+		rearrangeSection();
+		jQuery( this ).closest( 'ul' ).hide();
+	} );
+
+	jQuery( this ).on( 'click', '.optionRemove', function() {
+		jQuery( this ).closest( 'li' ).remove();
+	} );
+
+	jQuery( this ).on( 'click', '.addOptionBtn', function() {
+		var ind = jQuery( this ).prev().find( 'li' ).length + 1;
+		var index = jQuery( this ).closest( '.drugableSection' ).attr( 'data-field' );
+		var markUp = `
+			<li>
+				<div class="barIcon">
+					<i class="fa fa-bars" aria-hidden="true"></i>
+				</div>
+
+				<div class="optnTxtArea">
+					<input type="text" name="content_form_radio_title_${ind}_${index}" placeholder="Option ${ind}" />
+				</div>
+
+				<div class="optionRemove">
+					<i class="fa fa-trash" aria-hidden="true"></i>
+				</div>
+			</li>
+		`;
+		jQuery( this ).prev().append( markUp );
+	} );
+
+	jQuery( this ).on( 'click', '#welcomePageBtn', function() {
 		var ind = jQuery( '#fldArea .drugableSection' ).length + 1;
-		var structure = emailAddressFld( 'Email address', 'ea_' + ind );
+		var structure = welcomePageField( 'Welcome Page', 'wp_' + ind );
+
 		jQuery( '#fldArea' ).append( structure[ 1 ] );
 		toggleEl( '#addFldList', 'hide' );
+
 		rearrangeSection();
 		popupPreview();
-	});
-	
-	popupPreview();
+	} );
 
-	jQuery('#welcomePageBtn').click(function() {
+	jQuery( this ).on( 'click', '#emailAddressBtn', function() {
 		var ind = jQuery( '#fldArea .drugableSection' ).length + 1;
+		var structure = emailAddressFld( 'Email address', 'ea_' + ind );
 
-		jQuery('#fldArea').append(welcomePageField('Welcome Page', 'wp_'+ind));
-		toggleEl('#addFldList', 'hide');
+		jQuery( '#fldArea' ).append( structure[ 1 ] );
+		toggleEl( '#addFldList', 'hide' );
+
 		rearrangeSection();
-	});
-	jQuery('#radioButtonsBtn').click(function() {
+		popupPreview();
+	} );
+
+	jQuery( this ).on( 'click', '#radioButtonsBtn', function() {
 		var ind = jQuery( '#fldArea .drugableSection' ).length + 1;
+		var structure = radioButtonFld( 'Radio Button', 'rb_' + ind );
 
-		jQuery('#fldArea').append(radioButtonFld('Radio Button', 'rb_'+ind));
+		jQuery('#fldArea').append( structure[ 1 ] );
 		toggleEl('#addFldList', 'hide');
-		jQuery(".optionUl").sortable();
+
+		jQuery( '.optionUl').sortable();
 		rearrangeSection();
-	});
+		popupPreview();
+	} );
+
 	jQuery('#checkboxesBtn').click(function() {
 		var ind = jQuery( '#fldArea .drugableSection' ).length + 1;
 
@@ -1327,6 +1354,7 @@ jQuery( document ).ready( function( e ) {
 		jQuery('#segmentArea').append(newSegment('Segment ' + ind, 'segment_'+ind));
 		colorPickerInit();
 	});
+
 	jQuery(document).on('click', '.cloneSegment', function() {
 		var $el = jQuery(this).closest('.drugableSection').find('.editableTitle');
 		var id = 'segment_' + jQuery('#segmentArea .drugableSection').length;
@@ -1372,7 +1400,7 @@ jQuery( document ).ready( function( e ) {
 				field_name: fieldName,
 			},
 			success: function( response ) {
-				console.log( response );
+				// console.log( response );
 				if ( response ) {
 					if ( fieldType == "checkbox" ) {
 						jQuery( '[name="' + fieldName + '"]' ).prop( 'checked', true );
@@ -1425,40 +1453,84 @@ var popupPreview = () => {
 				var frameSRC = jQuery( '.preview-wrap iframe' ).attr( 'src' );
 				jQuery( '.preview-wrap iframe' ).attr( 'src', frameSRC ); 
 				jQuery( 'a.frame' ).attr( 'href', frameSRC );
-				
-				test();
 			}
 		} );
 	}
 }
 
-var test = () => {
-	console.log( "TEST IS HERE" );
-	jQuery( '.pt-frm-field' ).find( 'input, select, textarea' ).each( function() {
-		var fieldType = this.type;
-		var fieldID = this.id;
-		var splitFieldID = fieldID.split( '_' );
-		var ID = splitFieldID[ 1 ];
+var updatePopupData = () => {
+	if ( popupData ) {
+		console.log( "UPDATE IS HERE" );
+		console.log( popupData );
+		jQuery( '.pt-frm-field' ).find( 'input, select, textarea' ).each( function() {
+			var fieldType = this.type;
+			var fieldID = this.id;
+			var splitFieldID = fieldID.split( '_' );
+			var ID = splitFieldID[ 1 ];
 
-		jQuery.ajax( {
-			type: 'POST',
-			url: ajaxurl,
-			dataType: 'json',
-			async: false,
-			data: {
-				action: 'set_frontend_popup_form_fields_value_ajax',
-				popup_id: popupData.popup_id,
-				field_type: fieldType,
-				field_id: ID,
-			},
-			success: function( response ) {
-				if ( fieldType == "radio" ) {
-					jQuery( '.popup-content #label-' + ID ).text( response[ 0 ] );
-					jQuery( '.popup-content #' + fieldID ).attr( 'placeholder', response[ 1 ] );
-
+			jQuery.ajax( {
+				type: 'POST',
+				url: ajaxurl,
+				dataType: 'json',
+				async: false,
+				data: {
+					action: 'set_frontend_popup_form_fields_value_ajax',
+					popup_id: popupData.popup_id,
+					field_type: fieldType,
+					field_id: ID,
+				},
+				success: function( response ) {
+					if ( fieldType == "email" ) {
+						jQuery( '.popup-content #label-' + ID ).text( response[ 0 ] );
+						jQuery( '.popup-content #' + fieldID ).attr( 'placeholder', response[ 1 ] );
+						if ( response[ 2 ] == "on" ) {
+							jQuery( '.popup-content #' + fieldID ).prop( 'required', true );
+						}
+					}
+				},
+				complete: function( response ) {
+					sendPopupData();
 				}
-			}
+			} );
 		} );
+	}
+}
+
+var sendPopupData = () => {
+	console.log( "TEST IS HERE" );
+	var contentHTMLStructures = jQuery( '#fldArea' ).html();
+	if ( contentHTMLStructures <= 29 ) {
+		popupData[ 'content_html_structures' ] = '';
+	} else {
+		popupData[ 'content_html_structures' ] = contentHTMLStructures;
+	}
+
+	var popupHTML = jQuery( '.popup-content' ).html();
+	console.log( popupData );
+
+	jQuery.ajax( {
+		type: 'POST',
+		url: ajaxurl,
+		dataType: 'json',
+		data: {
+			action: 'update_popup_info_ajax',
+			popup_data: popupData,
+			popup_html: popupHTML,
+			remove_fields: removeFieldsNameArray,
+		},
+		beforeSend: ( x ) => {
+			if ( x && x.overrideMimeType ) {
+				x.overrideMimeType( "application/j-son; charset=UTF-8" );
+			}
+		},
+		success: ( data ) => {
+			jQuery( '#success-message' ).html( '<i class="fa fa-check" aria-hidden="true"></i>Saved!' ).show();
+			setTimeout( () => {
+				jQuery( '#success-message' ).hide( 'blind', {}, 500 );
+			}, 1500 );
+			removeFieldsNameArray = [];
+			location.reload();
+		}
 	} );
 }
 
@@ -1887,7 +1959,7 @@ var filteredReport = ( fromDate, toDate ) => {
 					animationEnabled: true,
 					data: [ {
 						type: "doughnut",
-						startAngle: 0,
+						startAngle: 60,
 						innerRadius: 60,
 						indexLabel: " ",
 						toolTipContent: "<b>{label}:</b> {y} (#percent%)",
@@ -1898,44 +1970,6 @@ var filteredReport = ( fromDate, toDate ) => {
 				roundChart.render();
 			} );
 		// }
-	}
-}
-
-var updatePopupDataa = () => {
-	if ( popupData ) {
-		var contentHTMLStructures = jQuery( '#fldArea' ).html();
-		if ( contentHTMLStructures <= 29 ) {
-			popupData[ 'content_html_structures' ] = '';
-		} else {
-			popupData[ 'content_html_structures' ] = contentHTMLStructures;
-		}
-
-		var popupHTML = jQuery( '.popup-content' ).html();
-
-		jQuery.ajax( {
-			type: 'POST',
-			url: ajaxurl,
-			dataType: 'json',
-			data: {
-				action: 'update_popup_info_ajax',
-				popup_data: popupData,
-				popup_html: popupHTML,
-				remove_fields: removeFieldsNameArray,
-			},
-			beforeSend: ( x ) => {
-				if ( x && x.overrideMimeType ) {
-					x.overrideMimeType( "application/j-son; charset=UTF-8" );
-				}
-			},
-			success: ( data ) => {
-				jQuery( '#success-message' ).html( '<i class="fa fa-check" aria-hidden="true"></i>Saved!' ).show();
-				setTimeout( () => {
-					jQuery( '#success-message' ).hide( 'blind', {}, 500 );
-				}, 1500 );
-				removeFieldsNameArray = [];
-				location.reload();
-			}
-		} );
 	}
 }
 
@@ -1990,86 +2024,12 @@ var toggleEl = ( $el, action ) => {
 }
 
 // markups
-var emailAddressFld = ( title, id ) => {
+var welcomePageField = ( title, id ) => {
 	var returnStructure = [];
 	var index = formFieldIndex();
 	var order = findNextIndex( id );
-	var html = `
-		<div class="drugableSection" id="${id}" data-field="${index}">
-			<div class="pt-addfield-box">
-				<div class="accrodianBtn">
-					<span class="pt-addfield-box-icon">
-						<i class="fa fa-bars" aria-hidden="true"></i>
-					</span>
 
-					<span class="pt-addfield-box-title">
-						<input type="text" class="editableTitle" name="content_form_email_field_${index}" readonly value="${title}" />
-					</span>
-
-					<span class="pt-addfield-box-arrow">
-						<i class="fa fa-caret-down" aria-hidden="true"></i>
-					</span>
-				</div>
-
-				<a class="pt-addfield-box-config" href="javascript:void(0);">
-					<i class="fa fa-cog" aria-hidden="true"></i>
-				</a>
-
-				<ul class="add-button-field pt-config-btn">
-					<li class="renameTitle">Rename</li>
-					<li class="cloneSection">Clone</li>
-					<li class="removeSection">Remove</li>
-				</ul>
-			</div>
-
-			<div class="pt-addfield-box-edit">
-				<div class="pt-option-box">
-					<label>Title</label>
-					<input type="text" name="content_form_email_title_${index}" placeholder="Title" />
-				</div>
-
-				<section>
-					<div class="pt-checkbox pt-inline-field">
-						<label class="container">
-							<input type="checkbox" name="content_form_email_consent_${index}" id="conent-form-email-consent-${index}" class="sectionOpener option-checkbox" />
-							<span class="checkmark"></span>Add a consent checkbox
-						</label>
-					</div>
-
-					<div class="subSection">
-						<div class="pt-option-box">
-							<label>Text</label>
-							<input type="text" name="content_form_email_message_${index}" placeholder="Spacify consent message" />
-						</div>
-
-						<div class="pt-checkbox pt-inline-field">
-							<label class="container">
-								<input type="checkbox" name="content_form_email_required_${index}" id="conent-form-email-required-${index}" class="option-checkbox" />
-								<span class="checkmark"></span>Required
-							</label>
-						</div>
-					</div>
-				</section>
-			</div>
-		</div>
-  	`;
-  	returnStructure.push( index, html );
-
-  	var formField = `
-		<div class="pt-frm-field" id="fl_${id}" data-form-field="${index}" data-order="${order}">
-			<label id="label-${index}"></label>
-			<input type="email" name="${index}" id="field_${index}" placeholder="" />
-		</div>
-	`;
-  	jQuery( '.form-fields-block' ).append( formField );
-
-  	return returnStructure;
-}
-
-var welcomePageField = ( title, id ) => {
-	var index = formFieldIndex();
-
-  	return `
+  	var html = `
   		<div class="drugableSection" id="${id}" data-field="${index}">
   			<div class="pt-addfield-box">
   				<div class="accrodianBtn">
@@ -2140,59 +2100,160 @@ var welcomePageField = ( title, id ) => {
   			</div>
   		</div>
   	`;
+  	returnStructure.push( index, html );
+
+ //  	var formField = `
+	// 	<div class="pt-frm-field" id="fl_${id}" data-form-field="${index}" data-order="${order}">
+	// 		<label id="label-${index}"></label>
+	// 		<input type="email" name="email_name_${index}" id="field_${index}" placeholder="" />
+	// 	</div>
+	// `;
+ //  	jQuery( '.form-fields-block' ).append( formField );
+
+  	return returnStructure;
+}
+
+var emailAddressFld = ( title, id ) => {
+	var returnStructure = [];
+	var index = formFieldIndex();
+	var order = findNextIndex( id );
+	var html = `
+		<div class="drugableSection" id="${id}" data-field="${index}">
+			<div class="pt-addfield-box">
+				<div class="accrodianBtn">
+					<span class="pt-addfield-box-icon">
+						<i class="fa fa-bars" aria-hidden="true"></i>
+					</span>
+
+					<span class="pt-addfield-box-title">
+						<input type="text" class="editableTitle" name="content_form_email_field_${index}" readonly value="${title}" />
+					</span>
+
+					<span class="pt-addfield-box-arrow">
+						<i class="fa fa-caret-down" aria-hidden="true"></i>
+					</span>
+				</div>
+
+				<a class="pt-addfield-box-config" href="javascript:void(0);">
+					<i class="fa fa-cog" aria-hidden="true"></i>
+				</a>
+
+				<ul class="add-button-field pt-config-btn">
+					<li class="renameTitle">Rename</li>
+					<li class="cloneSection">Clone</li>
+					<li class="removeSection">Remove</li>
+				</ul>
+			</div>
+
+			<div class="pt-addfield-box-edit">
+				<div class="pt-option-box">
+					<label>Title</label>
+					<input type="text" name="content_form_email_title_${index}" placeholder="Title" />
+				</div>
+
+				<section>
+					<div class="pt-checkbox pt-inline-field">
+						<label class="container">
+							<input type="checkbox" name="content_form_email_consent_${index}" id="conent-form-email-consent-${index}" class="sectionOpener option-checkbox" />
+							<span class="checkmark"></span>Add a consent checkbox
+						</label>
+					</div>
+
+					<div class="subSection">
+						<div class="pt-option-box">
+							<label>Text</label>
+							<input type="text" name="content_form_email_message_${index}" placeholder="Spacify consent message" />
+						</div>
+
+						<div class="pt-checkbox pt-inline-field">
+							<label class="container">
+								<input type="checkbox" name="content_form_email_required_${index}" id="conent-form-email-required-${index}" class="option-checkbox" />
+								<span class="checkmark"></span>Required
+							</label>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+  	`;
+  	returnStructure.push( index, html );
+
+  	var formField = `
+		<div class="pt-frm-field" id="fl_${id}" data-form-field="${index}" data-order="${order}">
+			<label id="label-${index}"></label>
+			<input type="email" name="email_name_${index}" id="field_${index}" placeholder="" />
+		</div>
+	`;
+  	jQuery( '.form-fields-block' ).append( formField );
+
+  	return returnStructure;
 }
 
 var radioButtonFld = ( title, id ) => {
-  return `<div class="drugableSection" id="${id}">
-    <div class="pt-addfield-box">
-      <div class="accrodianBtn">
-        <span class="pt-addfield-box-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
-        <span class="pt-addfield-box-title"><input type="text" class="editableTitle" name="" readonly value="${title}"></span>
-        <span class="pt-addfield-box-arrow"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
-      </div>
+	var returnStructure = [];
+	var index = formFieldIndex();
+	var order = findNextIndex( id );
+	var html = `
+	  <div class="drugableSection" id="${id}" data-field="${index}">
+	    <div class="pt-addfield-box">
+	      <div class="accrodianBtn">
+	        <span class="pt-addfield-box-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+	        <span class="pt-addfield-box-title"><input type="text" class="editableTitle" name="content_form_radio_field_${index}" readonly value="${title}"></span>
+	        <span class="pt-addfield-box-arrow"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+	      </div>
 
-        <a class="pt-addfield-box-config" href="javascript:void(0);"><i class="fa fa-cog" aria-hidden="true"></i></a>
-        <ul class="add-button-field pt-config-btn">
-            <li class="renameTitle">Rename</li>
-            <li class="cloneSection">Clone</li>
-            <li class="removeSection">Remove</li>
-        </ul>
-    </div>
-    <div class="pt-addfield-box-edit">
-        <div class="pt-option-box">
-            <label>Field Label</label>
-            <input type="text" name="" placeholder="Select one">
-        </div>
-        <div class="pt-option-box">
-            <label>Options</label>
-            <ul class="optionUl">
-              <li>
-                <div class="barIcon"><i class="fa fa-bars" aria-hidden="true"></i></div>
-                <div class="optnTxtArea"><input type="text" name="" value="Option 1"></div>
-                <div class="optionRemove"><i class="fa fa-trash" aria-hidden="true"></i></div>
-              </li>
-              <li>
-                <div class="barIcon"><i class="fa fa-bars" aria-hidden="true"></i></div>
-                <div class="optnTxtArea"><input type="text" name="" value="Option 2"></div>
-                <div class="optionRemove"><i class="fa fa-trash" aria-hidden="true"></i></div>
-              </li>
-            </ul>
-            <div class="addOptionBtn"> + Add option</div>
-        </div>
-        <div class="pt-option-box">
-            <label>Comment placeholder</label>
-            <input type="text" value="" name="" class="success-redirect-url" placeholder="Please specify (optional)">
+	        <a class="pt-addfield-box-config" href="javascript:void(0);"><i class="fa fa-cog" aria-hidden="true"></i></a>
+	        <ul class="add-button-field pt-config-btn">
+	            <li class="renameTitle">Rename</li>
+	            <li class="cloneSection">Clone</li>
+	            <li class="removeSection">Remove</li>
+	        </ul>
+	    </div>
+	    <div class="pt-addfield-box-edit">
+	        <div class="pt-option-box">
+	            <label>Field Label</label>
+	            <input type="text" name="content_form_radio_title_${index}" placeholder="Select one">
+	        </div>
+	        <div class="pt-option-box">
+	            <label>Options</label>
+	            <ul class="optionUl">
+	              <li>
+	                <div class="barIcon"><i class="fa fa-bars" aria-hidden="true"></i></div>
+	                <div class="optnTxtArea"><input type="text" name="content_form_radio_title_1_${index}" value="Option 1"></div>
+	                <div class="optionRemove"><i class="fa fa-trash" aria-hidden="true"></i></div>
+	              </li>
+	              <li>
+	                <div class="barIcon"><i class="fa fa-bars" aria-hidden="true"></i></div>
+	                <div class="optnTxtArea"><input type="text" name="content_form_radio_title_2_${index}" value="Option 2"></div>
+	                <div class="optionRemove"><i class="fa fa-trash" aria-hidden="true"></i></div>
+	              </li>
+	            </ul>
+	            <div class="addOptionBtn"> + Add option</div>
+	        </div>
+	        <div class="pt-option-box">
+	            <label>Comment placeholder</label>
+	            <input type="text" name="content_form_radio_placeholder_${index}" class="success-redirect-url" placeholder="Please specify (optional)">
+	        </div>
+	        <div class="pt-checkbox pt-inline-field">
+	            <label class="container">
+	              <input type="checkbox" name="content_form_radio_required_${index}" id="conent-form-radio-required-${index}" class="option-checkbox" />
+	              <span class="checkmark"></span>Required
+	            </label>
+	        </div>
+	    </div>
 
-        </div>
-        <div class="pt-checkbox pt-inline-field">
-            <label class="container">
-              <input type="checkbox">
-              <span class="checkmark"></span>Required
-            </label>
-        </div>
-    </div>
+	  </div>`;
+	  	returnStructure.push( index, html );
 
-  </div>`;
+	  	
+	  	var formField = `
+			<div class="pt-frm-field radio-${id}" id="fl_${id}" data-form-field="${index}" data-order="${order}">
+				<label id="label-${index}"></label>
+			</div>
+		`;
+	  	jQuery( '.form-fields-block' ).append( formField );
+
+	  return returnStructure;
 }
 
 var singleLineTextFld =  ( title, id ) => {

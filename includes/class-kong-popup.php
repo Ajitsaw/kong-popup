@@ -471,13 +471,15 @@ class Kong_Popup
         ';
 
         echo '
-    	function close_kong_popup() {
+    	function close_kong_popup() 
+    	{
             jQuery( ".kong-popup" ).hide();
         }
         ';
 
         echo '
-        function clickTarget( popupID, target ) {
+        function clickTarget( popupID, target ) 
+        {
         	jQuery.ajax( {
 				type: "POST",
 				url: "' . $ajaxURL . '",
@@ -491,12 +493,63 @@ class Kong_Popup
         }
         ';
 
+        $email = "[type='email']";
         echo '
-        function submit_behaviour(){
-            // do ajax submission of email and then display msg or redirect
-            alert("Hello!!!!");
+        function submit_behaviour( popupID, e, $el ) 
+        {
+            e.preventDefault();
+
+            var flag = 0;
+            var checkAtleastOneEmail = jQuery( ".popup-form input' . $email . '" ).filter( function() {
+            	return this.value !== "" && this.value !== "0";
+            } );
+
+            if ( checkAtleastOneEmail.length > 0 ) {
+            	flag = 1;
+            }
+
+            var formData = jQuery( $el ).serialize();
+            jQuery.ajax( {
+				type: "POST",
+				url: "' . $ajaxURL . '",
+				data: {
+					action: "save_popup_feeds_ajax",
+					popup_id: popupID,
+					form_data: formData,
+				},
+				success: function( response ) {
+					if ( flag == 1 ) {
+						clickTarget( popupID, "submit" );
+					}
+					jQuery( "#popup-block" ).remove();
+				}
+			} );
             return false;
         }';
+
+    //     echo '
+    //     function popupFunctionalities() {
+    //     	jQuery( document ).ready( function( e ) {
+    //     		jQuery( "form #popup-submit" ).submit( function( e ) {
+				//     e.preventDefault(); 
+
+				//     var form = jQuery( this );
+				//     console.log( form );
+				//     return;
+				//     // var url = form.attr( "action" );
+				//     // jQuery.ajax( {
+				//     // 	type: "POST",
+				//     // 	url: url,
+				//     // 	data: form.serialize(),
+				//     // 	success: function( data ) {
+				//     // 		console.log( data ); // show response from the php script.
+				//     // 		return;
+				//     // 	}
+				//     // } );
+				// } );
+    //     	} );
+    //     }
+    //     ';
 
         echo '
         function getBrowser() {
@@ -744,6 +797,7 @@ class Kong_Popup
         echo '}
         getBrowser();
         render_popups();
+        // popupFunctionalities();
         ';
         die();
     }
