@@ -3313,7 +3313,7 @@ select#site-pages {
   align-items: center;
 }
 .show-visitor select {
-  width: 60px !important;
+  width: 80px !important;
   margin: 0 10px !important;
 }
 .preview-wrap iframe{
@@ -3349,6 +3349,7 @@ select#site-pages {
 }
 .behavior input[type="radio"] {
   margin-top: 3px;
+  border: 1px solid #7e8993;
 }
 .behavior input[type="text"] {
   margin-bottom: 0;
@@ -5215,9 +5216,6 @@ div#report-filter i {
   line-height: 1;
 }
 
-input[type=text]:not(.browser-default){
-  font-size: 14px!important;
-}
 input.input-mini.form-control.kg_secondary_bg {
   color: #fff;
 }
