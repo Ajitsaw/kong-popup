@@ -4670,13 +4670,14 @@ a.close-popup {
 }
 .pt-color-option {
   position: absolute;
-  width: 250px;
+  width: 270px;
   top: 100%;
   padding: 15px;
   background-color: #fff;
   box-shadow: 0 0 5px #ccc;
   z-index: 1;
   display: none;
+  
 }
 .pt-color-option p {
   font-size: 12px;
