@@ -58,18 +58,72 @@ class Kong_Popup_Admin_Ajax
         $result = array();
 
         $popup_id = $_REQUEST[ 'popup_id' ];
+
         if ( $_REQUEST[ 'field_type' ] == "email" ) {
-            $title_key = 'content_form_' . $_REQUEST[ 'field_type' ] . '_title_' . $_REQUEST[ 'field_id' ];
+            $title_key = "content_form_email_title_{$_REQUEST[ 'field_id' ]}";
             $title = ( $this->get_preview_popup_meta( $popup_id, $title_key ) ) ? $this->get_preview_popup_meta( $_REQUEST[ 'popup_id' ], $title_key ) : '';
 
-            $message_key = 'content_form_' . $_REQUEST[ 'field_type' ] . '_message_' . $_REQUEST[ 'field_id' ];
+            $message_key = "content_form_email_message_{$_REQUEST[ 'field_id' ]}";
             $message = ( $this->get_preview_popup_meta( $popup_id, $message_key ) ) ? $this->get_preview_popup_meta( $popup_id, $message_key ) : '';
 
-            $required_key = 'content_form_' . $_REQUEST[ 'field_type' ] . '_required_' . $_REQUEST[ 'field_id' ];
+            $required_key = "content_form_email_required_{$_REQUEST[ 'field_id' ]}";
             $required = ( $this->get_preview_popup_meta( $popup_id, $required_key ) ) ? $this->get_preview_popup_meta( $popup_id, $required_key ) : '';
             
             $result = array( $title, $message, $required );
+        } else if ( $_REQUEST[ 'field_type' ] == "radio" ) {
+            $expl_name = explode( '_', $_REQUEST[ 'field_address' ] );
+            $title_key = "content_form_radio_title_{$_REQUEST[ 'field_id' ]}";
+            $title = ( $this->get_preview_popup_meta( $popup_id, $title_key ) ) ? $this->get_preview_popup_meta( $_REQUEST[ 'popup_id' ], $title_key ) : '';
+
+            $option_key = "content_form_radio_opt_title_{$expl_name[ 1 ]}_{$_REQUEST[ 'field_id' ]}";
+            $option = ( $this->get_preview_popup_meta( $popup_id, $option_key ) ) ? $this->get_preview_popup_meta( $_REQUEST[ 'popup_id' ], $option_key ) : '';
+
+            $result = array( $title, $option );
+        } else if ( $_REQUEST[ 'field_type' ] == "textarea" ) {
+            $title_key = "content_form_radio_placeholder_{$_REQUEST[ 'field_id' ]}";
+            $title = ( $this->get_preview_popup_meta( $popup_id, $title_key ) ) ? $this->get_preview_popup_meta( $_REQUEST[ 'popup_id' ], $title_key ) : '';
+
+            $required_key = "content_form_radio_required_{$_REQUEST[ 'field_id' ]}";
+            $required = ( $this->get_preview_popup_meta( $popup_id, $required_key ) ) ? $this->get_preview_popup_meta( $popup_id, $required_key ) : '';
+
+            $lable_key = "content_form_single_title_{$_REQUEST[ 'field_id' ]}";
+            $lable = ( $this->get_preview_popup_meta( $popup_id, $lable_key ) ) ? $this->get_preview_popup_meta( $_REQUEST[ 'popup_id' ], $lable_key ) : '';
+
+            $required_text_key = "content_form_field_required_{$_REQUEST[ 'field_id' ]}";
+            $required_text = ( $this->get_preview_popup_meta( $popup_id, $required_text_key ) ) ? $this->get_preview_popup_meta( $popup_id, $required_text_key ) : '';
+
+            $result = array( $title, $required, $lable, $required_text );
+        } else if ( $_REQUEST[ 'field_type' ] == "checkbox" ) {
+            $expl_name = explode( '_', $_REQUEST[ 'field_address' ] );
+            $title_key = "content_form_radio_title_{$_REQUEST[ 'field_id' ]}";
+            $title = ( $this->get_preview_popup_meta( $popup_id, $title_key ) ) ? $this->get_preview_popup_meta( $_REQUEST[ 'popup_id' ], $title_key ) : '';
+
+            $option_key = "content_form_radio_opt_title_{$expl_name[ 1 ]}_{$_REQUEST[ 'field_id' ]}";
+            $option = ( $this->get_preview_popup_meta( $popup_id, $option_key ) ) ? $this->get_preview_popup_meta( $_REQUEST[ 'popup_id' ], $option_key ) : '';
+
+            $result = array( $title, $option );
+        } else if ( $_REQUEST[ 'field_type' ] == "select-one" ) {
+            $title_key = "content_form_radio_title_{$_REQUEST[ 'field_id' ]}";
+            $title = ( $this->get_preview_popup_meta( $popup_id, $title_key ) ) ? $this->get_preview_popup_meta( $_REQUEST[ 'popup_id' ], $title_key ) : '';
+
+            $result = array( $title );
+        } else if ( $_REQUEST[ 'field_type' ] == "text" ) {
+            $title_key = "content_form_single_title_{$_REQUEST[ 'field_id' ]}";
+            $title = ( $this->get_preview_popup_meta( $popup_id, $title_key ) ) ? $this->get_preview_popup_meta( $_REQUEST[ 'popup_id' ], $title_key ) : '';
+
+            $required_key = "content_form_field_required_{$_REQUEST[ 'field_id' ]}";
+            $required = ( $this->get_preview_popup_meta( $popup_id, $required_key ) ) ? $this->get_preview_popup_meta( $popup_id, $required_key ) : '';
+
+            $result = array( $title, $required );
+        } else if ( ! isset( $_REQUEST[ 'field_type' ] ) ) {
+            $expl_name = explode( '_', $_REQUEST[ 'field_address' ] );
+            $option_key = "content_form_radio_opt_title_{$expl_name[ 1 ]}_{$_REQUEST[ 'field_id' ]}";
+            $option = ( $this->get_preview_popup_meta( $popup_id, $option_key ) ) ? $this->get_preview_popup_meta( $_REQUEST[ 'popup_id' ], $option_key ) : '';
+
+            $result = array( $title, $option );
         }
+
+        // print_data( $result );
 
         echo json_encode( $result );
 
