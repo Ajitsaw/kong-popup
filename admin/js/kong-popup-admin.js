@@ -46,7 +46,7 @@ jQuery( document ).ready( function( e ) {
 	jQuery( '#toplevel_page_edit-popup, #toplevel_page_edit-template, #toplevel_page_create-template, #toplevel_page_popups-under-folder' ).remove();
 	jQuery( '#toplevel_page_create-popup a' ).addClass( 'kg_secondary_bg btn p-0 site-action-toggle btn-raised' );
 
-	jQuery( '.kong-container .tab-content, .pt-add-image-field' ).hide();
+	jQuery( '.kong-container .tab-content' ).hide();
 	jQuery( '.kong-container #tabs li:first-child' ).addClass( 'active' );
 	jQuery( '.kong-container .tab-content:first-child' ).show();
 	
@@ -152,10 +152,12 @@ jQuery( document ).ready( function( e ) {
 		console.log( "RADIO" );
 		var key = e.target.name;
 		var value = e.target.value;
+		var id = e.target.id;
 		popupData[ key ] = value;
 
 		console.log( "RADIO KEY = " + key );
 		console.log( "RADIO VALUE = " + value );
+		console.log( "RADIO ID = " + id );
 		console.log( popupData );
 
 		if ( value == "specific" ) {
@@ -164,6 +166,12 @@ jQuery( document ).ready( function( e ) {
 
 		if ( value == "all" ) {
 			jQuery( '.conditional-block' ).removeClass( 'show-parameter-list' ).addClass( 'hide-parameter-list' );
+		}
+
+		if ( id == "radio-3" ) {
+			jQuery( '#url-test' ).prop( 'disabled', false );
+		} else {
+			jQuery( '#url-test' ).prop( 'disabled', true );
 		}
 
 		// if ( value == "specific" || value == "condition" ) {
@@ -186,8 +194,12 @@ jQuery( document ).ready( function( e ) {
 	} );
 
 	jQuery( this ).on( 'change', '.kong-container .option-checkbox', function( e ) {
+		console.log( "CHECKBOX OPTION-CHECKBOX" );
 		var key = e.target.name;
 		var id = e.target.id;
+
+		console.log( "KEY = " + key );
+		console.log( "ID = " + id );
 
 		if ( jQuery( '#' + id ).is( ':checked' ) ) {
 			popupData[ key ] = e.target.value;
@@ -1003,7 +1015,13 @@ jQuery( document ).ready( function( e ) {
 	 		rearrangeSection();
 	 	}
 	} );
-	jQuery( '.optionUl' ).sortable();
+
+	jQuery( '.optionUl' ).sortable( {
+	 	update: function( event, ui ) {
+	 		rearrangeSection();
+	 	}
+	} );
+	// jQuery( '.optionUl' ).sortable();
 	jQuery( '#step1-mobile-size, #step1-mobile-bgfile, #step1-mobile-btmscreen, #step2-mobile-size' ).hide();
 	// popup position selecte
 	jQuery('.pos-label').click(function() {
@@ -1234,7 +1252,12 @@ jQuery( document ).ready( function( e ) {
 		} else if ( fldIdentity == 'rb' || fldIdentity == 'cb' || fldIdentity == 'dl' ) {
 			var structure = radioButtonFld( title, id, tag );
 			jQuery( '#fldArea').append( structure[ 1 ] );
-			jQuery( '.optionUl' ).sortable();
+			// jQuery( '.optionUl' ).sortable();
+			jQuery( '.optionUl' ).sortable( {
+			 	update: function( event, ui ) {
+			 		rearrangeSection();
+			 	}
+			} );
 		} else if ( fldIdentity == 'slt' || fldIdentity == 'mlt' ) {
 			jQuery( '#fldArea' ).append( singleLineTextFld( title, id, tag ) );
 		} else if(fldIdentity == 'ea') {
@@ -1251,9 +1274,13 @@ jQuery( document ).ready( function( e ) {
 
 	jQuery( this ).on( 'click', '.optionRemove', function() {
 		var removeInput = jQuery( this ).closest( 'li' ).attr( 'data-input' );
-		var removeSpan = jQuery( this ).closest( 'li' ).attr( 'data-span' );
-		jQuery( '.popup-content #' + removeInput ).remove();
-		jQuery( '.popup-content #' + removeSpan ).remove();
+		// var removeSpan = jQuery( this ).closest( 'li' ).attr( 'data-span' );
+		var splitIndex = removeInput.split( '_' );
+		// console.log( removeInput );
+		// console.log( removeSpan );
+		// return;
+		jQuery( '.popup-content #options-' + splitIndex[ 2 ] ).find( 'div[data-index="' + splitIndex[ 1 ] + '"]' ).remove();
+		// jQuery( '.popup-content #' + removeSpan ).remove();
 		jQuery( this ).closest( 'li' ).remove();
 	} );
 
@@ -1279,10 +1306,12 @@ jQuery( document ).ready( function( e ) {
 
 		if ( tag == "radio" ) {
 			var html = `
-				<input type="radio" name="radio_option_${index}" id="opt_${ind}_${index}"/>
-				<span id="sp-${ind}-${index}"></span>
+				<div data-index="${ind}" data-order="${ind}">
+					<input type="radio" name="radio_option_${index}" id="opt_${ind}_${index}"/>
+					<span id="sp-${ind}-${index}"></span>
+				</div>
 			`;
-			jQuery( '.options-' + index ).append( html );
+			jQuery( '#option-fields-block-' + index ).append( html );
 		} else if ( tag == "checkbox" ) {
 			var html = `
 				<input type="checkbox" name="checkbox_option_${index}" id="opt_${ind}_${index}"/>
@@ -1297,6 +1326,7 @@ jQuery( document ).ready( function( e ) {
 		}
 		jQuery( this ).prev().append( markUp );
 
+		rearrangeSection();
 		popupPreview();
 	} );
 
@@ -2163,24 +2193,18 @@ var welcomePageField = ( title, id ) => {
   					<label>Final action</label>
   					
   					<div class="pt-radio">
-  						<label class="container">
-	  						<input type="radio" name="content_form_welcome_action_${index}" value="none" />
-	  						<span class="checkmark"></span>none
-  						</label>
+  						<input type="radio" name="content_form_welcome_action_${index}" class="bg_radio_color sub-radio" value="none" />
+  						<label for="start-to-display-option">none</label>
   					</div>
-				  	
+
 				  	<div class="pt-radio">
-					  	<label class="container">
-						  	<input type="radio" name="content_form_welcome_action_${index}" value="close" />
-						  	<span class="checkmark"></span>close widget
-					  	</label>
+					  	<input type="radio" name="content_form_welcome_action_${index}" class="bg_radio_color sub-radio" value="close" />
+					  	<label for="start-to-display-option">close widget</label>
 				  	</div>
 				  	
 				  	<div class="pt-radio">
-					  	<label class="container">
-						  	<input type="radio" name="content_form_welcome_action_${index}" value="redirect" />
-						  	<span class="checkmark"></span>redirect to URL
-					  	</label>
+					  	<input type="radio" name="content_form_welcome_action_${index}" class="bg_radio_color sub-radio" value="redirect" />
+					  	<label for="start-to-display-option">redirect to URL</label>
 				  	</div>
   					
   					<div class="redirect-url">
@@ -2351,8 +2375,17 @@ var radioButtonFld = ( title, id, item ) => {
 				<div class="pt-frm-field radio-${index}" id="fl_${id}" data-form-field="${index}" data-order="${order}">
 					<div class="radio-options options-${index}" id="options-${index}">
 						<label id="label-${index}"></label>
-						<input type="radio" name="radio_option_${index}" id="opt_1_${index}" /><span id="sp-1-${index}"></span>
-						<input type="radio" name="radio_option_${index}" id="opt_2_${index}" /><span id="sp-2-${index}"></span>
+						<div id="option-fields-block-${index}">
+							<div data-index="1" data-order="1">
+								<input type="radio" name="radio_option_${index}" id="opt_1_${index}" />
+								<span id="sp-1-${index}"></span>
+							</div>
+
+							<div data-index="2" data-order="2">
+								<input type="radio" name="radio_option_${index}" id="opt_2_${index}" />
+								<span id="sp-2-${index}"></span>
+							</div>
+						</div>
 					</div>
 
 					<div class="comment-section comment-${index}">
@@ -2607,17 +2640,40 @@ var findNextIndex =  ( id ) => {
 
 	return parseInt( splitIndex[ 1 ] );
 }
-
+// options-86c4w1uhorus
 var rearrangeSection = () => {
 	var length = jQuery( '#fldArea .drugableSection' ).length;
 	for ( var i = 1; i <= length; i++ ) {
 		var dataField = jQuery( '.drugableSection:nth-child( ' + i + ' )' ).attr( 'data-field' );
+		var dataTag = jQuery( '.drugableSection:nth-child( ' + i + ' )' ).attr( 'data-tag' );
 		var splitIndex = jQuery( '.drugableSection:nth-child( ' + i + ' )' )[ 0 ].id.split( '_' );
+		// console.log( "DATA FIELD = " + dataField );
+		// console.log( "DATA TAG = " + dataTag );
+		// console.log( "SPLIT INDEX = " + splitIndex );
+
 		// jQuery( '.drugableSection:nth-child( ' + i + ' )' ).removeClass().addClass( 'drugableSection drag-' + i ).attr( { 'id': splitIndex[ 0 ] + '_' + i, 'data-order': i } );
 		jQuery( '.drugableSection:nth-child( ' + i + ' )' ).attr( { 'id': splitIndex[ 0 ] + '_' + i } );
 		jQuery( '.form-fields-block' ).find( "[data-form-field='" + dataField + "']" ).attr( { 'id': 'fl_' + splitIndex[ 0 ] + '_' + i, 'data-order': i } );
+
+		if ( dataTag == "radio" || dataTag == "checkbox" || dataTag == "select" ) {
+			var inputLength = jQuery( 'ul[data-select="' + dataField + '"] li' ).length; 
+			// console.log( "INPUT LENGTH = " + inputLength );
+			for ( var j = 1; j <= inputLength; j++ ) {
+				var splitInput = jQuery( 'ul[data-select="' + dataField + '"] li:nth-child( ' + j + ' )' ).attr( 'data-input' ).split( '_' );
+				jQuery( '#options-' + dataField ).find( "[data-index='" + j + "']" ).attr( { 'data-order': splitInput[ 1 ] } );
+				console.log( dataField );
+				console.log( splitInput[ 1 ] );
+			}
+		}
 	}
-	sortFormFieldsPostion();
+
+	jQuery( '.optionUl' ).sortable( {
+	 	update: function( event, ui ) {
+	 		rearrangeSection();
+	 	}
+	} );
+
+	sortFormFieldsPostion( dataField );
 	popupPreview();
 }
 
@@ -2632,10 +2688,19 @@ var formFieldIndex = () => {
     return result;
 }
 
-var sortFormFieldsPostion = () => {
+var sortFormFieldsPostion = ( id = '' ) => {
 	var fields = jQuery( '.pt-frm-field' );
 	fields.sort( ( a, b ) => {
 		return jQuery( a ).data( 'order' ) - jQuery( b ).data( 'order' );
 	} );
 	jQuery( '.form-fields-block' ).html( fields );
+
+	var optionFields = jQuery( '#options-' + id + ' div' );
+	console.log( optionFields );
+	if ( optionFields) {
+		optionFields.sort( ( a, b ) => {
+			return jQuery( a ).data( 'order' ) - jQuery( b ).data( 'order' );
+		} );
+		jQuery( '#option-fields-block-' + id ).html( optionFields );
+	}
 }

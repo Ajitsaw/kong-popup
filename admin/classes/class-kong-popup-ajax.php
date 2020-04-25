@@ -235,6 +235,8 @@ class Kong_Popup_Admin_Ajax
 
                 $current_date = date( 'Y-m-d', time() );
 
+                $mdvalue = maybe_serialize( $mdvalue );
+
                 if ( empty( $mdvalue ) ) {
                     $wpdb->query( "DELETE FROM {$wpdb->prefix}kong_popup_content_structures WHERE popup_id = {$post_id}" );
                 } else {

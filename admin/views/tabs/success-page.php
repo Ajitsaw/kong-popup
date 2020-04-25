@@ -38,7 +38,7 @@
                 <!-- .redirect-url starts -->
                 <div class="redirect-url">
                     <input type="text" value="<?php if ( isset( $popup_meta[ 'success_redirect_url' ] ) ) echo $popup_meta[ 'success_redirect_url' ]; ?>" name="success_redirect_url" class="success-redirect-url" id="success-redirect-url" placeholder="Redirect URL" />
-                    <button type="button" class="url-test" id="url-test">
+                    <button type="button" class="url-test" id="url-test" disabled>
                         <?php echo __( 'Test', 'kong-popup' ); ?>
                     </button>
                 </div>

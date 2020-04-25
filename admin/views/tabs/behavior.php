@@ -162,7 +162,7 @@
               <?php echo __( 'start on', 'kong-popup' ); ?>
             </label>
             <!-- .sub-checkbox ends -->
-            <input class="time-duration width--120" type="text" name="start_on" id="date-start-field" placeholder="<?php echo date( 'M d,yy' ); ?>" value="<?php if ( isset( $popup_meta[ 'start_on' ] ) ) echo $popup_meta[ 'start_on' ]; ?>" <?php if ( isset( $popup_meta[ 'is_date_start' ] ) && trim( $popup_meta[ 'is_date_start' ] ) != "on" ) echo "disabled='disabled'"; ?> />
+            <input class="time-duration width--120" type="text" name="start_on" id="date-start-field" placeholder="<?php echo date( 'M d,yy' ); ?>" value="<?php if ( isset( $popup_meta[ 'start_on' ] ) ) echo $popup_meta[ 'start_on' ]; ?>" <?php if ( ! isset( $popup_meta[ 'is_date_start' ] ) ) echo "disabled='disabled'"; ?> />
 
             <!-- .sub-checkbox starts -->
             <label class="container sub-checkbox">
@@ -171,7 +171,7 @@
               <?php echo __( 'stop on', 'kong-popup' ); ?>
             </label>
             <!-- .sub-checkbox ends -->
-            <input class="time-duration width--120" type="text" name="stop_on" id="date-stop-field" placeholder="<?php echo date( 'M d,yy' ); ?>" value="<?php if ( isset( $popup_meta[ 'stop_on' ] ) ) echo $popup_meta[ 'stop_on' ]; ?>" <?php if ( isset( $popup_meta[ 'is_date_stop' ] ) && trim( $popup_meta[ 'is_date_stop' ] ) != "on" ) echo "disabled='disabled'"; ?> />
+            <input class="time-duration width--120" type="text" name="stop_on" id="date-stop-field" placeholder="<?php echo date( 'M d,yy' ); ?>" value="<?php if ( isset( $popup_meta[ 'stop_on' ] ) ) echo $popup_meta[ 'stop_on' ]; ?>" <?php if ( ! isset( $popup_meta[ 'is_date_stop' ] ) ) echo "disabled='disabled'"; ?> />
           </div>
           <!-- .form-group ends -->
         </div>
@@ -189,7 +189,7 @@
               <?php echo __( 'from', 'kong-popup' ); ?>
             </label>
             <!-- .sub-checkbox ends -->
-            <input class="time-duration width--120" type="text" name="time_from" id="time-from-field" placeholder="23:55" value="<?php if ( isset( $popup_meta[ 'time_from' ] ) ) echo $popup_meta[ 'time_from' ]; ?>" <?php if ( isset( $popup_meta[ 'is_time_from' ] ) && trim( $popup_meta[ 'is_time_from' ] ) != "on" ) echo "disabled='disabled'"; ?> />
+            <input class="time-duration width--120" type="text" name="time_from" id="time-from-field" placeholder="23:55" value="<?php if ( isset( $popup_meta[ 'time_from' ] ) ) echo $popup_meta[ 'time_from' ]; ?>" <?php if ( ! isset( $popup_meta[ 'is_time_from' ] ) ) echo "disabled='disabled'"; ?> />
 
             <!-- .sub-checkbox starts -->
             <label class="container sub-checkbox">
@@ -198,7 +198,7 @@
               <?php echo __( 'to', 'kong-popup' ); ?>
             </label>
             <!-- .sub-checkbox ends -->
-            <input class="time-duration width--120" type="text" name="time_to" id="time-to-field" placeholder="23:55" value="<?php if ( isset( $popup_meta[ 'time_to' ] ) ) echo $popup_meta[ 'time_to' ]; ?>" <?php if ( isset( $popup_meta[ 'is_time_to' ] ) && trim( $popup_meta[ 'is_time_to' ] ) != "on" ) echo "disabled='disabled'"; ?> />
+            <input class="time-duration width--120" type="text" name="time_to" id="time-to-field" placeholder="23:55" value="<?php if ( isset( $popup_meta[ 'time_to' ] ) ) echo $popup_meta[ 'time_to' ]; ?>" <?php if ( ! isset( $popup_meta[ 'is_time_to' ] ) ) echo "disabled='disabled'"; ?> />
 
             <?php echo __( 'time zone', 'kong-popup' ); ?>
             <!-- .select-option starts -->

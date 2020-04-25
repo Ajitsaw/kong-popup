@@ -58,7 +58,7 @@
             <div class="pt-checkbox pt-inline-field">
                 <!-- .container starts -->
                 <label class="container">
-                    <input type="checkbox" name="add_image_appearance" class="option-checkbox kg_checkbox_color" id="option-add-image-opener-appearance" data-info="add-image" <?php if ( isset( $popup_meta[ 'add_image_appearance' ] ) == 'on' ) echo 'checked'; ?> />
+                    <input type="checkbox" name="add_image_appearance" class="option-checkbox kg_checkbox_color" id="option-add-image-opener-appearance" data-info="add-image" <?php if ( isset( $popup_meta[ 'add_image_appearance' ] ) && $popup_meta[ 'add_image_appearance' ] == 'on' ) echo 'checked'; ?> />
                     <span class="checkmark"></span>
                     <?php echo __( 'Add image', 'kong-popup' ); ?>
                 </label>
@@ -67,7 +67,7 @@
             <!-- .pt-checkbox ends -->
 
             <!-- .pt-add-image-field starts -->
-            <div class="pt-add-image-field add-image hide-app" <?php if ( isset( $popup_meta[ 'add_image_appearance' ] ) == 'on' ) echo 'style="display: block"'; ?>>
+            <div class="pt-add-image-field add-image" <?php echo ( isset( $popup_meta[ 'add_image_appearance' ] ) && $popup_meta[ 'add_image_appearance' ]== 'on' ) ? 'style="display: block"' : 'style="display: none"'; ?>>
                 <!-- .pt-add-image-field_tab starts -->
                 <ul class="pt-add-image-field_tab">
                     <li class="selected" data-id="step1-desktop-size-appearance">

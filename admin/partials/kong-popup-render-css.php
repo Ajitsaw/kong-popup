@@ -12,9 +12,9 @@ switch ( $appearance_position ) {
 
     case 'bottom-left':
     $position_css .= '
-        left: 15px;
+        left: 70px;
         right: auto;
-        bottom: 15px;
+        bottom: 70px;
         top: auto;
         transform: none;
     ';
@@ -23,8 +23,8 @@ switch ( $appearance_position ) {
     case 'bottom-right':
     $position_css .= '
         left: auto;
-        right: 15px;
-        bottom: 15px;
+        right: 70px;
+        bottom: 70px;
         top: auto;
         transform: none;
     ';
@@ -57,8 +57,8 @@ switch ( $appearance_position ) {
     $position_css .= '
         left: 0px;
         right: auto;
-        top: 50%;
-        transform: translateY(-50%);
+        top: 70px;
+        transform: none;
     ';
     break;
 
@@ -66,14 +66,14 @@ switch ( $appearance_position ) {
     $position_css .= '
         left: auto;
         right: 0px;
-        top: 50%;
-        transform: translateY(-50%);
+        top: 70px;
+        transform: none;
     ';
     break;
 
     case 'baseline-left':
     $position_css .= '
-        left: 15px;
+        left: 70px;
         right: auto !important;
         top: auto;
         transform: none;
@@ -84,7 +84,7 @@ switch ( $appearance_position ) {
     case 'baseline-right':
     $position_css .= '
         left: auto !important;
-        right: 15px;
+        right: 70px;
         top: auto;
         transform: none;
         bottom: 0px;
