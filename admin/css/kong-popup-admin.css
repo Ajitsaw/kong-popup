@@ -2578,7 +2578,8 @@ height:40px;
 }
 .wrap {
   margin-right: 0;
-  margin-top: 0
+  margin-top: 0;
+  min-height: calc(100vh - 64px);
 }
 
 .section-header {
@@ -3104,8 +3105,8 @@ input.time-schedule {
   right: 0;
   top: 0;
   height: 40px;
-  background: #F9FAFC;
-  border: 1px solid #EAEEF4;
+  background: #efefef;
+  border: 1px solid #eaeaea;
   border-radius: 5px;
   font-size: 14px;
   color: #B7BABF;
@@ -3113,6 +3114,11 @@ input.time-schedule {
   cursor: pointer;
   margin-left: 10px;
 } 
+.url-test:disabled {
+  background: #F9FAFC;
+  border: 1px solid #EAEEF4;
+  color: #b5b5b5;
+}
 .preview-viewport {
   padding: 5px 0 0;
 }
@@ -4182,8 +4188,10 @@ a.close-popup {
   position: absolute;
   opacity: 0;
   cursor: pointer;
-  height: 0;
+  height: 100%;
   width: 0;
+  z-index: 9;
+  left:0;
 }
 
 

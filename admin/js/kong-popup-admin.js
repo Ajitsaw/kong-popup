@@ -1036,6 +1036,13 @@ jQuery( document ).ready( function( e ) {
 		jQuery( this ).is( ':checked' ) ? $ele.slideDown( 500 ) : $ele.slideUp( 500 );
 	} );
 
+	jQuery( ".pt-image-field_cnt" ).hide();
+
+	var data_id = jQuery( '.pt-add-image-field_tab li[class="selected"]' ).attr('data-id');
+	jQuery( '#' + data_id ).show();
+
+	
+
 	jQuery( '.pt-add-image-field_tab li' ).click( function() {
 		jQuery( this ).closest( 'ul' ).find( 'li' ).removeClass( 'selected' );
 		if ( jQuery( this ).attr( 'data-step' ) == "step-2" ) {
@@ -1052,6 +1059,7 @@ jQuery( document ).ready( function( e ) {
 		jQuery( this ).closest( '.pt-add-image-field' ).find( '.pt-image-field_cnt' ).hide();
 		jQuery( '#' + tabName ).show();
 	} );
+	
 
 	jQuery(document).on('click', '.pt-add-img li', function() {
 		tabSelectedFunction(jQuery(this));
