@@ -411,7 +411,7 @@ class Kong_Popup_Admin
             </style>
             */
         echo '</head>';
-        echo '<body>'.$content.'</body>';
+        echo '<body class="popup-body">'.$content.'</body>';
         echo '</html>';
         die();
     }
