@@ -4,6 +4,8 @@ class Kong_Popup_Admin_Ajax
 {
     public function __construct() 
     {
+        add_action( 'wp_ajax_save_popup_info_ajax', array( $this, 'save_popup_info' ) );
+
         add_action( 'wp_ajax_get_all_templates_ajax', array( $this, 'get_all_templates' ) );
 
         add_action( 'wp_ajax_set_backend_popup_form_fields_value_ajax', array( $this, 'set_backend_popup_form_fields_value' ) );
@@ -25,7 +27,80 @@ class Kong_Popup_Admin_Ajax
         add_action( 'wp_ajax_update_popup_status_ajax', array( $this, 'update_popup_status' ) );
     }
 
-    public function get_all_templates() {
+    public function save_popup_info() 
+    {
+        global $wpdb;
+
+        $title = trim( $_REQUEST[ 'title' ] );
+        $folder = trim( $_REQUEST[ 'folder' ] );
+        $template = trim( $_REQUEST[ 'template' ] );
+
+        $template_html_path = PLUGIN_BASE_DIR . '/templates/' . $template . '/template.html';
+        $content = '';
+        $fp1 = fopen( $template_html_path, 'r' ) or die( 'Unable to open file' );
+        if ( $fp1 ) {
+            while ( $s = fgets( $fp1, filesize( $template_html_path ) ) ) {
+                $content .= $s;
+            }
+        }
+        fclose( $fp1 );
+        
+        $template_info_path = PLUGIN_BASE_DIR . '/templates/' . $template . '/template.info';
+        $infos = array();
+        $fp2 = fopen( $template_info_path, 'r' ) or die( 'Unable to open file' );
+        if ( $fp2 ) {
+            while ($info = fgets( $fp2, filesize( $template_info_path ) ) ) {
+                $arr = explode( '=', $info );
+                $k = $arr[ 0 ];
+                $v = $arr[ 1 ];
+                $infos[ $k ] = $v;
+            }
+        }
+        fclose( $fp2 );
+
+        $fields_html_path = PLUGIN_BASE_DIR . '/templates/' . $template . '/fields.html';
+        $fields_content = '';
+        $fp3 = fopen( $fields_html_path, 'r' ) or die( 'Unable to open file' );
+        if ( $fp3 ) {
+            while ( $s = fgets( $fp3, filesize( $fields_html_path ) ) ) {
+                $fields_content .= $s;
+            }
+        }
+        fclose( $fp3 );
+
+        $popup = array(
+            'post_title'    => $title,
+            'post_content'  => $content,
+            'post_status'   => 'draft',
+            'post_author'   => 1,
+            'post_type'     => 'popup',
+        );
+        $post_id = wp_insert_post( $popup );
+
+        foreach ( $infos as $key => $info ) {
+            update_post_meta( $post_id, $key, $info );
+        }
+        update_post_meta( $post_id, 'template', $template );
+
+        $current_date = date( 'Y-m-d', time() );
+        $wpdb->query( "INSERT INTO {$wpdb->prefix}kong_popup_content_structures ( popup_id, structures, created_at ) VALUES ( {$post_id}, '{$fields_content}', '{$current_date}' )" );
+        
+        // if ( empty( $folder ) ) {
+        //     $folder = "unassigned";
+        // }
+        $attached_folder = get_term_by( 'slug', $folder, 'popup-folder', ARRAY_A );
+        wp_set_object_terms( $post_id,  $attached_folder[ 'term_id' ] , 'popup-folder');
+
+        $attached_template = get_term_by( 'slug', $template, 'popup-template', ARRAY_A );
+        wp_set_object_terms( $post_id,  $attached_template[ 'term_id' ] , 'popup-template');
+
+        echo $post_id;
+
+        die();
+    }
+
+    public function get_all_templates() 
+    {
         // get all items which belongs to popup-template category
         $popup_template_categories = get_terms( 
             array(
@@ -48,13 +123,15 @@ class Kong_Popup_Admin_Ajax
         die();
     }
 
-    public function set_backend_popup_form_fields_value() {
+    public function set_backend_popup_form_fields_value() 
+    {
         echo get_post_meta( $_REQUEST[ 'popup_id' ], $_REQUEST[ 'field_name' ], true );
 
         die();
     }
 
-    public function set_frontend_popup_form_fields_value() {
+    public function set_frontend_popup_form_fields_value() 
+    {
         $result = array();
 
         $popup_id = $_REQUEST[ 'popup_id' ];
@@ -711,4 +788,5 @@ class Kong_Popup_Admin_Ajax
 
         die();
     }
+
 }

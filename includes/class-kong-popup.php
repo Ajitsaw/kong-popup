@@ -158,6 +158,7 @@ class Kong_Popup
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-kong-popup-public.php';
+		
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/classes/class-kong-popup-ajax.php';
 
 		$this->loader = new Kong_Popup_Loader();

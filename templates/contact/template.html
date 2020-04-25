@@ -1,72 +1,30 @@
-<!-- <div id="contact" data-id="{_ID_}" class="popup-container kong-popup" style="display: none;" data-template="Contact">
-	<div class="popup-modalone modal-image">
-		<a class="close-popup" onclick="close_kong_popup()">x</a>
-		<div class="popup-row">
-			<div class="popup-row-image">
-				<img src="{popup_image}" alt="">
-			</div>
-			<div class="popup-row-info">
-				<h2>{popup_body_title}</h2>
-				<p>{popup_body_description}</p>
-			</div>
-		</div>
-	</div>
-</div> -->
-
-<!-- <div class="pt-popup pt-popup--contact popup-container kong-popup" id="contact" data-id="{_ID_}" style="display: none;" data-template="Contact">
-    <div class="pt-popup__header">
-        <a class="pt-popup__close" href="javascript:void(0);" onclick="close_kong_popup();">
-        	<i class="fa fa-times" aria-hidden="true"></i>
-        </a>
-
-        <h2>{popup_body_title}</h2>
-    </div>
-
-    <div class="pt-popup__body">
-        <p>{popup_body_description}</p>
-
-        <form class="popup-form" onsubmit="javascript:submit_behaviour( {_ID_}, event, this );" novalidate>
-            <div class="form-fields-block">
-                <div class="pt-frm-field">
-                    <label>Email</label>
-                    <input type="email" name="">
-                </div>
-
-                <div class="pt-frm-field">
-                    <label>Message</label>
-                    <textarea></textarea>
-                </div>
-            </div>
-
-            <div class="form-btn-block">
-                <button id="popup-submit">{popup_button_text}</button>
-            </div>
-        </form>
-    </div>
-</div> -->
-
 <div class="pt-popup pt-popup--contact popup-container kong-popup" id="contact" data-id="{_ID_}" style="display: none;" data-template="Contact">
     <div class="pt-popup__header">
         <a class="pt-popup__close" href="javascript:void(0);" onclick="close_kong_popup();">
             <i class="fa fa-times" aria-hidden="true"></i>
         </a>
 
-        <h2>{popup_body_title}</h2>
+        <h2>{content_title}</h2>
     </div>
 
     <div class="pt-popup__body">
-        <p>{popup_body_description}</p>
+        <p>{content_description}</p>
 
         <form class="popup-form" method="POST" onsubmit="javascript:submit_behaviour( {_ID_}, event, this );">
             <div class="form-fields-block">
                 <div class="pt-frm-field" id="fl_ea_1" data-form-field="e2xinp3ug8hp" data-order="1">
-                    <label id="label-e2xinp3ug8hp">First Title</label>
-                    <input type="email" name="email_name_e2xinp3ug8hp" id="field_e2xinp3ug8hp" placeholder="vcvvuybibibasd" required="">
+                    <label id="label-e2xinp3ug8hp">Email</label>
+                    <input type="email" name="email_name_e2xinp3ug8hp" id="field_e2xinp3ug8hp">
+                </div>
+
+                <div class="pt-frm-field" id="fl_mlt_2" data-form-field="e2xinp3ug8hp" data-order="2">
+                    <label id="label-e2xinp3ug8hp">Message</label>
+                    <textarea name="textarea_e2xinp3ug8hp" id="textarea_e2xinp3ug8hp"></textarea>
                 </div>
             </div>
 
             <div class="form-btn-block">
-                <button id="popup-submit">{popup_button_text}</button>
+                <button id="popup-submit">{button_text}</button>
             </div>
         </form>
     </div>

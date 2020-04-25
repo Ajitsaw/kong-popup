@@ -3,39 +3,92 @@ $position_css = $animation_css = '';
 
 switch ( $appearance_position ) {
     case 'center-center':
-    $position_css .= 'top: 50%; left: 50%; transform: translate(-50%, -50%);';
+    $position_css .= '
+        top: 50%; 
+        left: 50%; 
+        transform: translate(-50%, -50%);
+    ';
     break;
 
     case 'bottom-left':
-    $position_css .= 'bottom:5px; left:5px;';
+    $position_css .= '
+        left: 15px;
+        right: auto;
+        bottom: 15px;
+        top: auto;
+        transform: none;
+    ';
     break;
 
     case 'bottom-right':
-    $position_css .= 'bottom:5px; right:5px;';
+    $position_css .= '
+        left: auto;
+        right: 15px;
+        bottom: 15px;
+        top: auto;
+        transform: none;
+    ';
     break;
 
     case 'top-full':
-    $position_css .= 'top:5px; left:5px;';
+    $position_css .= '
+        left: 0;
+        right: 0;
+        top: 0;
+        width: 100%;
+        max-width: 100%;
+        transform: none;
+    ';
     break;
 
     case 'bottom-full':
-    $position_css .= 'bottom:5px; left:5px;';
+    $position_css .= '
+        left: 0;
+        right: 0;
+        top: auto;
+        bottom:0;
+        width: 100%;
+        max-width: 100%;
+        transform: none;
+    ';
     break;
 
     case 'center-left':
-    $position_css .= 'top:50%; left:5px; transform: translate(5px, -50%);';
+    $position_css .= '
+        left: 0px;
+        right: auto;
+        top: 50%;
+        transform: translateY(-50%);
+    ';
     break;
 
     case 'center-right':
-    $position_css .= 'top:50%; right:5px;transform: translate(5px, -50%);';
+    $position_css .= '
+        left: auto;
+        right: 0px;
+        top: 50%;
+        transform: translateY(-50%);
+    ';
     break;
 
     case 'baseline-left':
-    $position_css .= 'bottom:5px; left:5px;';
+    $position_css .= '
+        left: 15px;
+        right: auto !important;
+        top: auto;
+        transform: none;
+        bottom: 0px;
+    ';
     break;
 
     case 'baseline-right':
-    $position_css .= 'bottom:5px; right:5px;';
+    $position_css .= '
+        left: auto !important;
+        right: 15px;
+        top: auto;
+        transform: none;
+        bottom: 0px;
+    ';
     break;
 }
 
@@ -325,20 +378,20 @@ $generated_css .= "
     /*Popup CSS 18.3.2020 -->>end*/
 ";
 
-// $generated_css .= "
-//     .kong-popup {
-//         position: fixed;
-//         width: auto; 
-//         height: 100%;
-//         padding:20px;
-//         z-index: 99999999999;
-//         $dynamic_css;
-//         animation-name: $position;
-//         animation-duration: 2s;
-//         -webkit-animation-duration: 6s;
-//         overflow:hidden;
-//     }
-// ";
+$generated_css .= "
+    .kong-popup {
+        position: fixed;
+        width: auto; 
+        height: auto;
+        padding:20px;
+        z-index: 99999999999;
+        $dynamic_css;
+        animation-name: $position;
+        animation-duration: 2s;
+        -webkit-animation-duration: 6s;
+        overflow:hidden;
+    }
+";
 
 $generated_css .= "
     @keyframes bottom-left { 

@@ -94,10 +94,15 @@ jQuery( document ).ready( function( e ) {
 			jQuery( '#pt-error-message' ).text( "" );
 		}
 
+		// console.log( ajaxurl );
+		// return;
+
 		if ( isVaildate ) {
 			jQuery.ajax( {
-				url: ajaxurl + "?action=savepopup",
+				type: 'POST',
+				url: ajaxurl,
 				data: {
+					action: 'save_popup_info_ajax',
 					title: projectTitle, 
 					folder: projectFolder, 
 					template: projectTemplate

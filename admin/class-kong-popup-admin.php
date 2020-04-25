@@ -83,7 +83,7 @@ class Kong_Popup_Admin
 
         add_action( 'admin_menu', array( $this, 'admin_pages' ) );
 
-        add_action( 'wp_ajax_savepopup', array( $this, 'savePopup' ) );
+        // add_action( 'wp_ajax_savepopup', array( $this, 'savePopup' ) );
         //add_action( 'wp_ajax_nopriv_savepopup', array( $this, 'savePopup' ) );
         // add_action( 'wp_ajax_update_popup_info_ajax', array( $this, 'update_popup_info' ) );
         // add_action( 'wp_ajax_update_popup_status_ajax', array( $this, 'update_popup_status' ) );
@@ -216,62 +216,62 @@ class Kong_Popup_Admin
         }
     }
 
-    public function savePopup() 
-    {
-        $title = trim( $_REQUEST[ 'title' ] );
-        $folder = trim( $_REQUEST[ 'folder' ] );
-        $template = trim( $_REQUEST[ 'template' ] );
+    // public function savePopup() 
+    // {
+    //     $title = trim( $_REQUEST[ 'title' ] );
+    //     $folder = trim( $_REQUEST[ 'folder' ] );
+    //     $template = trim( $_REQUEST[ 'template' ] );
 
-        $template_html_path = PLUGIN_BASE_DIR . '/templates/' . $template . '/template.html';
-        $content = '';
-        $fp1 = fopen( $template_html_path, 'r' ) or die( 'Unable to open file' );
-        if ( $fp1 ) {
-            while ( $s = fgets( $fp1, filesize( $template_html_path ) ) ) {
-                $content .= $s;
-            }
-        }
-        fclose( $fp1 );
+    //     $template_html_path = PLUGIN_BASE_DIR . '/templates/' . $template . '/template.html';
+    //     $content = '';
+    //     $fp1 = fopen( $template_html_path, 'r' ) or die( 'Unable to open file' );
+    //     if ( $fp1 ) {
+    //         while ( $s = fgets( $fp1, filesize( $template_html_path ) ) ) {
+    //             $content .= $s;
+    //         }
+    //     }
+    //     fclose( $fp1 );
         
-        $template_info_path = PLUGIN_BASE_DIR . '/templates/' . $template . '/template.info';
-        $infos = array();
-        $fp2 = fopen( $template_info_path, 'r' ) or die( 'Unable to open file' );
-        if ( $fp2 ) {
-            while ($info = fgets( $fp2, filesize( $template_info_path ) ) ) {
-                $arr = explode( '=', $info );
-                $k = $arr[ 0 ];
-                $v = $arr[ 1 ];
-                $infos[ $k ] = $v;
-            }
-        }
-        fclose( $fp2 );
+    //     $template_info_path = PLUGIN_BASE_DIR . '/templates/' . $template . '/template.info';
+    //     $infos = array();
+    //     $fp2 = fopen( $template_info_path, 'r' ) or die( 'Unable to open file' );
+    //     if ( $fp2 ) {
+    //         while ($info = fgets( $fp2, filesize( $template_info_path ) ) ) {
+    //             $arr = explode( '=', $info );
+    //             $k = $arr[ 0 ];
+    //             $v = $arr[ 1 ];
+    //             $infos[ $k ] = $v;
+    //         }
+    //     }
+    //     fclose( $fp2 );
 
-        $popup = array(
-            'post_title'    => $title,
-            'post_content'  => $content,
-            'post_status'   => 'draft',
-            'post_author'   => 1,
-            'post_type'     => 'popup',
-        );
-        $post_id = wp_insert_post( $popup );
+    //     $popup = array(
+    //         'post_title'    => $title,
+    //         'post_content'  => $content,
+    //         'post_status'   => 'draft',
+    //         'post_author'   => 1,
+    //         'post_type'     => 'popup',
+    //     );
+    //     $post_id = wp_insert_post( $popup );
 
-        foreach ( $infos as $key => $info ) {
-            update_post_meta( $post_id, $key, $info );
-        }
-        update_post_meta( $post_id, 'template', $template );
+    //     foreach ( $infos as $key => $info ) {
+    //         update_post_meta( $post_id, $key, $info );
+    //     }
+    //     update_post_meta( $post_id, 'template', $template );
         
-        // if ( empty( $folder ) ) {
-        //     $folder = "unassigned";
-        // }
-        $attached_folder = get_term_by( 'slug', $folder, 'popup-folder', ARRAY_A );
-        wp_set_object_terms( $post_id,  $attached_folder[ 'term_id' ] , 'popup-folder');
+    //     // if ( empty( $folder ) ) {
+    //     //     $folder = "unassigned";
+    //     // }
+    //     $attached_folder = get_term_by( 'slug', $folder, 'popup-folder', ARRAY_A );
+    //     wp_set_object_terms( $post_id,  $attached_folder[ 'term_id' ] , 'popup-folder');
 
-        $attached_template = get_term_by( 'slug', $template, 'popup-template', ARRAY_A );
-        wp_set_object_terms( $post_id,  $attached_template[ 'term_id' ] , 'popup-template');
+    //     $attached_template = get_term_by( 'slug', $template, 'popup-template', ARRAY_A );
+    //     wp_set_object_terms( $post_id,  $attached_template[ 'term_id' ] , 'popup-template');
 
-        echo $post_id;
+    //     echo $post_id;
 
-        die();
-    }
+    //     die();
+    // }
 
     // public function update_popup_info() 
     // {

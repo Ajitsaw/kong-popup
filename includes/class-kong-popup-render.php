@@ -62,22 +62,24 @@ class Kong_Popup_Render
             $content = str_replace( $v, $replace_value, $content );
         }
 
+        // print_data( $content );
+
         return $content;
     }
 
     public function generate_popup_css() 
     {
-        $appearance_position = $this->get_popup_info( 'appearance_position' );
-        $animation = $this->get_popup_info( 'animation' );
-        $font = $this->get_popup_info( 'fonts' );
-        $width = $this->get_popup_info( 'popup_width' );
-        $height = $this->get_popup_info( 'popup_height' );
-        $textcolor = $this->get_popup_info( 'textcolor' );
-        $bgcolor = $this->get_popup_info( 'bgcolor' );
-        $use_bgimage = $this->get_popup_info( 'use_bgimage' );
-        $bgimage = $this->get_popup_info( 'bgimage' );
-        $btn_bg_color = ( $this->get_popup_info( 'buttonbgcolor' ) ) ? $this->get_popup_info( 'buttonbgcolor' ) : '#808080';
-        $btn_txt_color = ( $this->get_popup_info( 'buttontextcolor' ) ) ? $this->get_popup_info( 'buttontextcolor' ) : '#fff';
+        $appearance_position = $this->get_popup_infoo( 'appearance_position' );
+        $animation = $this->get_popup_infoo( 'animation' );
+        $font = $this->get_popup_infoo( 'fonts' );
+        $width = $this->get_popup_infoo( 'popup_width' );
+        $height = $this->get_popup_infoo( 'popup_height' );
+        $textcolor = $this->get_popup_infoo( 'textcolor' );
+        $bgcolor = $this->get_popup_infoo( 'bgcolor' );
+        $use_bgimage = $this->get_popup_infoo( 'use_bgimage' );
+        $bgimage = $this->get_popup_infoo( 'bgimage' );
+        $btn_bg_color = ( $this->get_popup_infoo( 'buttonbgcolor' ) ) ? $this->get_popup_infoo( 'buttonbgcolor' ) : '#808080';
+        $btn_txt_color = ( $this->get_popup_infoo( 'buttontextcolor' ) ) ? $this->get_popup_infoo( 'buttontextcolor' ) : '#fff';
 
         require_once PLUGIN_BASE_DIR . '/admin/partials/kong-popup-render-css.php';
 
@@ -248,7 +250,18 @@ class Kong_Popup_Render
     //     }
     // }
 
+    public function get_popup_infoo( $label = '' ) 
+    {
+        global $wpdb;
 
+        $info = '';
+        if ( $label != '' ) {
+            $get_preview_data_query = $wpdb->get_results( "SELECT meta_value FROM {$wpdb->prefix}kong_popup_preview_meta WHERE popup_id = {$this->popup_id} AND meta_key = '{$label}'" );
+            $info = $get_preview_data_query[ 0 ]->meta_value;
+        }
+
+        return $info;
+    }
 
     public function get_popup_all_infoo() 
     {
