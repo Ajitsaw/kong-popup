@@ -91,7 +91,7 @@
                             $step = 1;
                             foreach ( $popup_meta[ 'desktop_image' ] as $id ) {
                                 ?>                                                                   
-                                <li class="desktop-bgimage-item<?php if ( $step == 1 ) echo ' selected'; ?>" id="desktop-bgimage-item-<?php echo $step; ?>">
+                                <li class="desktop-bgimage-item<?php if ( $popup_meta[ 'selected_desktop_image' ] == $id ) echo ' selected'; ?>" id="desktop-bgimage-item-<?php echo $step; ?>">
                                     <div class="image-editor-block">
                                         <a href="javascript:void(0);" class="upload-bgimage-button" data-param="bgimage">
                                             <i class="fa fa-pencil"></i>
@@ -311,7 +311,7 @@
                             $step = 1;
                             foreach ( $popup_meta[ 'mobile_image' ] as $id ) {
                                 ?>                                                                   
-                                <li class="mobile-bgimage-item<?php if ( $step == 1 ) echo ' selected'; ?>" id="mobile-bgimage-item-<?php echo $step; ?>">
+                                <li class="mobile-bgimage-item<?php if ( $popup_meta[ 'selected_mobile_image' ] == $id ) echo ' selected'; ?>" id="mobile-bgimage-item-<?php echo $step; ?>">
                                     <div class="image-editor-block">
                                         <a href="javascript:void(0);" class="upload-bgimage-button" data-param="bgimage">
                                             <i class="fa fa-pencil"></i>
