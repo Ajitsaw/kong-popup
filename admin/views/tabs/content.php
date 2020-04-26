@@ -410,7 +410,7 @@
                     <!-- .radio starts -->
                     <div class="radio">
                         <input name="content_branching" type="radio" class="bg_radio_color" value="linear" <?php if ( isset( $popup_meta[ 'content_branching' ] ) && trim( $popup_meta[ 'content_branching' ] ) == "linear" ) echo "checked='checked'"; ?> />
-                        <label>
+                        <label class="radio-label">
                             <?php echo __( 'Linear', 'kong-popup' ); ?>
                             <span>
                                 <a href="javascript:void(0);">
@@ -424,7 +424,7 @@
                     <!-- .radio starts -->
                     <div class="radio">
                         <input name="content_branching" type="radio" class="bg_radio_color" value="skip" <?php if ( isset( $popup_meta[ 'content_branching' ] ) && trim( $popup_meta[ 'content_branching' ] ) == "skip" ) echo "checked='checked'"; ?> />
-                        <label>
+                        <label class="radio-label">
                             <?php echo __( 'Skip logic and branching', 'kong-popup' ); ?>
                             <span>
                                 <a href="javascript:void(0);">
@@ -703,17 +703,17 @@
                     <!-- .radio starts -->
                     <div class="radio">
                         <input name="url_to_share" type="radio" class="bg_radio_color" value="current_page" <?php if ( isset( $popup_meta[ 'url_to_share' ] ) && trim( $popup_meta[ 'url_to_share' ] ) == "current_page" ) echo "checked='checked'"; ?> />
-                        <label><?php echo __( 'current page', 'kong-popup' ); ?></label>
+                        <label class="radio-label"><?php echo __( 'current page', 'kong-popup' ); ?></label>
                     </div>
                     <!-- .radio ends -->
 
                     <!-- .radio starts -->
                     <div class="radio">
                         <input name="url_to_share" type="radio" class="bg_radio_color" value="choose_page" <?php if ( isset( $popup_meta[ 'url_to_share' ] ) && trim( $popup_meta[ 'url_to_share' ] ) == "choose_page" ) echo "checked='checked'"; ?> />
-                        <label><?php echo __( 'choose page to share', 'kong-popup' ); ?></label>
+                        <label class="radio-label"><?php echo __( 'choose page to share', 'kong-popup' ); ?></label>
                     </div>
                     <!-- .radio ends -->
-                    <input type="text" name="" placeholder="URL" readonly="readonly">
+                    <input type="text" name="" placeholder="URL">
                 </div>
                 <!-- Button Text //end -->
                 <?php
@@ -781,7 +781,7 @@
                         </button>
                     </div>
                     <label class="container">
-                        <input type="checkbox" class="sectionOpener">
+                        <input type="checkbox" class="sectionOpener option-checkbox kg_checkbox_color">
                         <span class="checkmark"></span><?php echo __( 'Open the target page in a new window', 'kong-popup' ); ?>
                     </label>
                 </div>

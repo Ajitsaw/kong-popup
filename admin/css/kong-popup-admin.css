@@ -3062,7 +3062,7 @@ input.time-schedule {
   width: 1.4em;
   height: 1.4em;
   position: relative;
-  top: -0.2em;
+  top: 0;
   margin-right: 1em;
   vertical-align: top;
   cursor: pointer;
@@ -4155,7 +4155,8 @@ a.close-popup {
 
 
 /* The container */
-.pt-checkbox .container, .is-template-block .container, .form-group .container {
+.pt-checkbox .container,.pt-option-box .container, .is-template-block .container, 
+.form-group .container {
   display: block;
   position: relative;
   padding-left: 30px;
@@ -4184,7 +4185,8 @@ a.close-popup {
 }
 
 /* Hide the browser's default checkbox */
-.pt-checkbox .container input, .is-template-block .container input, .form-group .container input{
+.pt-checkbox .container input, .pt-option-box .container input, 
+.is-template-block .container input, .form-group .container input{
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -4196,7 +4198,8 @@ a.close-popup {
 
 
 /* Create a custom checkbox */
-.pt-checkbox .container .checkmark, .is-template-block .container .checkmark, .form-group .container .checkmark {
+.pt-checkbox .container .checkmark, .is-template-block .container .checkmark, 
+.form-group .container .checkmark, .pt-option-box .container .checkmark {
   position: absolute;
   top: auto;
   left: 0;
@@ -4206,14 +4209,17 @@ a.close-popup {
   border: 1px solid #ccc;
   border-radius: 3px;
   padding-left: 0;
+  margin-left: 0;
 }
 .is-template-block .container .checkmark, .form-group .container .checkmark {
   height: 15px;
   width: 15px;
 }
 
-.pt-checkbox [type=checkbox]:checked+span:not(.lever):before, .is-template-block [type=checkbox]:checked+span:not(.lever):before, 
-.form-group .container [type=checkbox]:checked+span:not(.lever):before{
+.pt-checkbox [type=checkbox]:checked+span:not(.lever):before, 
+.is-template-block [type=checkbox]:checked+span:not(.lever):before, 
+.form-group .container [type=checkbox]:checked+span:not(.lever):before, 
+.pt-option-box  .container [type=checkbox]:checked+span:not(.lever):before {
   top: 0;
   left: 1px;
   width: 7px;
@@ -4222,7 +4228,8 @@ a.close-popup {
   border-right: 2px solid #fff !important;
   border-bottom: 2px solid #fff !important;
 }
-.is-template-block [type=checkbox]:checked+span:not(.lever):before, .form-group .container [type=checkbox]:checked+span:not(.lever):before{
+.is-template-block [type=checkbox]:checked+span:not(.lever):before, 
+.form-group .container [type=checkbox]:checked+span:not(.lever):before{
   top: 2px;
   left: 1px;
   width: 5px;
@@ -4231,7 +4238,8 @@ a.close-popup {
 }
 .pt-checkbox [type=checkbox]+span:not(.lever):before, 
 .is-template-block [type=checkbox]+span:not(.lever):before, 
-.form-group .container [type=checkbox]+span:not(.lever):before {
+.form-group .container [type=checkbox]+span:not(.lever):before,
+.pt-option-box .container [type=checkbox]+span:not(.lever):before  {
   border: none !important;
 }
 
@@ -4255,12 +4263,13 @@ a.close-popup {
 }
 
 /* Show the checkmark when checked */
-.pt-checkbox .container input:checked ~ .checkmark:after {
+.pt-checkbox .container input:checked ~ .checkmark:after, 
+.pt-option-box .container input:checked ~ .checkmark:after{
   display: block;
 }
 
 /* Style the checkmark/indicator */
-.pt-checkbox .container .checkmark:after {
+.pt-checkbox .container .checkmark:after, .pt-option-box .container .checkmark:after{
   left: 5px;
   top: 1px;
   width: 4px;
@@ -5282,7 +5291,25 @@ button.applyBtn.kg_secondary_bg.btn.btn-sm.btn-success, button.cancelBtn.btn.btn
   color: #fff;
   font-size: 20px;
 }
-
+.inline-input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.inline-input input {
+  margin-bottom: 0 !important;
+  margin-right: 10px !important;
+}
+.inline-radio {
+  display: flex;
+  align-items: center;
+}
+.inline-radio .radio {
+  margin-right: 30px;
+}
+.inline-radio .radio:last-child {
+  margin-right: 0px;
+}
 
 
 /*Responsive Start*/
