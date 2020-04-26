@@ -4392,7 +4392,7 @@ a.close-popup {
 
 .left-panel .form-wrap .form-position label {
   width: 40px;
-  margin-right: 7px;
+  margin-right: 0px;
   display: inline-block;
 }
 
@@ -4846,9 +4846,9 @@ a.add-upload-bgimage {
   cursor: pointer;
 }
 .pt-addfield {
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #ccc
+  margin-bottom: 0px;
+  padding-bottom: 10px;
+  border-bottom: none
 }
 .pt-addfield-box {
   border: 1px solid #e5e7ec;
