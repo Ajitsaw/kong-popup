@@ -64,46 +64,50 @@
                     <div class="popview-icon popview-icon__one <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'center-center' ) echo 'kg_border_color'; ?>"></div>
                 </label>
 
-                <label for="content-bottom-left" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'bottom-left' ) echo 'selected'; ?>">
-                    <input type="radio" class="bg_radio_color" name="content_position" value="bottom-left" id="content-bottom-left" data-name="position" />
-                    <div class="popview-icon popview-icon__two <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'bottom-left' ) echo 'kg_border_color'; ?>"></div>
-                </label>
-
-                <label for="content-bottom-right" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'bottom-right' ) echo 'selected'; ?>">
-                    <input type="radio" class="bg_radio_color" name="content_position" value="bottom-right" id="content-bottom-right" data-name="position" />
-                    <div class="popview-icon popview-icon__three <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'bottom-right' ) echo 'kg_border_color'; ?>"></div>
-                </label>
-
-                <label for="content-top-full" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'top-full' ) echo 'selected'; ?>">
-                    <input type="radio" class="bg_radio_color" name="content_position" value="top-full" id="content-top-full" data-name="position" />
-                    <div class="popview-icon popview-icon__four <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'top-full' ) echo 'kg_border_color'; ?>"></div>
-                </label>
-
-                <label for="content-bottom-full" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'bottom-full' ) echo 'selected'; ?>">
-                    <input type="radio" class="bg_radio_color" name="content_position" value="bottom-full" id="content-bottom-full" data-name="position" />
-                    <div class="popview-icon popview-icon__five <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'bottom-full' ) echo 'kg_border_color'; ?>"></div>
-                </label>
-
-                <label for="content-center-left" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'center-left' ) echo 'selected'; ?>">
-                    <input type="radio" class="bg_radio_color" name="content_position" value="center-left" id="content-center-left" data-name="position" />
-                    <div class="popview-icon popview-icon__six <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'center-left' ) echo 'kg_border_color'; ?>"></div>
-                </label>
-
-                <label for="content-center-right" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'center-right' ) echo 'selected'; ?>">
-                    <input type="radio" class="bg_radio_color" name="content_position" value="center-right" id="content-center-right" data-name="position" />
-                    <div class="popview-icon popview-icon__seven <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'center-right' ) echo 'kg_border_color'; ?>"></div>
-                </label>
-
-                <label for="content-baseline-left" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'baseline-left' ) echo 'selected'; ?>">
-                    <input type="radio" class="bg_radio_color" name="content_position" value="baseline-left" id="content-baseline-left" data-name="position" />
-                    <div class="popview-icon popview-icon__eight <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'baseline-left' ) echo 'kg_border_color'; ?>"></div>
-                </label>
-
-                <label for="content-baseline-right" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'baseline-right' ) echo 'selected'; ?>">
-                    <input type="radio" class="bg_radio_color" name="content_position" value="baseline-right" id="content-baseline-right" data-name="position" />
-                    <div class="popview-icon popview-icon__nine <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'baseline-right' ) echo 'kg_border_color'; ?>"></div>
-                </label>
                 <?php
+                if ( ! in_array( $slug, array( 'content-upgrade' ) ) ) {
+                    ?>
+                    <label for="content-bottom-left" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'bottom-left' ) echo 'selected'; ?>">
+                        <input type="radio" class="bg_radio_color" name="content_position" value="bottom-left" id="content-bottom-left" data-name="position" />
+                        <div class="popview-icon popview-icon__two <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'bottom-left' ) echo 'kg_border_color'; ?>"></div>
+                    </label>
+
+                    <label for="content-bottom-right" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'bottom-right' ) echo 'selected'; ?>">
+                        <input type="radio" class="bg_radio_color" name="content_position" value="bottom-right" id="content-bottom-right" data-name="position" />
+                        <div class="popview-icon popview-icon__three <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'bottom-right' ) echo 'kg_border_color'; ?>"></div>
+                    </label>
+
+                    <label for="content-top-full" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'top-full' ) echo 'selected'; ?>">
+                        <input type="radio" class="bg_radio_color" name="content_position" value="top-full" id="content-top-full" data-name="position" />
+                        <div class="popview-icon popview-icon__four <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'top-full' ) echo 'kg_border_color'; ?>"></div>
+                    </label>
+
+                    <label for="content-bottom-full" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'bottom-full' ) echo 'selected'; ?>">
+                        <input type="radio" class="bg_radio_color" name="content_position" value="bottom-full" id="content-bottom-full" data-name="position" />
+                        <div class="popview-icon popview-icon__five <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'bottom-full' ) echo 'kg_border_color'; ?>"></div>
+                    </label>
+
+                    <label for="content-center-left" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'center-left' ) echo 'selected'; ?>">
+                        <input type="radio" class="bg_radio_color" name="content_position" value="center-left" id="content-center-left" data-name="position" />
+                        <div class="popview-icon popview-icon__six <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'center-left' ) echo 'kg_border_color'; ?>"></div>
+                    </label>
+
+                    <label for="content-center-right" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'center-right' ) echo 'selected'; ?>">
+                        <input type="radio" class="bg_radio_color" name="content_position" value="center-right" id="content-center-right" data-name="position" />
+                        <div class="popview-icon popview-icon__seven <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'center-right' ) echo 'kg_border_color'; ?>"></div>
+                    </label>
+
+                    <label for="content-baseline-left" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'baseline-left' ) echo 'selected'; ?>">
+                        <input type="radio" class="bg_radio_color" name="content_position" value="baseline-left" id="content-baseline-left" data-name="position" />
+                        <div class="popview-icon popview-icon__eight <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'baseline-left' ) echo 'kg_border_color'; ?>"></div>
+                    </label>
+
+                    <label for="content-baseline-right" class="pos-label <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'baseline-right' ) echo 'selected'; ?>">
+                        <input type="radio" class="bg_radio_color" name="content_position" value="baseline-right" id="content-baseline-right" data-name="position" />
+                        <div class="popview-icon popview-icon__nine <?php if ( isset( $popup_meta[ 'content_position' ] ) && trim( $popup_meta[ 'content_position' ] ) == 'baseline-right' ) echo 'kg_border_color'; ?>"></div>
+                    </label>
+                    <?php
+                }
             }
             ?>
             </div>
@@ -402,7 +406,7 @@
             if ( in_array( $slug, array( 'content-upgrade', 'interstitial', 'survey', 'two-step', 'welcome-mat' ) ) ) {
                 ?>
                 <!-- .pt-option-box starts -->
-                <div class="pt-option-box">
+                <div class="pt-option-box inline-radio">
                     <!-- .radio starts -->
                     <div class="radio">
                         <input name="content_branching" type="radio" class="bg_radio_color" value="linear" <?php if ( isset( $popup_meta[ 'content_branching' ] ) && trim( $popup_meta[ 'content_branching' ] ) == "linear" ) echo "checked='checked'"; ?> />
@@ -770,10 +774,12 @@
                             </a>
                         </span>
                     </label>
-                    <input type="text" name="" placeholder="Target URL">
-                    <button class="pt-add-field" id="addFldBtn">
-                        <?php echo __( 'Test', 'kong-popup' ); ?>
-                    </button>
+                    <div class="inline-input">
+                        <input type="text" name="" placeholder="Target URL">
+                        <button class="pt-add-field" id="addFldBtn">
+                            <?php echo __( 'Test', 'kong-popup' ); ?>
+                        </button>
+                    </div>
                     <label class="container">
                         <input type="checkbox" class="sectionOpener">
                         <span class="checkmark"></span><?php echo __( 'Open the target page in a new window', 'kong-popup' ); ?>
