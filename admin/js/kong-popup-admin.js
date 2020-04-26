@@ -231,6 +231,8 @@ jQuery( document ).ready( function( e ) {
         jQuery( this ).children( '.image-editor-block' ).toggle();
     } );
 
+	console.log( kongPopupSupports );
+
 	jQuery( this ).on( 'click', '.add-upload-bgimage, .add-upload-bgfile, .add-upload-btmscreen', function( e ) {
     	e.preventDefault();
 
@@ -251,7 +253,7 @@ jQuery( document ).ready( function( e ) {
 	                    </a>
 		            </div>
 
-	                <img src="` + kongPopupSupports.base_url + `images/img1.png" alt="" class="image-tag" id="upload-bgimage-button-` + nextBackgroundImageBlock + `" data-target="` + target + `" data-index="` + countBackgroundImageBlock + `">
+	                <img src="` + kongPopupSupports.base_url + `admin/images/img1.png" alt="" class="image-tag" id="upload-bgimage-button-` + nextBackgroundImageBlock + `" data-target="` + target + `" data-index="` + countBackgroundImageBlock + `">
 	                <input type="hidden" name="` + target + `_image" id="` + target + `-image-` + nextBackgroundImageBlock + `" />
 	            </li>
 			`;
@@ -271,7 +273,7 @@ jQuery( document ).ready( function( e ) {
 	                    </a>
 		            </div>
 
-	                <img src="` + kongPopupSupports.base_url + `images/img1.png" alt="" class="image-tag" id="upload-bgfile-button-` + nextBackgroundImageBlock + `" data-target="` + target + `" data-index="` + countBackgroundImageBlock + `">
+	                <img src="` + kongPopupSupports.base_url + `admin/images/img1.png" alt="" class="image-tag" id="upload-bgfile-button-` + nextBackgroundImageBlock + `" data-target="` + target + `" data-index="` + countBackgroundImageBlock + `">
 	                <input type="hidden" name="` + target + `_image" id="` + target + `-image-` + nextBackgroundImageBlock + `" />
 	            </li>
 			`;
@@ -291,7 +293,7 @@ jQuery( document ).ready( function( e ) {
 	                    </a>
 		            </div>
 
-	                <img src="` + kongPopupSupports.base_url + `images/img1.png" alt="" class="image-tag" id="upload-btmscreen-button-` + nextBackgroundImageBlock + `" data-target="` + target + `" data-index="` + countBackgroundImageBlock + `">
+	                <img src="` + kongPopupSupports.base_url + `admin/images/img1.png" alt="" class="image-tag" id="upload-btmscreen-button-` + nextBackgroundImageBlock + `" data-target="` + target + `" data-index="` + countBackgroundImageBlock + `">
 	                <input type="hidden" name="` + target + `_image" id="` + target + `-image-` + nextBackgroundImageBlock + `" />
 	            </li>
 			`;
@@ -308,6 +310,15 @@ jQuery( document ).ready( function( e ) {
     	var selectID = this.id;
     	var removeItemBlockID = parseInt( selectID ) + 1;
     	var target = $currentTargetElement.attr( 'data-target' );
+
+    	// console.log( popupData );
+    	// console.log( $currentTargetElement );
+    	// console.log( param );
+    	// console.log( selectID );
+    	// console.log( removeItemBlockID );
+    	// console.log( target );
+
+
 
     	if ( $currentTargetElement.attr( 'data-target' ) == "desktop" ) {
     		if ( param == "bgimage" ) {
@@ -334,8 +345,13 @@ jQuery( document ).ready( function( e ) {
     	}
     	jQuery( '#' + target + '-' + param + '-item-' + removeItemBlockID ).remove();
 
+    	// console.log( bgImage );
+    	// console.log( appearanceImageArray );
     	appearanceImageArray.splice( selectID, 1 );
+    	// console.log( appearanceImageArray );
+
     	popupData[ bgImage ] = appearanceImageArray;
+    	// console.log( popupData );
 
     	popupPreview();
     } );
@@ -880,8 +896,7 @@ jQuery( document ).ready( function( e ) {
     	e.preventDefault();
     	e.stopPropagation();
 
-    	var splitID = this.id.split( '-' );
-    	var successRedirectURL = jQuery( '#success-redirect-url-' + splitID[ 1 ] ).val();
+    	var successRedirectURL = jQuery( this ).closest( '.redirect-url' ).find( '#success-redirect-url' ).val();
     	var pattern = /^((http|https|ftp):\/\/)/;
 		if ( ! pattern.test( successRedirectURL ) ) {
 		    successRedirectURL = "http://" + successRedirectURL;
@@ -1061,9 +1076,10 @@ jQuery( document ).ready( function( e ) {
 	} );
 	
 
-	jQuery(document).on('click', '.pt-add-img li', function() {
-		tabSelectedFunction(jQuery(this));
-	});
+	jQuery( this ).on( 'click', '.pt-add-img li', function() {
+		console.log( "IMAGE SELECTED" );
+		tabSelectedFunction( jQuery( this ) );
+	} );
 
 	jQuery( this ).on( 'click', '.pt-inner-tab li', function() {
 		var popupID = jQuery( '.appearance' ).attr( 'data-popup' );
@@ -1089,12 +1105,19 @@ jQuery( document ).ready( function( e ) {
 		tabSelectedFunction( jQuery( this ) );
 	} );
 
-	jQuery('.pt-flip-option li').click(function() {
-		var $this = jQuery( this );
+	jQuery( this ).on( 'click', '.pt-flip-option li', function( e ) {
+		console.log( "FLIP" );
+
+		var key = jQuery( this ).find( 'input' )[ 0 ].name;
+		var value = jQuery( this ).find( 'input' ).val();
+		popupData[ key ] = value;
+
 		// $this.hasClass('selected') ? $this.removeClass('selected') : $this.addClass('selected');
 		jQuery( '.pt-flip-option li' ).removeClass( 'selected' );
-		$this.addClass('selected');
-	});
+		jQuery( this ).addClass( 'selected' );
+
+		popupPreview();
+	} );
 
 	// jQuery( '.color-select' ).spectrum( {
 	// 	// color: "#98752d",
@@ -1272,7 +1295,8 @@ jQuery( document ).ready( function( e ) {
 			var structure = emailAddressFld( title, id );
 			jQuery( '#fldArea' ).append( structure[ 1 ] );
 		} else if(fldIdentity == 'r') {
-			jQuery( '#fldArea' ).append( ratingFld( title, id ) );
+			var structure = ratingFld( title, id );
+			jQuery( '#fldArea' ).append( structure[ 1 ] );
 		} else if(fldIdentity == 'sp') {
 			jQuery( '#fldArea' ).append( successPageFld( title, id ) );
 		}
@@ -1423,13 +1447,16 @@ jQuery( document ).ready( function( e ) {
 		toggleEl('#addFldList', 'hide');
 		rearrangeSection();
 	});
-	jQuery('#ratingBtn').click(function() {
+	jQuery( this ).on( 'click', '#ratingBtn', function() {
 		var ind = jQuery( '#fldArea .drugableSection' ).length + 1;
+		var structure = ratingFld( 'Rating', 'r_' + ind );
 
-		jQuery('#fldArea').append(ratingFld('Rating', 'r_'+ind));
-		toggleEl('#addFldList', 'hide');
+		jQuery( '#fldArea' ).append( structure[ 1 ] );
+		toggleEl( '#addFldList', 'hide' );
+		
 		rearrangeSection();
-	});
+		popupPreview();
+	} );
 	colorPickerInit();
 	jQuery('#addSegmentBtn').click(function() {
 		// var ind = jQuery('#segmentArea .drugableSection').length;
@@ -1512,10 +1539,26 @@ jQuery( document ).ready( function( e ) {
 		filteredReport( fromDate, toDate );
 	} );
 
+	// jQuery( this ).on( 'input', '.rating-star-number', function( e ) {
+	// 	var numberOfStars = this.value;
+	// 	jQuery.ajax( {
+	// 		type: 'POST',
+	// 		url: ajaxurl,
+	// 		data: {
+	// 			action: 'set_star_number_ajax',
+	// 			star_numbers: numberOfStars,
+	// 		},
+	// 		success: function( response ) {
+	// 			console.log( response );
+	// 		}
+	// 	} );
+	// } );
+
 } );
 
 var popupPreview = () => {
 	console.log( "PREVIEW WORKS HERE" );
+	console.log( popupData );
 	var popupHTML = jQuery( '.popup-content' ).html();
 	if ( popupData ) {
 		jQuery.ajax( {
@@ -2133,8 +2176,14 @@ var colorPickerInit = () => {
 }
 
 var tabSelectedFunction = ( $el ) => {
+	var key = 'selected_' + $el.find( 'input' )[ 0 ].name;
+	var value = $el.find( 'input' ).val();
+	popupData[ key ] = value;
+
 	$el.closest( 'ul' ).find( 'li' ).removeClass( 'selected' );
 	$el.addClass( 'selected' );
+
+	popupPreview();
 }
 
 var newTitle = ( $el ) => {
@@ -2499,95 +2548,126 @@ var singleLineTextFld =  ( title, id, item ) => {
 }
 
 var successPageFld = ( title, id ) => {
-  return `<div class="drugableSection" id="${id}">
-    <div class="pt-addfield-box">
-      <div class="accrodianBtn">
-        <span class="pt-addfield-box-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
-        <span class="pt-addfield-box-title"><input type="text" class="editableTitle" name="" readonly value="${title}"></span>
-        <span class="pt-addfield-box-arrow"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
-      </div>
+  var returnStructure = [];
+	var index = formFieldIndex();
+	var order = findNextIndex( id );
 
-        <a class="pt-addfield-box-config" href="javascript:void(0);"><i class="fa fa-cog" aria-hidden="true"></i></a>
-        <ul class="add-button-field pt-config-btn">
-            <li class="renameTitle">Rename</li>
-            <li class="cloneSection">Clone</li>
-            <li class="removeSection">Remove</li>
-        </ul>
-    </div>
-    <div class="pt-addfield-box-edit">
-        <div class="pt-option-box">
-            <label>Title</label>
-            <input type="text" name="" placeholder="Welcome!">
-        </div>
-        <div class="pt-option-box">
-            <label>Description</label>
-            <textarea></textarea>
-        </div>
-        <div class="pt-option-box">
-            <label>Final action</label>
-            <div class="pt-radio">
-                <label class="container">
-                  <input type="radio" name="radio">
-                  <span class="checkmark"></span>none
-                </label>
-            </div>
-            <div class="pt-radio">
-                <label class="container">
-                  <input type="radio" name="radio">
-                  <span class="checkmark"></span>Close widget
-                </label>
-            </div>
-            <div class="pt-radio">
-                <label class="container">
-                  <input type="radio" name="radio">
-                  <span class="checkmark"></span>redirect to URL
-                </label>
-            </div>
-            <div class="redirect-url">
-                <input type="text" value="" name="success_redirect_url" class="success-redirect-url" placeholder="Redirect URL">
-                <button type="button" class="url-test">Test</button>
-            </div>
-        </div>
-    </div>
+  	var html = `
+  	<div class="drugableSection" id="${id}" data-field="${index}">
+	    <div class="pt-addfield-box">
+	      <div class="accrodianBtn">
+	        <span class="pt-addfield-box-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+	        <span class="pt-addfield-box-title"><input type="text" class="editableTitle" name="content_form_success_field_${index}" readonly value="${title}"></span>
+	        <span class="pt-addfield-box-arrow"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+	      </div>
 
-  </div>`;
+	        <a class="pt-addfield-box-config" href="javascript:void(0);"><i class="fa fa-cog" aria-hidden="true"></i></a>
+	        <ul class="add-button-field pt-config-btn">
+	            <li class="renameTitle">Rename</li>
+	            <li class="cloneSection">Clone</li>
+	            <li class="removeSection">Remove</li>
+	        </ul>
+	    </div>
+	    <div class="pt-addfield-box-edit">
+	        <div class="pt-option-box">
+	            <label>Title</label>
+	            <input type="text" name="content_form_success_title_${index}" placeholder="Welcome!">
+	        </div>
+	        <div class="pt-option-box">
+	            <label>Description</label>
+	            <textarea name="content_form_success_description_${index}"></textarea>
+	        </div>
+	        <div class="pt-option-box">
+	            <label>Final action</label>
+	            
+	            <div class="pt-radio">
+					<input type="radio" name="content_form_success_action_${index}" class="bg_radio_color sub-radio" value="none" />
+					<label for="start-to-display-option">none</label>
+				</div>
+
+			  	<div class="pt-radio">
+				  	<input type="radio" name="content_form_success_action_${index}" class="bg_radio_color sub-radio" value="close" />
+				  	<label for="start-to-display-option">close widget</label>
+			  	</div>
+			  	
+			  	<div class="pt-radio">
+				  	<input type="radio" name="content_form_success_action_${index}" class="bg_radio_color sub-radio" value="redirect" />
+				  	<label for="start-to-display-option">redirect to URL</label>
+			  	</div>
+
+	            <div class="redirect-url">
+					<input type="text" name="content_form_success_redirect_url_${index}" class="success-redirect-url" id="success-redirect-url-${index}" placeholder="Redirect URL" />
+					<button type="button" id="btn-${index}" class="url-test">Test</button>
+				</div>
+	        </div>
+	    </div>
+
+	</div>`;
+	returnStructure.push( index, html );
+
+	// var formField = `
+	// 	<div class="extrnal-page" id="fl_${id}" data-form-field="${index}" data-order="${order}">
+	// 		<label id="label-${index}"></label>
+	// 		<input type="email" name="email_name_${index}" id="field_${index}" placeholder="" />
+	// 	</div>
+	// `;
+ //  	jQuery( '.popup-form' ).append( formField );
+
+	return returnStructure;
 }
 
 var ratingFld =  ( title, id ) => {
-  return `<div class="drugableSection" id="${id}">
-  <div class="pt-addfield-box">
-    <div class="accrodianBtn">
-      <span class="pt-addfield-box-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
-      <span class="pt-addfield-box-title"><input type="text" class="editableTitle" name="" readonly value="${title}"></span>
-      <span class="pt-addfield-box-arrow"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
-    </div>
+	var returnStructure = [];
+	var index = formFieldIndex();
+	var order = findNextIndex( id );
+	var html = `
+	  <div class="drugableSection" id="${id}" data-field="${index}">
+	  <div class="pt-addfield-box">
+	    <div class="accrodianBtn">
+	      <span class="pt-addfield-box-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+	      <span class="pt-addfield-box-title"><input type="text" class="editableTitle" name="content_form_rating_field_${index}" readonly value="${title}"></span>
+	      <span class="pt-addfield-box-arrow"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+	    </div>
 
-      <a class="pt-addfield-box-config" href="javascript:void(0);"><i class="fa fa-cog" aria-hidden="true"></i></a>
-      <ul class="add-button-field pt-config-btn">
-          <li class="renameTitle">Rename</li>
-          <li class="cloneSection">Clone</li>
-          <li class="removeSection">Remove</li>
-      </ul>
-  </div>
-  <div class="pt-addfield-box-edit">
-      <div class="pt-option-box">
-          <label>Field Label</label>
-          <input type="text" name="" placeholder="text Label">
-      </div>
-      <div class="pt-option-box">
-          <i class="fa fa-star fontSize30" aria-hidden="true"></i>
-          <label>Repeats</label>
-          <input type="text" name="" placeholder="10">
-      </div>
-      <div class="pt-checkbox pt-inline-field">
-          <label class="container">
-            <input type="checkbox">
-            <span class="checkmark"></span>Required
-          </label>
-      </div>
-  </div>
+	      <a class="pt-addfield-box-config" href="javascript:void(0);"><i class="fa fa-cog" aria-hidden="true"></i></a>
+	      <ul class="add-button-field pt-config-btn">
+	          <li class="renameTitle">Rename</li>
+	          <li class="cloneSection">Clone</li>
+	          <li class="removeSection">Remove</li>
+	      </ul>
+	  </div>
+	  <div class="pt-addfield-box-edit">
+	      <div class="pt-option-box">
+	          <label>Field Label</label>
+	          <input type="text" name="content_form_rating_title_${index}" placeholder="text Label">
+	      </div>
+	      <div class="pt-option-box">
+	          <i class="fa fa-star fontSize30" aria-hidden="true"></i>
+	          <label>Repeats</label>
+	          <input type="text" class="rating-star-number" name="content_form_rating_repeats_${index}" placeholder="10" />
+	      </div>
+	      <div class="pt-checkbox pt-inline-field">
+	          <label class="container">
+	            <input type="checkbox" name="content_form_rating_required_${index}" id="conent-form-rating-required-${index}" class="option-checkbox" />
+	            <span class="checkmark"></span>Required
+	          </label>
+	      </div>
+	  </div>
 
-</div>`;
+	</div>`;
+	returnStructure.push( index, html );
+
+  	var formField = `
+		<div class="pt-frm-field" id="fl_${id}" data-form-field="${index}" data-order="${order}">
+			<label id="label-${index}"></label>
+			<div class='rating-stars text-center'>
+			    <ul id='stars'></ul>
+			</div>
+		</div>
+	`;
+  	jQuery( '.form-fields-block' ).append( formField );
+
+  	return returnStructure;
 }
 
 var newSegment = ( title, id ) => {

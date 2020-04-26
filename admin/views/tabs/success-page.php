@@ -7,7 +7,13 @@
             <!-- .form-bar starts -->
             <div class="form-bar">
                 <label><?php echo __( 'Description', 'kong-popup' ); ?></label>
-                <textarea name="success_message" class="description" placeholder="You have successfully subscribed."></textarea>
+                <textarea name="success_message" class="description" placeholder="You have successfully subscribed.">
+                <?php 
+                if ( isset( $popup_meta[ 'success_message' ] ) && !empty( $popup_meta[ 'success_message' ] ) ) {
+                    echo trim( $popup_meta[ 'success_message' ] );
+                }
+                ?>
+                </textarea>
 
                 <label><?php echo __( 'Final action', 'kong-popup' ); ?></label>
                 <!-- .final-action starts -->
@@ -38,7 +44,7 @@
                 <!-- .redirect-url starts -->
                 <div class="redirect-url">
                     <input type="text" value="<?php if ( isset( $popup_meta[ 'success_redirect_url' ] ) ) echo $popup_meta[ 'success_redirect_url' ]; ?>" name="success_redirect_url" class="success-redirect-url" id="success-redirect-url" placeholder="Redirect URL" />
-                    <button type="button" class="url-test" id="url-test" disabled>
+                    <button type="button" class="url-test" id="url-test" <?php if ( trim( $popup_meta[ 'success_action' ] ) != 'redirect' ) echo "disabled"; ?>>
                         <?php echo __( 'Test', 'kong-popup' ); ?>
                     </button>
                 </div>

@@ -25,6 +25,8 @@ class Kong_Popup_Admin_Ajax
         add_action( 'wp_ajax_nopriv_save_popup_feeds_ajax', array( $this, 'save_popup_feeds' ) );
 
         add_action( 'wp_ajax_update_popup_status_ajax', array( $this, 'update_popup_status' ) );
+
+        add_action( 'wp_ajax_set_star_number_ajax', array( $this, 'set_star_number' ) );
     }
 
     public function save_popup_info() 
@@ -235,8 +237,6 @@ class Kong_Popup_Admin_Ajax
 
                 $current_date = date( 'Y-m-d', time() );
 
-                $mdvalue = maybe_serialize( $mdvalue );
-
                 if ( empty( $mdvalue ) ) {
                     $wpdb->query( "DELETE FROM {$wpdb->prefix}kong_popup_content_structures WHERE popup_id = {$post_id}" );
                 } else {
@@ -260,13 +260,16 @@ class Kong_Popup_Admin_Ajax
                         }
                     }
                     update_post_meta( $post_id, $mdkey, $mdvalue );
+                    $this->update_preview_popup_meta( $post_id, $mdkey, $mdvalue );
                 } else {
                     delete_post_meta( $post_id, $mdkey );
+                    $this->delete_preview_popup_meta( $post_id, $mdkey );
                 }
             }
 
             if ( is_array( $mdvalue ) && empty( $mdvalue[ 0 ] ) ) {
                 delete_post_meta( $post_id, $mdkey );
+                $this->delete_preview_popup_meta( $post_id, $mdkey );
             }
         }
 
@@ -679,6 +682,9 @@ class Kong_Popup_Admin_Ajax
     {
         $meta_data = $_REQUEST[ 'popup_data' ];
 
+        // print_data( $meta_data );
+        // exit;
+
         $post_id = $meta_data[ 'popup_id' ];
         unset( $meta_data[ 'popup_id' ] );  // remove the popup_id from array
 
@@ -763,6 +769,8 @@ class Kong_Popup_Admin_Ajax
     {
         global $wpdb;
 
+        $mdvalue = maybe_serialize( $mdvalue );
+
         $query = $wpdb->get_results( "SELECT ID FROM {$wpdb->prefix}kong_popup_preview_meta WHERE popup_id = {$post_id} AND meta_key = '{$mdkey}'" );
         if ( $query ) {
             $wpdb->query( "UPDATE {$wpdb->prefix}kong_popup_preview_meta SET meta_value = '{$mdvalue}' WHERE popup_id = {$post_id} AND meta_key = '{$mdkey}'" );
@@ -790,5 +798,20 @@ class Kong_Popup_Admin_Ajax
 
         die();
     }
+
+    // public function set_star_number()
+    // {
+    //     $star_numbers = $_REQUEST[ 'star_numbers' ];
+    //     $i = 1;
+    //     $html = '';
+    //     while ( $i <= $star_numbers ) {
+    //         $html .= "<li class='star' data-value='{$i}'>";
+    //         $i++;
+    //     }
+
+    //     echo $html;
+
+    //     die();
+    // }
 
 }
